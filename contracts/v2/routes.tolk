@@ -20,7 +20,10 @@ fun v2FindRouteFrom(
         return null;
     }
     val route = v2RouteAt(routes, index);
-    if (route.sourceCoreId == sourceCoreId && route.sourcePort == sourcePort) {
+    if (
+        route.domain == DOMAIN_ROUTE_V2 && route.sourceCoreId == sourceCoreId &&
+        route.sourcePort == sourcePort
+    ) {
         return route;
     }
     return v2FindRouteFrom(routes, sourceCoreId, sourcePort, index + 1, count);

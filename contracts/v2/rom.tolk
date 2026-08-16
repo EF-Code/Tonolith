@@ -82,18 +82,10 @@ fun v2RomWord(romCell: cell, address: uint10): uint16 {
     val leafIndex = address >> 5;
     val wordIndex = address & 31;
     val rootIndex = leafIndex >> 4;
-    var level2: V2RomLevel2;
-    if (rootIndex == 0) {
-        level2 = root.level20.load();
-    } else if (rootIndex == 1) {
-        level2 = root.level21.load();
-    } else if (rootIndex == 2) {
-        level2 = root.level22.load();
-    } else if (rootIndex == 3) {
-        level2 = root.level23.load();
-    } else {
-        throw ErrorsV2.InvalidPc;
-    }
+    // A 10-bit program counter addresses 32 leaves. The four-way root
+    // therefore uses only its first two children, exactly like the v1 ROM
+    // layout; the remaining children stay canonical zero padding.
+    val level2 = rootIndex == 0 ? root.level20.load() : root.level21.load();
     val level1 = selectV2RomLevel1(level2, (leafIndex >> 2) & 3);
     val leafIndexInLevel = leafIndex & 3;
     var leafCell = level1.leaf0;

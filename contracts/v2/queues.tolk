@@ -179,6 +179,76 @@ fun v2FindInput(root: cell, epoch: uint64, port: int): V2InputCursor {
     return v2FindInputFrom(root, epoch, port, 0, count);
 }
 
+fun v2InputBefore(left: V2InputRecord, right: V2InputRecord): bool {
+    if (left.destinationEpoch != right.destinationEpoch) {
+        return left.destinationEpoch < right.destinationEpoch;
+    }
+    if (left.destinationPort != right.destinationPort) {
+        return left.destinationPort < right.destinationPort;
+    }
+    return left.sequence < right.sequence;
+}
+
+fun v2InputInsertionIndex(root: cell, record: V2InputRecord, index: int, count: int): int {
+    if (index >= count || index >= 16) {
+        return count;
+    }
+    val current = v2InputAt(root, index);
+    if (v2InputBefore(record, current)) {
+        return index;
+    }
+    return v2InputInsertionIndex(root, record, index + 1, count);
+}
+
+fun v2InsertInputRecordFrom(
+    root: cell,
+    record: cell,
+    insertionIndex: int,
+    sourceIndex: int,
+    count: int,
+    result: cell,
+): cell {
+    if (sourceIndex == insertionIndex) {
+        val withInserted = v2AppendQueueRoot(result, record);
+        if (sourceIndex >= count) {
+            return withInserted;
+        }
+        return v2InsertInputRecordFrom(
+            root,
+            record,
+            insertionIndex,
+            sourceIndex + 1,
+            count,
+            v2AppendQueueRoot(withInserted, v2RecordAt(root, sourceIndex)),
+        );
+    }
+    if (sourceIndex >= count) {
+        return result;
+    }
+    return v2InsertInputRecordFrom(
+        root,
+        record,
+        insertionIndex,
+        sourceIndex + 1,
+        count,
+        v2AppendQueueRoot(result, v2RecordAt(root, sourceIndex)),
+    );
+}
+
+fun v2InsertInputRecord(root: cell, record: cell): cell {
+    val count = v2QueueCount(root);
+    val typedRecord = (record as Cell<V2InputRecord>).load();
+    val insertionIndex = v2InputInsertionIndex(root, typedRecord, 0, count);
+    return v2InsertInputRecordFrom(
+        root,
+        record,
+        insertionIndex,
+        0,
+        count,
+        v2EmptyQueueRootForMutation(),
+    );
+}
+
 fun v2FindInputFrom(root: cell, epoch: uint64, port: int, index: int, count: int): V2InputCursor {
     if (index >= count || index >= 16) {
         return V2InputCursor {

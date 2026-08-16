@@ -249,7 +249,7 @@ fun processDeliverInputV2(sender: address, value: coins, msg: V2DeliverInput) {
         consumed: 0,
     }.toCell();
     var updatedQueues = queues;
-    updatedQueues.inboxRoot = v2AppendQueueRoot(queues.inboxRoot, input);
+    updatedQueues.inboxRoot = v2InsertInputRecord(queues.inboxRoot, input);
     core.queues = updatedQueues.toCell();
     core.inputCount += 1;
     core.acceptedMessageCount += 1;
@@ -392,23 +392,35 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
     if (core.status == STATUS_WAITING_INPUT_V2 || core.status == STATUS_BACKPRESSURED_V2) {
         core.status = STATUS_RUNNING_V2;
     }
-    val word = v2RomWord(storage.rom, core.pc);
-    val _legacyOutput = v2ExecuteInstruction(
-        mutate core,
-        word,
-        identity.runId,
-        identity.coreId,
-        storage.network.load().routes,
-        previousStateHash,
-    );
-    val executionStateHash = core.toCell().hash();
-    val stepsExecuted = (core.instructionCount - startInstructionCount) as uint16;
-    val outputsProduced = (core.outputCount - startOutputCount) as uint8;
+    var stepsExecuted: uint16 = 0;
+    var outputsProduced: uint8 = 0;
+    var trace = previousStateHash;
+    var keepRunning = true;
+    while (keepRunning && stepsExecuted < msg.maxInstructions && core.status == STATUS_RUNNING_V2) {
+        val word = v2RomWord(storage.rom, core.pc);
+        val beforeInstructionCount = core.instructionCount;
+        val _legacyOutput = v2ExecuteInstruction(
+            mutate core,
+            word,
+            identity.runId,
+            identity.coreId,
+            storage.network.load().routes,
+            previousStateHash,
+        );
+        if (core.instructionCount == beforeInstructionCount) {
+            keepRunning = false;
+        }
+        if (core.instructionCount != beforeInstructionCount) {
+            trace = nextV2TraceCommitment(trace, word, core.toCell().hash());
+            stepsExecuted = (core.instructionCount - startInstructionCount) as uint16;
+            outputsProduced = (core.outputCount - startOutputCount) as uint8;
+            if (core.epoch != startEpoch || outputsProduced >= msg.maxOutputs) {
+                keepRunning = false;
+            }
+        }
+    }
     val yielded = core.epoch != startEpoch;
     val stopReason = v2StopReason(core.status, yielded);
-    val trace = stepsExecuted == 0
-        ? previousStateHash
-        : nextV2TraceCommitment(previousStateHash, word, executionStateHash);
     core.advanceCount += 1;
     core.acceptedMessageCount += 1;
     storage.core = core.toCell();

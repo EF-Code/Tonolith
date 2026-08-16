@@ -174,7 +174,15 @@ fun v2ExecuteSys(
     if (subop == 10) {
         val port = operand >> 4;
         val queues = core.queues.load();
-        assert (v2QueueCount(queues.outboxRoot) < MAX_OUTPUT_RECORDS_V2) throw ErrorsV2.QueueFull;
+        if (v2QueueCount(queues.outboxRoot) >= MAX_OUTPUT_RECORDS_V2) {
+            // A blocked OUTP is not an executed instruction. Restore the
+            // fetch counters and leave the core in an observable stop state
+            // so a later acknowledgement can wake it safely.
+            core.pc = ((core.pc - 1) & 1023) as uint10;
+            core.instructionCount -= 1;
+            core.status = STATUS_BACKPRESSURED_V2;
+            return null;
+        }
         val route = v2FindRoute(routes, coreId, port);
         assert (route != null) throw ErrorsV2.InvalidRoute;
         val sequence = v2GetOutputSequence(core.nextOutputSequence, port);
