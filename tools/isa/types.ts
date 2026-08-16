@@ -85,3 +85,14 @@ export function assertRamAddress(address: number): void {
   }
 }
 
+export function assertRegister(index: number): void {
+  if (!Number.isInteger(index) || index < 0 || index >= REGISTER_COUNT) {
+    throw new RangeError(`register index must be in 0..${REGISTER_COUNT - 1}`);
+  }
+}
+
+export function readRam(state: CpuState, address: number): number {
+  assertRamAddress(address);
+  return state.ram[address] ?? 0;
+}
+
