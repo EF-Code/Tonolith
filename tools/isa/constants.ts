@@ -10,3 +10,5 @@ export const FLAG_ZERO = 1;
 export const FLAG_CARRY = 2;
 export const STATUS_RUNNING = "running" as const;
 export const STATUS_HALTED = "halted" as const;
+export const STATIC_COMMITMENT_NAMESPACE = 0x544e4c01;
+export const SCHEMA_VERSION = 1;
