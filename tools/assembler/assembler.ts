@@ -179,3 +179,22 @@ function parseInstruction(source: string, labels: Record<string, number>, line: 
   }
 }
 
+interface ParsedLine {
+  lineNumber: number;
+  source: string;
+  address: number;
+}
+
+function parseNoOperand(
+  mnemonic: string,
+  operandText: string | undefined,
+  opcode: Opcode,
+  line: number,
+  operand = 0,
+): number {
+  if (operandText !== undefined) {
+    throw new AssemblyError(`${mnemonic} does not take an operand`, line);
+  }
+  return encodeInstruction(opcode, operand);
+}
+
