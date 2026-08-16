@@ -66,6 +66,7 @@ export function staticCommitmentCell(fields: {
   readonly romRoot: Hash256;
   readonly routeRoot: Hash256;
   readonly limitsHash: Hash256;
+  readonly peerRoot?: Hash256;
 }): Cell {
   const programPayload = beginCell()
     .storeUint(toBigInt(fields.programId), 256)
@@ -73,6 +74,7 @@ export function staticCommitmentCell(fields: {
     .storeUint(toBigInt(fields.routeRoot), 256)
     .endCell();
   const limitsPayload = beginCell().storeUint(toBigInt(fields.limitsHash), 256).endCell();
+  const peerPayload = beginCell().storeUint(toBigInt(fields.peerRoot ?? "0".repeat(64)), 256).endCell();
   return beginCell()
     .storeUint(DOMAIN.static, 32)
     .storeUint(fields.schemaVersion, 16)
@@ -83,6 +85,7 @@ export function staticCommitmentCell(fields: {
     .storeUint(fields.coreId, 16)
     .storeRef(programPayload)
     .storeRef(limitsPayload)
+    .storeRef(peerPayload)
     .endCell();
 }
 

@@ -3,6 +3,7 @@ import { ABI_VERSION, ISA_VERSION, PROTOCOL_VERSION, RAM_NIBBLES, ROM_WORDS, SCH
 import { assembleV2, type V2AssemblyResult } from "./assembler.js";
 import { deriveRunId, limitsHash, programId, protocolVersions, staticCommitment, type Hash256, type LimitsV2 } from "./commitments.js";
 import { normalizeRam, normalizeRom, ramRoot, ramRootCell, romRoot, romRootCell } from "./memory.js";
+import { normalizePeers, peerRoot, type PeerDescriptor } from "./peers.js";
 import { normalizeRoutes, routeRoot, type RouteDescriptor } from "./routes.js";
 
 export interface CompilerInfo {
@@ -30,6 +31,7 @@ export interface ArtifactManifestV2 {
   readonly romRoot: Hash256;
   readonly initialRamRoot: Hash256;
   readonly routeRoot: Hash256;
+  readonly peerRoot: Hash256;
   readonly programId: Hash256;
   readonly limitsHash: Hash256;
   readonly staticCommitment: Hash256;
@@ -45,6 +47,7 @@ export interface BuildArtifactOptions {
   readonly runId?: Hash256;
   readonly runSalt?: Hash256;
   readonly routes?: readonly RouteDescriptor[];
+  readonly peers?: readonly PeerDescriptor[];
   readonly limits?: Partial<LimitsV2>;
   readonly compiler?: Partial<CompilerInfo>;
 }
@@ -54,6 +57,7 @@ export interface ArtifactBundle {
   readonly source: string;
   readonly assembly: V2AssemblyResult;
   readonly routes: readonly RouteDescriptor[];
+  readonly peers: readonly PeerDescriptor[];
   readonly limits: LimitsV2;
   readonly files: Readonly<Record<string, string>>;
 }
@@ -75,6 +79,7 @@ export const DEFAULT_LIMITS: LimitsV2 = {
 export function buildArtifact(source: string, options: BuildArtifactOptions): ArtifactBundle {
   const assembly = assembleV2(source, options.fileName ?? "program.tasm");
   const routes = normalizeRoutes(options.routes ?? []);
+  const peers = normalizePeers(options.peers ?? []);
   const limits: LimitsV2 = {
     ...DEFAULT_LIMITS,
     ...options.limits,
@@ -83,6 +88,7 @@ export function buildArtifact(source: string, options: BuildArtifactOptions): Ar
   const romRootValue = romRoot(assembly.words);
   const initialRamRoot = ramRoot(assembly.ram);
   const routeRootValue = routeRoot(routes);
+  const peerRootValue = peerRoot(peers);
   const programIdValue = programId({
     artifactVersion: 2,
     isaVersion: ISA_VERSION,
@@ -106,6 +112,7 @@ export function buildArtifact(source: string, options: BuildArtifactOptions): Ar
     programId: programIdValue,
     romRoot: romRootValue,
     routeRoot: routeRootValue,
+    peerRoot: peerRootValue,
     limitsHash: limitsHashValue,
   });
   const compiler: CompilerInfo = {
@@ -133,14 +140,15 @@ export function buildArtifact(source: string, options: BuildArtifactOptions): Ar
     romRoot: romRootValue,
     initialRamRoot,
     routeRoot: routeRootValue,
+    peerRoot: peerRootValue,
     programId: programIdValue,
     limitsHash: limitsHashValue,
     staticCommitment: staticCommitmentValue,
     sourceHash: sha256(assembly.canonicalSource),
     compiler,
   };
-  const files = makeFiles(manifest, source, assembly, routes);
-  return { manifest, source, assembly, routes, limits, files };
+  const files = makeFiles(manifest, source, assembly, routes, peers);
+  return { manifest, source, assembly, routes, peers, limits, files };
 }
 
 export function verifyArtifact(bundle: ArtifactBundle): ArtifactVerificationReport {
@@ -153,13 +161,14 @@ export function verifyArtifact(bundle: ArtifactBundle): ArtifactVerificationRepo
   if (manifest.isaVersion !== versions.isaVersion) errors.push("unsupported isaVersion");
   if (manifest.abiVersion !== versions.abiVersion) errors.push("unsupported abiVersion");
   if (manifest.protocolVersion !== versions.protocolVersion) errors.push("unsupported protocolVersion");
-  for (const field of ["runId", "runSalt", "romRoot", "initialRamRoot", "routeRoot", "programId", "limitsHash", "staticCommitment", "sourceHash"] as const) {
+  for (const field of ["runId", "runSalt", "romRoot", "initialRamRoot", "routeRoot", "peerRoot", "programId", "limitsHash", "staticCommitment", "sourceHash"] as const) {
     if (!/^[0-9a-f]{64}$/.test(manifest[field])) errors.push(`${field} is not canonical lowercase uint256 hex`);
   }
   try {
     const computedRomRoot = romRoot(bundle.assembly.words);
     const computedRamRoot = ramRoot(bundle.assembly.ram);
     const computedRouteRoot = routeRoot(bundle.routes);
+    const computedPeerRoot = peerRoot(bundle.peers);
     const computedProgramId = programId({
       artifactVersion: 2,
       isaVersion: 2,
@@ -181,6 +190,7 @@ export function verifyArtifact(bundle: ArtifactBundle): ArtifactVerificationRepo
       programId: computedProgramId,
       romRoot: computedRomRoot,
       routeRoot: computedRouteRoot,
+      peerRoot: computedPeerRoot,
       limitsHash: computedLimitsHash,
     });
     const computedRunId = deriveRunId([computedProgramId], computedRouteRoot, manifest.runSalt);
@@ -188,6 +198,7 @@ export function verifyArtifact(bundle: ArtifactBundle): ArtifactVerificationRepo
       romRoot: computedRomRoot,
       initialRamRoot: computedRamRoot,
       routeRoot: computedRouteRoot,
+      peerRoot: computedPeerRoot,
       programId: computedProgramId,
       limitsHash: computedLimitsHash,
       staticCommitment: computedStatic,
@@ -224,7 +235,7 @@ export function canonicalJson(value: unknown): string {
   return JSON.stringify(sortJson(value));
 }
 
-function makeFiles(manifest: ArtifactManifestV2, source: string, assembly: V2AssemblyResult, routes: readonly RouteDescriptor[]): Readonly<Record<string, string>> {
+function makeFiles(manifest: ArtifactManifestV2, source: string, assembly: V2AssemblyResult, routes: readonly RouteDescriptor[], peers: readonly PeerDescriptor[]): Readonly<Record<string, string>> {
   const artifactJson = canonicalJson(manifest);
   return {
     "artifact.json": artifactJson,
@@ -234,6 +245,7 @@ function makeFiles(manifest: ArtifactManifestV2, source: string, assembly: V2Ass
     "symbols.json": canonicalJson({ labels: assembly.labels, exports: assembly.exports }),
     "source-map.json": canonicalJson(assembly.sourceMap),
     "routes.json": canonicalJson(routes),
+    "peers.json": canonicalJson(peers),
     "BUILDINFO.json": canonicalJson({ artifactSha256: sha256(artifactJson), compiler: manifest.compiler, sourceHash: manifest.sourceHash }),
   };
 }

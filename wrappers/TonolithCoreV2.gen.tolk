@@ -142,10 +142,7 @@ fun TonolithCoreV2.sendV2InputAccepted(
     abiVersion: uint16,
     queryId: uint64,
     runId: uint256,
-    outputId: uint256,
-    destinationCoreId: uint16,
-    destinationEpoch: uint64,
-    destinationStateHash: uint256,
+    detail: V2AcknowledgementDetail,
     config: SendParams = {},
 ): SendResultList {
     val genericMsg = createMessage({
@@ -156,10 +153,7 @@ fun TonolithCoreV2.sendV2InputAccepted(
             abiVersion,
             queryId,
             runId,
-            outputId,
-            destinationCoreId,
-            destinationEpoch,
-            destinationStateHash,
+            detail: detail.toCell(),
         },
     });
     return net.send(from, genericMsg);
@@ -278,4 +272,36 @@ fun TonolithCoreV2.getAccumulatorV2(self): uint4 {
 
 fun TonolithCoreV2.getFlagsV2(self): uint2 {
     return net.runGetMethod(self.address, "getFlagsV2");
+}
+
+fun TonolithCoreV2.getAcceptedMessageCountV2(self): uint64 {
+    return net.runGetMethod(self.address, "getAcceptedMessageCountV2");
+}
+
+fun TonolithCoreV2.getOutputCountV2(self): uint64 {
+    return net.runGetMethod(self.address, "getOutputCountV2");
+}
+
+fun TonolithCoreV2.getInputCountV2(self): uint64 {
+    return net.runGetMethod(self.address, "getInputCountV2");
+}
+
+fun TonolithCoreV2.getInboxCountV2(self): uint8 {
+    return net.runGetMethod(self.address, "getInboxCountV2");
+}
+
+fun TonolithCoreV2.getOutboxCountV2(self): uint8 {
+    return net.runGetMethod(self.address, "getOutboxCountV2");
+}
+
+fun TonolithCoreV2.getOutputCommitmentV2(self): uint256 {
+    return net.runGetMethod(self.address, "getOutputCommitmentV2");
+}
+
+fun TonolithCoreV2.getInputCommitmentV2(self): uint256 {
+    return net.runGetMethod(self.address, "getInputCommitmentV2");
+}
+
+fun TonolithCoreV2.getEpochHistoryCommitmentV2(self): uint256 {
+    return net.runGetMethod(self.address, "getEpochHistoryCommitmentV2");
 }

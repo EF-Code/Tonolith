@@ -220,25 +220,30 @@ export function decodeDeliverInputV2(input: Cell | Slice): DeliverInputV2Message
 }
 
 export function encodeInputAcceptedV2(message: Omit<InputAcceptedV2Message, "kind">): Cell {
-  return commonCell(MESSAGE_PREFIX.inputAccepted, message)
+  const detail = beginCell()
     .storeUint(toBigInt(message.outputId), 256)
     .storeUint(message.destinationCoreId, 16)
     .storeUint(message.destinationEpoch, 64)
     .storeUint(toBigInt(message.destinationStateHash), 256)
+    .endCell();
+  return commonCell(MESSAGE_PREFIX.inputAccepted, message)
+    .storeRef(detail)
     .endCell();
 }
 
 export function decodeInputAcceptedV2(input: Cell | Slice): InputAcceptedV2Message {
   const slice = parseSlice(input, MESSAGE_PREFIX.inputAccepted);
   const common = readCommon(slice, MESSAGE_PREFIX.inputAccepted);
+  const detail = slice.loadRef().beginParse();
   const message: InputAcceptedV2Message = {
     kind: "inputAccepted",
     ...common,
-    outputId: loadHash(slice),
-    destinationCoreId: slice.loadUint(16),
-    destinationEpoch: slice.loadUintBig(64),
-    destinationStateHash: loadHash(slice),
+    outputId: loadHash(detail),
+    destinationCoreId: detail.loadUint(16),
+    destinationEpoch: detail.loadUintBig(64),
+    destinationStateHash: loadHash(detail),
   };
+  finish(detail);
   finish(slice);
   return message;
 }

@@ -7,6 +7,37 @@ struct V2LegacyOutput {
     outputCommitment: uint256
 }
 
+fun v2StaticCommitment(
+    runId: uint256,
+    coreId: uint16,
+    programId: uint256,
+    romRoot: uint256,
+    routeRoot: uint256,
+    peerRoot: uint256,
+    limitsHash: uint256,
+): uint256 {
+    val programPayload = beginCell()
+        .storeUint(programId, 256)
+        .storeUint(romRoot, 256)
+        .storeUint(routeRoot, 256)
+        .endCell();
+    val limitsPayload = beginCell().storeUint(limitsHash, 256).endCell();
+    val peerPayload = beginCell().storeUint(peerRoot, 256).endCell();
+    return beginCell()
+        .storeUint(DOMAIN_STATIC_V2, 32)
+        .storeUint(SCHEMA_VERSION_V2, 16)
+        .storeUint(ISA_VERSION_V2, 16)
+        .storeUint(ABI_VERSION_V2, 16)
+        .storeUint(PROTOCOL_VERSION_V2, 16)
+        .storeUint(runId, 256)
+        .storeUint(coreId, 16)
+        .storeRef(programPayload)
+        .storeRef(limitsPayload)
+        .storeRef(peerPayload)
+        .endCell()
+        .hash();
+}
+
 fun nextV2LegacyOutputCommitment(
     previous: uint256,
     outputIndex: uint64,
@@ -34,7 +65,6 @@ fun nextV2AcknowledgementCommitment(previous: uint256, outputId: uint256): uint2
 
 fun v2OutputId(
     runId: uint256,
-    sourceStateHash: uint256,
     sourceCoreId: uint16,
     destinationCoreId: uint16,
     sourceEpoch: uint64,
@@ -48,7 +78,6 @@ fun v2OutputId(
     return beginCell()
         .storeUint(DOMAIN_OUTPUT_V2, 32)
         .storeUint(runId, 256)
-        .storeUint(sourceStateHash, 256)
         .storeUint(sourceCoreId, 16)
         .storeUint(destinationCoreId, 16)
         .storeUint(sourceEpoch, 64)

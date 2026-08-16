@@ -31,9 +31,11 @@ const ISA_VERSION_V2: uint16 = 2
 const ABI_VERSION_V2: uint16 = 2
 const PROTOCOL_VERSION_V2: uint16 = 2
 const DOMAIN_STATE_V2: uint32 = 0x544C4332
+const DOMAIN_STATIC_V2: uint32 = 0x544C5332
 const DOMAIN_EPOCH_V2: uint32 = 0x544C4532
 const DOMAIN_OUTPUT_V2: uint32 = 0x544C4F32
 const DOMAIN_INPUT_V2: uint32 = 0x544C4932
+const DOMAIN_ROUTE_V2: uint32 = 0x544C5232
 const DOMAIN_ACK_V2: uint32 = 0x544C4132
 const DOMAIN_BATCH_V2: uint32 = 0x544C4232
 const MESSAGE_ADVANCE_V2: uint32 = 0x544E4C21
@@ -135,6 +137,12 @@ struct V2Route {
     maxRecordsPerEpoch: uint8
 }
 
+struct V2Peer {
+    domain: uint32
+    coreId: uint16
+    peerAddress: address
+}
+
 struct V2OutputRecord {
     domain: uint32
     outputId: uint256
@@ -172,6 +180,11 @@ struct V2InputCursor {
     value: uint4
 }
 
+struct V2RecordCursor {
+    found: uint1
+    index: uint8
+}
+
 struct V2CoreState {
     domain: uint32
     staticCommitment: uint256
@@ -192,10 +205,15 @@ struct V2CoreState {
     queues: Cell<V2QueueRoots>
 }
 
+struct V2PeerRoots {
+    peerRoot: uint256
+}
+
 struct V2StaticRoots {
     romRoot: uint256
     routeRoot: uint256
     limitsHash: uint256
+    peers: Cell<V2PeerRoots>
 }
 
 struct V2StaticData {
@@ -215,7 +233,12 @@ struct V2Storage {
     identity: Cell<V2StaticData>
     core: Cell<V2CoreState>
     rom: cell
+    network: Cell<V2NetworkData>
+}
+
+struct V2NetworkData {
     routes: cell
+    peers: cell
 }
 
 fun V2Storage.load(): V2Storage {
@@ -261,14 +284,18 @@ struct (0x544E4C23) V2DeliverInput {
     sourceState: Cell<V2Hash>
 }
 
-struct (0x544E4C24) V2InputAccepted {
-    abiVersion: uint16
-    queryId: uint64
-    runId: uint256
+struct V2AcknowledgementDetail {
     outputId: uint256
     destinationCoreId: uint16
     destinationEpoch: uint64
     destinationStateHash: uint256
+}
+
+struct (0x544E4C24) V2InputAccepted {
+    abiVersion: uint16
+    queryId: uint64
+    runId: uint256
+    detail: Cell<V2AcknowledgementDetail>
 }
 
 struct (0x544E4C25) V2TopUp {

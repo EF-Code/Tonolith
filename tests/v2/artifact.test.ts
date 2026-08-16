@@ -49,6 +49,7 @@ test("v2 artifact builder emits deterministic files and independently matching c
     programId: first.manifest.programId,
     romRoot: first.manifest.romRoot,
     routeRoot: first.manifest.routeRoot,
+    peerRoot: first.manifest.peerRoot,
     limitsHash: first.manifest.limitsHash,
   }).hash().toString("hex"), first.manifest.staticCommitment);
 });

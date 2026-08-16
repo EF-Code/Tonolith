@@ -182,7 +182,6 @@ fun v2ExecuteSys(
         val destinationEpoch = core.epoch + route!.delay;
         val outputId = v2OutputId(
             runId,
-            beforeStateHash,
             coreId,
             route!.destinationCoreId,
             core.epoch,

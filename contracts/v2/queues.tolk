@@ -197,3 +197,116 @@ fun v2FindInputFrom(root: cell, epoch: uint64, port: int, index: int, count: int
     }
     return v2FindInputFrom(root, epoch, port, index + 1, count);
 }
+
+fun v2FindRecordById(root: cell, outputId: uint256): V2RecordCursor {
+    return v2FindRecordByIdFrom(root, outputId, 0, v2QueueCount(root));
+}
+
+fun v2FindRecordByIdFrom(root: cell, outputId: uint256, index: int, count: int): V2RecordCursor {
+    if (index >= count || index >= 16) {
+        return V2RecordCursor {
+            found: 0,
+            index: 0,
+        };
+    }
+    var record = v2RecordAt(root, index).beginParse();
+    record.loadUint(32);
+    val candidate = record.loadUint(256);
+    if (candidate == outputId) {
+        return V2RecordCursor {
+            found: 1,
+            index: index as uint8,
+        };
+    }
+    return v2FindRecordByIdFrom(root, outputId, index + 1, count);
+}
+
+fun v2FindInputSlot(root: cell, epoch: uint64, port: int, sequence: uint8): V2RecordCursor {
+    return v2FindInputSlotFrom(
+        root,
+        epoch,
+        port,
+        sequence,
+        0,
+        v2QueueCount(root),
+    );
+}
+
+fun v2FindInputSlotFrom(
+    root: cell,
+    epoch: uint64,
+    port: int,
+    sequence: uint8,
+    index: int,
+    count: int,
+): V2RecordCursor {
+    if (index >= count || index >= 16) {
+        return V2RecordCursor {
+            found: 0,
+            index: 0,
+        };
+    }
+    val input = v2InputAt(root, index);
+    if (
+        input.destinationEpoch == epoch && input.destinationPort == port &&
+        input.sequence == sequence
+    ) {
+        return V2RecordCursor {
+            found: 1,
+            index: index as uint8,
+        };
+    }
+    return v2FindInputSlotFrom(
+        root,
+        epoch,
+        port,
+        sequence,
+        index + 1,
+        count,
+    );
+}
+
+fun v2EmptyQueueRootForMutation(): cell {
+    val page = beginCell().storeUint(0, 3).endCell();
+    return beginCell()
+        .storeUint(0, 5)
+        .storeRef(page)
+        .storeRef(page)
+        .storeRef(page)
+        .storeRef(page)
+        .endCell();
+}
+
+fun v2RemoveRecordAt(root: cell, index: int): cell {
+    val count = v2QueueCount(root);
+    assert (index >= 0 && index < count) throw ErrorsV2.NotFound;
+    return v2RemoveRecordAtFrom(
+        root,
+        index,
+        0,
+        count,
+        v2EmptyQueueRootForMutation(),
+    );
+}
+
+fun v2RemoveRecordAtFrom(
+    root: cell,
+    skippedIndex: int,
+    sourceIndex: int,
+    count: int,
+    result: cell,
+): cell {
+    if (sourceIndex >= count) {
+        return result;
+    }
+    if (sourceIndex == skippedIndex) {
+        return v2RemoveRecordAtFrom(root, skippedIndex, sourceIndex + 1, count, result);
+    }
+    return v2RemoveRecordAtFrom(
+        root,
+        skippedIndex,
+        sourceIndex + 1,
+        count,
+        v2AppendQueueRoot(result, v2RecordAt(root, sourceIndex)),
+    );
+}

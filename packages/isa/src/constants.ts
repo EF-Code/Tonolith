@@ -29,6 +29,7 @@ export const DOMAIN = {
   output: 0x544c4f32,
   input: 0x544c4932,
   route: 0x544c5232,
+  peer: 0x544c5033,
   batch: 0x544c4232,
   acknowledgement: 0x544c4132,
   run: 0x544c4432,
