@@ -174,3 +174,18 @@ export function executeBatch(
   return { state: current, outputs, executed };
 }
 
+function add(state: CpuState, operand: number, includeCarry: boolean): void {
+  const carry = includeCarry && flagsContain(state.flags, FLAG_CARRY) ? 1 : 0;
+  const sum = state.accumulator + operand + carry;
+  state.accumulator = sum & NIBBLE_MASK;
+  state.flags = sum >= 16 ? state.flags | FLAG_CARRY : state.flags & ~FLAG_CARRY;
+  state.flags = setZeroFlag(state.flags, state.accumulator);
+}
+
+function subtract(state: CpuState, operand: number): void {
+  const before = state.accumulator;
+  state.accumulator = (before - operand) & NIBBLE_MASK;
+  state.flags = before >= operand ? state.flags | FLAG_CARRY : state.flags & ~FLAG_CARRY;
+  state.flags = setZeroFlag(state.flags, state.accumulator);
+}
+
