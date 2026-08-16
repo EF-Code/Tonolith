@@ -1,0 +1,32 @@
+[package]
+name = "tonolith"
+description = "A deterministic, verifiable 4-bit processor on TON"
+version = "0.1.0"
+license = "MIT"
+
+[toolchain]
+acton = "1.0.0"
+
+[contracts.TonolithCpu]
+display-name = "TonolithCpu"
+src = "contracts/TonolithCpu.tolk"
+depends = []
+
+[test]
+
+[scripts]
+deploy-emulation = "acton script scripts/deploy.tolk"
+deploy-testnet = "acton script scripts/deploy-fibonacci.tolk --net testnet"
+deploy-fibonacci-emulation = "acton script scripts/deploy-fibonacci.tolk"
+deploy-fibonacci-testnet = "acton script scripts/deploy-fibonacci.tolk --net testnet"
+
+[fmt]
+width = 100
+ignore = []
+
+[import-mappings]
+acton = ".acton"
+contracts = "contracts"
+gen = "gen"
+tests = "tests"
+wrappers = "wrappers"
