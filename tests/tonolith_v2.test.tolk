@@ -108,7 +108,7 @@ fun inputRecordV2ForTest(epoch: uint64, port: uint4, sequence: uint8, outputId: 
         outputId,
         sourceCoreId: 1,
         destinationCoreId: 0,
-        sourceEpoch: epoch - 1,
+        sourceEpoch: epoch == 0 ? 0 : epoch - 1,
         destinationEpoch: epoch,
         sourcePort: 0,
         destinationPort: port,
@@ -1452,7 +1452,7 @@ get fun `test v2 advance validation and storage guards`() {
         0,
         0,
         initialHash,
-        2,
+        MAX_STEPS_PER_ADVANCE_V2 + 1,
         1,
         { value: ton("0.1") },
     );
