@@ -22,4 +22,8 @@ test("v2 trace schema is strict, deterministic, and round-trippable", () => {
   assert.deepEqual(decodeTrace(encoded), trace);
   assert.throws(() => decodeTrace(encoded.replace("tonolith-trace-v2", "trace-v1")), /unsupported trace schema/);
   assert.throws(() => decodeTrace(JSON.stringify({ ...trace, frames: [{ ...trace.frames[0], index: 2 }, { ...trace.frames[0], index: 1 }] })), /strictly increasing/);
+  assert.throws(() => decodeTrace(JSON.stringify({ ...trace, evidence: "testnet" })), /testnet evidence/);
+  assert.throws(() => decodeTrace(JSON.stringify({ ...trace, frames: [{ ...trace.frames[0], before: { ...state, pc: 1024 } }] })), /trace PC/);
+  assert.throws(() => decodeTrace(JSON.stringify({ ...trace, coreIds: [0, 0] })), /core IDs must be unique/);
+  assert.throws(() => decodeTrace(JSON.stringify({ ...trace, frames: [{ ...trace.frames[0], outputId: "00".repeat(31) }] })), /trace output ID/);
 });
