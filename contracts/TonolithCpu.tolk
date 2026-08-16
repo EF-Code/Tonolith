@@ -193,3 +193,12 @@ get fun getOutputRegister(): uint4 {
     return (storage.core as Cell<CoreState>).load().outputRegister;
 }
 
+get fun getRegisters(): uint64 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().registers;
+}
+
+get fun getRamNibble(address: uint8): uint4 {
+    val storage = lazy Storage.load();
+    return readRamNibble((storage.core as Cell<CoreState>).load(), address);
+}
