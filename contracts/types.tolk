@@ -60,3 +60,17 @@ struct RomLevel1 {
     leaf3: Cell<RomLeaf>
 }
 
+struct RomLevel2 {
+    level10: Cell<RomLevel1>
+    level11: Cell<RomLevel1>
+    level12: Cell<RomLevel1>
+    level13: Cell<RomLevel1>
+}
+
+struct RomRoot {
+    level20: Cell<RomLevel2>
+    level21: Cell<RomLevel2>
+    level22: Cell<RomLevel2>
+    level23: Cell<RomLevel2>
+}
+
