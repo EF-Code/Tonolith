@@ -85,3 +85,106 @@ get fun `test advance executes one instruction and emits commitments`() {
     expect(refundMessage.info.dest).toEqual(deployer.address);
 }
 
+get fun `test stale and invalid advance requests do not mutate state`() {
+    val deployer = testing.treasury("stale-deployer");
+    val cpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0x0000)));
+    val deploy = cpu.deploy(deployer.address, { value: ton("1") });
+    expect(deploy).toHaveSuccessfulDeploy({ to: cpu.address });
+
+    val initialHash = cpu.getCoreStateHash();
+    val first = cpu.sendAdvance(
+        deployer.address,
+        1,
+        0,
+        initialHash,
+        1,
+        { value: ton("0.1") },
+    );
+    expect(first).toHaveSuccessfulTx<Advance>();
+    val advancedHash = cpu.getCoreStateHash();
+
+    val stale = cpu.sendAdvance(
+        deployer.address,
+        2,
+        0,
+        initialHash,
+        1,
+        { value: ton("0.1") },
+    );
+    expect(stale).toHaveFailedTx({
+        from: deployer.address,
+        to: cpu.address,
+        exitCode: Errors.StaleAdvance,
+    });
+    expect(cpu.getCoreStateHash()).toEqual(advancedHash);
+
+    val wrongHash = cpu.sendAdvance(
+        deployer.address,
+        3,
+        1,
+        0,
+        1,
+        { value: ton("0.1") },
+    );
+    expect(wrongHash).toHaveFailedTx({
+        from: deployer.address,
+        to: cpu.address,
+        exitCode: Errors.StateHashMismatch,
+    });
+
+    val invalidSteps = cpu.sendAdvance(
+        deployer.address,
+        4,
+        1,
+        advancedHash,
+        2,
+        { value: ton("0.1") },
+    );
+    expect(invalidSteps).toHaveFailedTx({
+        from: deployer.address,
+        to: cpu.address,
+        exitCode: Errors.InvalidStepCount,
+    });
+    expect(cpu.getCoreStateHash()).toEqual(advancedHash);
+}
+
+get fun `test arithmetic logical and SYS opcodes`() {
+    val deployer = testing.treasury("opcode-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x100F,
+                0x3000,
+                0x1001,
+                0x4000,
+                0x5000,
+                0x6000,
+                0x7000,
+                0x8000,
+                0x9000,
+                0xF003,
+                0xF002,
+                0xF004,
+                0xF005,
+                0xF006,
+                0xF007,
+                0xF008,
+            ),
+        ),
+    );
+    expect(
+        cpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: cpu.address });
+
+    repeat (16) {
+        advanceOne(cpu, deployer.address, cpu.getAdvanceCount());
+    }
+
+    expect(cpu.getInstructionCount()).toEqual(16);
+    expect(cpu.getAdvanceCount()).toEqual(16);
+    expect(cpu.getPc()).toEqual(16);
+    expect(cpu.getAccumulator()).toEqual(7);
+    expect(cpu.getFlags()).toEqual(2);
+    expect(cpu.getRegisters()).toEqual(15);
+}
+
