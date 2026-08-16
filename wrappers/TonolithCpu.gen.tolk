@@ -85,3 +85,12 @@ fun TonolithCpu.sendAny(self, from: address, body: cell, config: SendParams = {}
 }
 
 /// Send an external-in message to the contract with a custom body cell
+fun TonolithCpu.sendAnyExternal(self, body: cell): SendResultList? {
+    val msg = net.createExternalMessage(self.address, body);
+    return net.sendExternal(msg);
+}
+
+fun TonolithCpu.getMagic(self): uint32 {
+    return net.runGetMethod(self.address, "getMagic");
+}
+
