@@ -107,3 +107,14 @@ fun Storage.load(): Storage {
     return Storage.fromCell(contract.getData());
 }
 
+fun Storage.save(self) {
+    contract.setData(self.toCell());
+}
+
+struct (0x544E4C01) Advance {
+    queryId: uint64
+    expectedAdvanceCount: uint64
+    expectedStateHash: uint256
+    maxInstructions: uint16
+}
+
