@@ -53,3 +53,9 @@ The current repository contains local Acton tests for these behaviors. A real
 testnet explorer transaction is required before any of them can be called
 testnet-proven.
 
+## If deployment is blocked
+
+Stop at the missing prerequisite. Report the exact missing wallet name,
+testnet funding, provider/API credential, or user approval. Do not generate a
+wallet, display a mnemonic, or place a secret in the repository just to pass a
+deployment gate.
