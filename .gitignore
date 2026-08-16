@@ -1,0 +1,18 @@
+
+# Acton related files
+.acton/
+gen/
+build/
+dist/
+coverage/
+coverage.txt
+node_modules/
+lcov.info
+libraries.toml
+global.libraries.toml
+
+# Mnemonic and wallet files
+.env
+*.mnemonic
+wallets.toml
+global.wallets.toml
