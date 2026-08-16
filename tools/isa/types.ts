@@ -96,3 +96,24 @@ export function readRam(state: CpuState, address: number): number {
   return state.ram[address] ?? 0;
 }
 
+export function writeRam(state: CpuState, address: number, value: number): void {
+  assertRamAddress(address);
+  assertNibble(value, "RAM value");
+  state.ram[address] = value;
+}
+
+export function packRamPage(ram: Uint8Array, pageIndex: number): bigint {
+  if (!Number.isInteger(pageIndex) || pageIndex < 0 || pageIndex >= 4) {
+    throw new RangeError("RAM page index must be in 0..3");
+  }
+
+  let packed = 0n;
+  const start = pageIndex * 64;
+  for (let index = 0; index < 64; index += 1) {
+    const value = ram[start + index] ?? 0;
+    assertNibble(value, "RAM value");
+    packed |= BigInt(value) << BigInt(index * 4);
+  }
+  return packed;
+}
+
