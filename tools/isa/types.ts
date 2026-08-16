@@ -26,3 +26,26 @@ export interface CpuState {
   ram: Uint8Array;
 }
 
+export interface CpuOutput {
+  outputIndex: bigint;
+  instructionCount: bigint;
+  value: number;
+  outputCommitment: bigint;
+}
+
+export function createInitialState(): CpuState {
+  return {
+    advanceCount: 0n,
+    instructionCount: 0n,
+    outputCount: 0n,
+    pc: 0,
+    accumulator: 0,
+    flags: 0,
+    status: STATUS_RUNNING,
+    outputRegister: 0,
+    registers: Array.from({ length: REGISTER_COUNT }, () => 0),
+    outputCommitment: 0n,
+    ram: new Uint8Array(RAM_SIZE),
+  };
+}
+
