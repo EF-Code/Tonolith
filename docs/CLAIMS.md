@@ -14,15 +14,20 @@
   instructions, and reaches final state hash
   `16925a27b1db66171cebb3d43c74702f06f4a362e302754f24026cca0a6bf2be`.
 - The measured worst-case local accepted `Advance` gas is 19,527 gas with
-  `MAX_STEPS_PER_ADVANCE = 1`, below the guide’s 800,000-gas ceiling.
+  `MAX_STEPS_PER_ADVANCE = 1`, below the v1 800,000-gas ceiling.
 
-## Not yet testnet-proven
+## Proven on TON testnet
 
-- contract address and code/data commitments;
-- inclusion/finality, actual fees, storage balance, and refund behavior;
-- permissionless ticking from an independent keeper;
-- stale-state rejection on the public network;
-- public-network Fibonacci outputs and hashes.
+- The Fibonacci instance was deployed at
+  `kQDCENlXgMC1FOWvEtM2wKcJHBLKS86Tbkv9xkT0u5aIa1av`.
+- The recorded account history contains one deployment and 97 accepted
+  one-instruction `Advance` transactions.
+- The public run emitted `1, 1, 2, 3, 5, 8, 13` and halted at PC 21 after 97
+  instructions.
+- The final public-run core state hash is
+  `16925a27b1db66171cebb3d43c74702f06f4a362e302754f24026cca0a6bf2be`.
+- The deployed code, data, ROM root, and static commitment are recorded in the
+  [testnet runbook](TESTNET.md) and linked explorer evidence.
 
 ## Explicitly unresolved or out of scope
 

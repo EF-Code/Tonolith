@@ -3,6 +3,34 @@
 Tonolith is testnet-only in v1. Never pass a mainnet network selector to these
 scripts.
 
+## Recorded Fibonacci run
+
+The v1 Fibonacci instance has completed on TON testnet. This is the current
+public run record:
+
+- Contract: [`kQDC...a1av`](https://testnet.tonviewer.com/kQDCENlXgMC1FOWvEtM2wKcJHBLKS86Tbkv9xkT0u5aIa1av)
+- Transactions: 98 total — 1 deployment and 97 accepted `Advance` messages;
+- Execution: one instruction per transaction, final PC 21, HALT after 97
+  instructions;
+- Outputs: `1, 1, 2, 3, 5, 8, 13`;
+- Final core state hash:
+  `16925a27b1db66171cebb3d43c74702f06f4a362e302754f24026cca0a6bf2be`;
+- State-init hash:
+  `c210d95780c0b514e5af12d336c0a7091c12ca4bce936e4bfdc644f4bb96886b`;
+- Code hash:
+  `dafd53a42bfb14d9de792a4ae9fda1e990c27abe356a38791911bf0a3d8bc7d5`;
+- Initial data hash:
+  `cd82de624829d70573a46eb33c3379650dbe98af38730289a1cda2fa9a990bed`;
+- ROM root:
+  `029ccf15774f680518705bb7c8be4b2ca92f34a4ceb9c963e55609225398c748`;
+- Static commitment:
+  `50da71fe389768e885c8258c7f4f4a97b86598738eed974336d527e459024f08`.
+
+[Deployment transaction](https://testnet.tonviewer.com/transaction/5a8c2ef9ff188f76ddd68f2b9700a5266aaac9c74bf35f4b797746d69f1daca7)
+
+The run is also available in the [Tonolith Visualizer](https://github.com/EF-Code/tonolith-visualizer)
+for transaction-by-transaction inspection.
+
 ## Prerequisites
 
 1. Use Acton 1.0.0 with the repository toolchain.
@@ -49,9 +77,9 @@ accepted tick, verify:
 - a retry using the fresh count/hash succeeds;
 - the final status is HALT and the final hash is recorded.
 
-The current repository contains local Acton tests for these behaviors. A real
-testnet explorer transaction is required before any of them can be called
-testnet-proven.
+The recorded run above establishes the public Fibonacci execution path. Use
+this checklist when reproducing the run or expanding the public evidence with
+additional keepers and failure-path transactions.
 
 ## If deployment is blocked
 

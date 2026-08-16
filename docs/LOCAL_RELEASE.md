@@ -53,6 +53,7 @@ npm run build
 
 ## Release decision
 
-The local v1 candidate is suitable for a testnet attempt only. It is not a
-mainnet or production release. Testnet remains gated on a funded
-`tonolith-testnet` wallet and reachable provider credentials.
+The local v1 release gates passed and the Fibonacci instance subsequently
+completed on TON testnet. The public run record is maintained in
+[TESTNET.md](TESTNET.md). Mainnet deployment and production approval remain
+separate release decisions.
