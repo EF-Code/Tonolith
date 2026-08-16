@@ -126,3 +126,11 @@ fun TonolithCpu.getInstructionCount(self): uint64 {
     return net.runGetMethod(self.address, "getInstructionCount");
 }
 
+fun TonolithCpu.getPc(self): uint10 {
+    return net.runGetMethod(self.address, "getPc");
+}
+
+fun TonolithCpu.getAccumulator(self): uint4 {
+    return net.runGetMethod(self.address, "getAccumulator");
+}
+
