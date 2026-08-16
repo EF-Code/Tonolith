@@ -88,3 +88,31 @@ fun processAdvance(sender: address, value: coins, msg: Advance) {
     returnSafeExcess(sender);
 }
 
+fun onInternalMessage(in: InMessage) {
+    if (in.body.isEmpty()) {
+        return;
+    }
+    if (in.body.remainingBitsCount() < 32) {
+        throw Errors.UnknownMessage;
+    }
+
+    val opcode = in.body.preloadUint(32);
+    if (opcode == 0x544E4C01) {
+        processAdvance(
+            in.senderAddress,
+            in.valueCoins,
+            Advance.fromSlice(in.body, { assertEndAfterReading: true }),
+        );
+        return;
+    }
+    if (opcode == 0x544E4C02) {
+        val _msg = TopUp.fromSlice(in.body, { assertEndAfterReading: true });
+        return;
+    }
+    throw Errors.UnknownMessage;
+}
+
+fun onExternalMessage(_in: slice) {
+    throw Errors.ExternalMessageRejected;
+}
+
