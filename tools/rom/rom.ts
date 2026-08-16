@@ -71,3 +71,32 @@ function level2Cell(level1Nodes: readonly Cell[]): Cell {
 }
 
 /** Build the canonical 1024-word, 4-way ROM tree used by the Tolk contract. */
+export function romRootCell(words: readonly number[] = []): Cell {
+  const normalized = normalizeWords(words);
+  const leaves = Array.from({ length: ROM_WORDS / WORDS_PER_LEAF }, (_, index) => {
+    const start = index * WORDS_PER_LEAF;
+    return romLeafCell(normalized.slice(start, start + WORDS_PER_LEAF));
+  });
+  const level1Nodes = Array.from({ length: leaves.length / LEAVES_PER_LEVEL1 }, (_, index) => {
+    const start = index * LEAVES_PER_LEVEL1;
+    return level1Cell(leaves.slice(start, start + LEAVES_PER_LEVEL1));
+  });
+  const level2Nodes = Array.from({ length: level1Nodes.length / LEVEL1_PER_LEVEL2 }, (_, index) => {
+    const start = index * LEVEL1_PER_LEVEL2;
+    return level2Cell(level1Nodes.slice(start, start + LEVEL1_PER_LEVEL2));
+  });
+  const zeroLeaf = romLeafCell(Array.from({ length: WORDS_PER_LEAF }, () => 0));
+  const zeroLevel1 = level1Cell(Array.from({ length: LEAVES_PER_LEVEL1 }, () => zeroLeaf));
+  const zeroLevel2 = level2Cell(Array.from({ length: LEVEL1_PER_LEVEL2 }, () => zeroLevel1));
+  return beginCell()
+    .storeRef(level2Nodes[0]!)
+    .storeRef(level2Nodes[1]!)
+    .storeRef(zeroLevel2)
+    .storeRef(zeroLevel2)
+    .endCell();
+}
+
+export function romRootHash(words: readonly number[] = []): bigint {
+  return BigInt(`0x${romRootCell(words).hash().toString("hex")}`);
+}
+
