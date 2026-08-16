@@ -4,3 +4,5 @@ export const RAM_SIZE = 256;
 export const ROM_WORDS = 1024;
 export const WORD_BITS = 16;
 export const WORD_MASK = (1 << WORD_BITS) - 1;
+export const PC_MASK = ROM_WORDS - 1;
+export const ADDRESS8_MASK = 0xff;
