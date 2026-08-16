@@ -118,3 +118,11 @@ fun TonolithCpu.getRomWord(self, address: uint10): uint16 {
     return net.runGetMethod(self.address, "getRomWord", [address]);
 }
 
+fun TonolithCpu.getAdvanceCount(self): uint64 {
+    return net.runGetMethod(self.address, "getAdvanceCount");
+}
+
+fun TonolithCpu.getInstructionCount(self): uint64 {
+    return net.runGetMethod(self.address, "getInstructionCount");
+}
+
