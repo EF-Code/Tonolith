@@ -85,7 +85,7 @@ test("state, record, route, and epoch commitments are deterministic", () => {
     sourceInstructionCount: 4n,
     sourceStateHash: first,
   };
-  const record = { ...outputBase, outputId: outputId(outputBase) };
+  const record = { ...outputBase, outputId: outputId(config.runId, outputBase) };
   assert.equal(outputRecordCell(record).beginParse().loadUint(32), DOMAIN.output);
   assert.equal(inputRecordCell({ ...record, consumed: false }).beginParse().loadUint(32), DOMAIN.input);
   assert.match(routeRoot(config.routes), /^[0-9a-f]{64}$/);
@@ -97,7 +97,7 @@ test("the core state cell remains a bounded three-reference root", () => {
   const slice = coreStateCell(state).beginParse();
   slice.loadUint(32);
   slice.loadUintBig(256);
-  for (const width of [3, 8, 10, 4, 2, 64, 64, 64, 64, 64, 128]) {
+  for (const width of [3, 8, 10, 4, 2, 64, 64, 64, 64, 64, 64, 128]) {
     slice.loadUint(width);
   }
   assert.equal(slice.remainingRefs, 3);

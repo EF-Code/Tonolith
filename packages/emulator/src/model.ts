@@ -78,6 +78,7 @@ export interface LegacyOutput {
 export interface V2State {
   readonly config: CoreConfig;
   advanceCount: bigint;
+  acceptedMessageCount: bigint;
   instructionCount: bigint;
   outputCount: bigint;
   inputCount: bigint;
@@ -102,6 +103,7 @@ export function createInitialState(config: CoreConfig): V2State {
   return {
     config,
     advanceCount: 0n,
+    acceptedMessageCount: 0n,
     instructionCount: 0n,
     outputCount: 0n,
     inputCount: 0n,

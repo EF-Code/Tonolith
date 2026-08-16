@@ -214,6 +214,23 @@ export function nextOutputCommitment(previous: Hash256, record: OutputRecord): H
   );
 }
 
+export function nextLegacyOutputCommitment(
+  previous: Hash256,
+  outputIndex: bigint,
+  instructionCount: bigint,
+  value: number,
+): Hash256 {
+  return hashHex(
+    beginCell()
+      .storeUint(DOMAIN.output, 32)
+      .storeUint(toBigInt(previous), 256)
+      .storeUint(outputIndex, 64)
+      .storeUint(instructionCount, 64)
+      .storeUint(value, 4)
+      .endCell(),
+  );
+}
+
 export function nextInputCommitment(previous: Hash256, record: InputRecord): Hash256 {
   return hashHex(
     beginCell()
@@ -250,10 +267,11 @@ export function nextEpochCommitment(
   );
 }
 
-export function outputId(record: Omit<OutputRecord, "outputId">): Hash256 {
+export function outputId(runId: Hash256, record: Omit<OutputRecord, "outputId">): Hash256 {
   return hashHex(
     beginCell()
       .storeUint(DOMAIN.output, 32)
+      .storeUint(toBigInt(runId), 256)
       .storeUint(toBigInt(record.sourceStateHash), 256)
       .storeUint(record.sourceCoreId, 16)
       .storeUint(record.destinationCoreId, 16)
@@ -268,6 +286,31 @@ export function outputId(record: Omit<OutputRecord, "outputId">): Hash256 {
   );
 }
 
+export function nextAcknowledgedOutputCommitment(previous: Hash256, outputIdValue: Hash256): Hash256 {
+  return hashHex(
+    beginCell()
+      .storeUint(DOMAIN.acknowledgement, 32)
+      .storeUint(toBigInt(previous), 256)
+      .storeUint(toBigInt(outputIdValue), 256)
+      .endCell(),
+  );
+}
+
+export function traceCommitment(
+  previous: Hash256,
+  instructionWord: number,
+  nextStateHash: Hash256,
+): Hash256 {
+  return hashHex(
+    beginCell()
+      .storeUint(DOMAIN.batch, 32)
+      .storeUint(toBigInt(previous), 256)
+      .storeUint(instructionWord, 16)
+      .storeUint(toBigInt(nextStateHash), 256)
+      .endCell(),
+  );
+}
+
 export function batchCommitment(fields: {
   previousStateHash: Hash256;
   nextStateHash: Hash256;
@@ -276,17 +319,22 @@ export function batchCommitment(fields: {
   stepsExecuted: number;
   outputsProduced: number;
   stopReason: number;
+  traceCommitment: Hash256;
 }): Hash256 {
+  const detail = beginCell()
+    .storeUint(toBigInt(fields.previousStateHash), 256)
+    .storeUint(toBigInt(fields.nextStateHash), 256)
+    .storeUint(fields.startInstructionCount, 64)
+    .storeUint(fields.endInstructionCount, 64)
+    .storeUint(fields.stepsExecuted, 16)
+    .storeUint(fields.outputsProduced, 8)
+    .storeUint(fields.stopReason, 8)
+    .storeUint(toBigInt(fields.traceCommitment), 256)
+    .endCell();
   return hashHex(
     beginCell()
       .storeUint(DOMAIN.batch, 32)
-      .storeUint(toBigInt(fields.previousStateHash), 256)
-      .storeUint(toBigInt(fields.nextStateHash), 256)
-      .storeUint(fields.startInstructionCount, 64)
-      .storeUint(fields.endInstructionCount, 64)
-      .storeUint(fields.stepsExecuted, 16)
-      .storeUint(fields.outputsProduced, 8)
-      .storeUint(fields.stopReason, 8)
+      .storeRef(detail)
       .endCell(),
   );
 }
@@ -317,6 +365,7 @@ export function coreStateCell(state: V2State): Cell {
     .storeUint(state.epoch, 64)
     .storeUint(state.instructionCount, 64)
     .storeUint(state.advanceCount, 64)
+    .storeUint(state.acceptedMessageCount, 64)
     .storeUint(state.outputCount, 64)
     .storeUint(state.inputCount, 64)
     .storeUint(packSequences(state.nextOutputSequence), 128)
@@ -365,7 +414,14 @@ function assertStateForHash(state: V2State): void {
   assertInteger(state.flags, 0, 3, "flags");
   [state.config.staticCommitment, state.outputCommitment, state.inputCommitment, state.epochHistoryCommitment]
     .forEach((hash) => assertHash(hash, "commitment"));
-  if (state.epoch < 0n || state.instructionCount < 0n || state.advanceCount < 0n || state.outputCount < 0n || state.inputCount < 0n) {
+  if (
+    state.epoch < 0n ||
+    state.instructionCount < 0n ||
+    state.advanceCount < 0n ||
+    state.acceptedMessageCount < 0n ||
+    state.outputCount < 0n ||
+    state.inputCount < 0n
+  ) {
     throw new RangeError("state counters must be unsigned");
   }
 }
@@ -375,11 +431,15 @@ function compareRoutes(a: Route, b: Route): number {
 }
 
 function compareInputs(a: InputRecord, b: InputRecord): number {
-  return Number(a.destinationEpoch - b.destinationEpoch) || a.destinationPort - b.destinationPort || a.sequence - b.sequence;
+  return compareBigInt(a.destinationEpoch, b.destinationEpoch) || a.destinationPort - b.destinationPort || a.sequence - b.sequence;
 }
 
 function compareOutputs(a: OutputRecord, b: OutputRecord): number {
-  return Number(a.sourceEpoch - b.sourceEpoch) || a.sourcePort - b.sourcePort || a.sequence - b.sequence;
+  return compareBigInt(a.sourceEpoch, b.sourceEpoch) || a.sourcePort - b.sourcePort || a.sequence - b.sequence;
+}
+
+function compareBigInt(a: bigint, b: bigint): number {
+  return a < b ? -1 : a > b ? 1 : 0;
 }
 
 export const EMPTY_COMMITMENT = zeroHash();

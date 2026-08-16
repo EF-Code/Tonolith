@@ -7,6 +7,8 @@ export const TONOLITH_MAGIC = 0x544e4c32 as const;
 
 export const WORD_BITS = 16 as const;
 export const NIBBLE_MASK = 0x0f as const;
+export const FLAG_ZERO = 1 as const;
+export const FLAG_CARRY = 2 as const;
 export const ROM_WORDS = 1024 as const;
 export const RAM_NIBBLES = 256 as const;
 export const PC_MASK = ROM_WORDS - 1;
