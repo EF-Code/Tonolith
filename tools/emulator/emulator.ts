@@ -13,3 +13,27 @@ import {
   SysOp,
   type DecodedInstruction,
 } from "../isa/isa.js";
+import {
+  assertNibble,
+  cloneState,
+  flagsContain,
+  nextOutputCommitment,
+  readRam,
+  readRegister,
+  setZeroFlag,
+  writeRam,
+  writeRegister,
+  type CpuOutput,
+  type CpuState,
+} from "../isa/types.js";
+
+export class CpuExecutionError extends Error {
+  public readonly code: string;
+
+  public constructor(code: string, message: string) {
+    super(message);
+    this.name = "CpuExecutionError";
+    this.code = code;
+  }
+}
+
