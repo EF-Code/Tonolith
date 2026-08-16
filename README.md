@@ -93,6 +93,30 @@ Acton wallet named `tonolith-testnet`; no wallet or secret is created by this
 repository. See [docs/CLAIMS.md](docs/CLAIMS.md) for the evidence record and
 release context.
 
+## Tonolith v2
+
+Tonolith v2 is the versioned multi-core architecture under active engineering.
+It adds an immutable `TonolithCoreV2`, versioned ABI and commitments, bounded
+inboxes/outboxes, logical epochs, authenticated input delivery,
+acknowledgements, retry-aware output dispatch, a permissionless bounded
+`AdvanceV2`, a browser-safe SDK, an independent verifier, a testnet-only keeper,
+and trace files that the [Tonolith Visualizer](https://github.com/EF-Code/tonolith-visualizer)
+can consume.
+
+The current local evidence includes **42/42** Acton tests, **73/73** TypeScript
+tests, deterministic Fibonacci/CRC-4/cellular-automaton vectors, a two-core
+counter pipeline, and a two-core 8-bit carry path. The v2 Fibonacci emulator
+produces `1, 1, 2, 3, 5, 8, 13` in **97 one-step batches** with final state hash
+`8238d6bbcd507f4a3b9cba3b1ad48b2d88fd6ab11f7068b75340a3f0044a9f1f`.
+
+The measured local `V2Advance` worst case is **47,997 gas**. The selected
+`MAX_STEPS_PER_ADVANCE` remains **1** until a real testnet gas reference and
+the remaining action, storage, message-size, coverage, and mutation gates are
+complete. The full [v2 local release record](docs/v2/LOCAL_RELEASE.md),
+[batch-selection matrix](benchmarks/v2/batch-selection.json), and
+[testnet validation ledger](docs/v2/TESTNET_VALIDATION.md) keep those evidence
+levels separate. No v2 testnet deployment is claimed by the current branch.
+
 Additional design references:
 
 - [docs/ISA.md](docs/ISA.md) — canonical instruction encoding and state model;
