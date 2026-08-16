@@ -456,3 +456,107 @@ fun executeSys(mutate core: CoreState, subop: int): CpuOutput? {
     throw Errors.InvalidSysSubop;
 }
 
+fun executeInstruction(mutate core: CoreState, word: uint16): CpuOutput? {
+    val opcode = word >> 12;
+    val operand = word & 0xFFF;
+    if (opcode == 0 && operand != 0) {
+        throw Errors.NonCanonicalInstruction;
+    }
+    if (opcode == 1 && operand > 15) {
+        throw Errors.NonCanonicalInstruction;
+    }
+    if (opcode >= 2 && opcode <= 9 && operand > 15) {
+        throw Errors.NonCanonicalInstruction;
+    }
+    if ((opcode == 10 || opcode == 11) && operand > 255) {
+        throw Errors.NonCanonicalInstruction;
+    }
+    if (opcode >= 12 && opcode <= 14 && operand > 1023) {
+        throw Errors.NonCanonicalInstruction;
+    }
+    if (opcode == 15 && (operand & 0xFF0) != 0) {
+        throw Errors.NonCanonicalInstruction;
+    }
+    core.pc = ((core.pc + 1) & 1023) as uint10;
+    core.instructionCount += 1;
+
+    if (opcode == 0) {
+        return null;
+    }
+    if (opcode == 1) {
+        core.accumulator = operand as uint4;
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    if (opcode == 2) {
+        core.accumulator = readRegister(core, operand);
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    if (opcode == 3) {
+        writeRegister(mutate core, operand, core.accumulator);
+        return null;
+    }
+    if (opcode == 4) {
+        addAccumulator(mutate core, readRegister(core, operand), false);
+        return null;
+    }
+    if (opcode == 5) {
+        addAccumulator(mutate core, readRegister(core, operand), true);
+        return null;
+    }
+    if (opcode == 6) {
+        subtractAccumulator(mutate core, readRegister(core, operand));
+        return null;
+    }
+    if (opcode == 7) {
+        logicalAccumulator(mutate core, (core.accumulator & readRegister(core, operand)) as uint4);
+        return null;
+    }
+    if (opcode == 8) {
+        logicalAccumulator(mutate core, (core.accumulator | readRegister(core, operand)) as uint4);
+        return null;
+    }
+    if (opcode == 9) {
+        logicalAccumulator(mutate core, (core.accumulator ^ readRegister(core, operand)) as uint4);
+        return null;
+    }
+    if (opcode == 10) {
+        core.accumulator = readRamNibble(core, operand);
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    if (opcode == 11) {
+        core.ram = writeRamNibble(core.ram, operand, core.accumulator);
+        return null;
+    }
+    if (opcode == 12) {
+        core.pc = operand as uint10;
+        return null;
+    }
+    if (opcode == 13) {
+        if (hasFlag(core.flags, FLAG_ZERO)) {
+            core.pc = operand as uint10;
+        }
+        return null;
+    }
+    if (opcode == 14) {
+        if (hasFlag(core.flags, FLAG_CARRY)) {
+            core.pc = operand as uint10;
+        }
+        return null;
+    }
+    return executeSys(mutate core, operand);
+}
+
+fun makeStorage(rom: Cell<RomRoot>): Storage {
+    return Storage {
+        magic: TONOLITH_MAGIC,
+        schemaVersion: SCHEMA_VERSION,
+        isaVersion: ISA_VERSION,
+        staticCommitment: staticCommitmentForRom(rom),
+        core: initialCore(),
+        rom,
+    };
+}
+
