@@ -56,3 +56,29 @@ uint10  finalPc
 uint1   status
 ```
 
+### `CpuOutput` — `0x544E4C82`
+
+```text
+uint64  outputIndex
+uint64  instructionCount
+uint4   value
+uint256 outputCommitment
+```
+
+The output commitment chains the previous commitment, output index,
+instruction count, and 4-bit value under namespace `0x544E4C4F`.
+
+## Error codes
+
+| Code | Meaning |
+| ---: | --- |
+| 100 | Unknown message |
+| 101 | CPU halted |
+| 102 | Stale advance count |
+| 103 | State hash mismatch |
+| 104 | Invalid step count |
+| 105 | Insufficient value |
+| 106 | Non-canonical instruction |
+| 107 | Invalid SYS sub-operation |
+| 108 | Invalid storage or internal tree selector |
+| 109 | External message rejected |
