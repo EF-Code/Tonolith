@@ -150,3 +150,10 @@ fun TonolithCpu.getOutputRegister(self): uint4 {
     return net.runGetMethod(self.address, "getOutputRegister");
 }
 
+fun TonolithCpu.getRegisters(self): uint64 {
+    return net.runGetMethod(self.address, "getRegisters");
+}
+
+fun TonolithCpu.getRamNibble(self, address: uint8): uint4 {
+    return net.runGetMethod(self.address, "getRamNibble", [address]);
+}
