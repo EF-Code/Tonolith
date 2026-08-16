@@ -189,3 +189,63 @@ function subtract(state: CpuState, operand: number): void {
   state.flags = setZeroFlag(state.flags, state.accumulator);
 }
 
+function logical(state: CpuState, value: number): void {
+  state.accumulator = value & NIBBLE_MASK;
+  state.flags &= ~FLAG_CARRY;
+  state.flags = setZeroFlag(state.flags, state.accumulator);
+}
+
+function executeSys(state: CpuState, instruction: DecodedInstruction): CpuOutput | undefined {
+  switch (instruction.operand) {
+    case SysOp.HALT:
+      state.status = STATUS_HALTED;
+      return undefined;
+    case SysOp.OUT:
+      assertNibble(state.accumulator, "output value");
+      return {
+        outputIndex: state.outputCount,
+        instructionCount: state.instructionCount,
+        value: state.accumulator,
+        outputCommitment: state.outputCommitment,
+      };
+    case SysOp.CLC:
+      state.flags &= ~FLAG_CARRY;
+      return undefined;
+    case SysOp.STC:
+      state.flags |= FLAG_CARRY;
+      return undefined;
+    case SysOp.NOT:
+      logical(state, (~state.accumulator) & NIBBLE_MASK);
+      return undefined;
+    case SysOp.SHL: {
+      const before = state.accumulator;
+      state.flags = (before & 0x8) !== 0 ? state.flags | FLAG_CARRY : state.flags & ~FLAG_CARRY;
+      state.accumulator = (before << 1) & NIBBLE_MASK;
+      state.flags = setZeroFlag(state.flags, state.accumulator);
+      return undefined;
+    }
+    case SysOp.SHR: {
+      const before = state.accumulator;
+      state.flags = (before & 0x1) !== 0 ? state.flags | FLAG_CARRY : state.flags & ~FLAG_CARRY;
+      state.accumulator = before >>> 1;
+      state.flags = setZeroFlag(state.flags, state.accumulator);
+      return undefined;
+    }
+    case SysOp.INC: {
+      const before = state.accumulator;
+      state.accumulator = (before + 1) & NIBBLE_MASK;
+      state.flags = before === NIBBLE_MASK ? state.flags | FLAG_CARRY : state.flags & ~FLAG_CARRY;
+      state.flags = setZeroFlag(state.flags, state.accumulator);
+      return undefined;
+    }
+    case SysOp.DEC: {
+      const before = state.accumulator;
+      state.accumulator = (before - 1) & NIBBLE_MASK;
+      state.flags = before !== 0 ? state.flags | FLAG_CARRY : state.flags & ~FLAG_CARRY;
+      state.flags = setZeroFlag(state.flags, state.accumulator);
+      return undefined;
+    }
+    default:
+      throw new CpuExecutionError("INVALID_SYS_SUBOP", `reserved SYS subop ${instruction.operand}`);
+  }
+}
