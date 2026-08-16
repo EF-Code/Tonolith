@@ -1,3 +1,6 @@
+import "v2/commitments"
+import "v2/execution"
+import "v2/rom"
 import "v2/types"
 
 const MIN_ADVANCE_VALUE_V2: coins = ton("0.01")
@@ -31,10 +34,33 @@ fun returnSafeExcessV2(sender: address) {
     refund.send(SEND_MODE_CARRY_ALL_REMAINING_MESSAGE_VALUE);
 }
 
+fun v2StopReason(status: uint3, yielded: bool): uint8 {
+    if (status == STATUS_HALTED_V2) {
+        return STOP_HALTED_V2;
+    }
+    if (status == STATUS_FAULTED_V2) {
+        return STOP_FAULTED_V2;
+    }
+    if (status == STATUS_WAITING_INPUT_V2) {
+        return STOP_INPUT_UNAVAILABLE_V2;
+    }
+    if (status == STATUS_BACKPRESSURED_V2) {
+        return STOP_OUTPUT_BACKPRESSURE_V2;
+    }
+    if (yielded) {
+        return STOP_YIELDED_V2;
+    }
+    return STOP_REQUEST_LIMIT_V2;
+}
+
 fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
     assert (msg.abiVersion == ABI_VERSION_V2) throw ErrorsV2.InvalidVersion;
-    assert (msg.maxInstructions > 0 && msg.maxInstructions <= MAX_STEPS_PER_ADVANCE_V2) throw ErrorsV2.InvalidBody;
-    assert (msg.maxOutputs > 0 && msg.maxOutputs <= MAX_OUTPUT_RECORDS_V2) throw ErrorsV2.InvalidBody;
+    assert (
+        msg.maxInstructions > 0 && msg.maxInstructions <= MAX_STEPS_PER_ADVANCE_V2
+    ) throw ErrorsV2.InvalidBody;
+    assert (
+        msg.maxOutputs > 0 && msg.maxOutputs <= MAX_OUTPUT_RECORDS_V2
+    ) throw ErrorsV2.InvalidBody;
     assert (value >= MIN_ADVANCE_VALUE_V2) throw ErrorsV2.InsufficientValue;
 
     var storage = V2Storage.load();
@@ -49,8 +75,12 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
     val previousStateHash = storage.core.hash();
     var core = storage.core.load();
     assert (core.domain == DOMAIN_STATE_V2) throw ErrorsV2.InvalidStorage;
-    assert (core.staticCommitment == identity.staticCommitment) throw ErrorsV2.InvalidStaticCommitment;
-    assert (core.status == STATUS_RUNNING_V2) throw ErrorsV2.InvalidStatus;
+    assert (
+        core.staticCommitment == identity.staticCommitment
+    ) throw ErrorsV2.InvalidStaticCommitment;
+    assert (
+        core.status != STATUS_HALTED_V2 && core.status != STATUS_FAULTED_V2
+    ) throw ErrorsV2.InvalidStatus;
     assert (msg.expectedAdvanceCount == core.advanceCount) throw ErrorsV2.StaleAdvance;
     assert (msg.expectedStateHash == previousStateHash) throw ErrorsV2.StateHashMismatch;
 
@@ -60,6 +90,28 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
     );
 
     val startInstructionCount = core.instructionCount;
+    val startOutputCount = core.outputCount;
+    val startEpoch = core.epoch;
+    if (core.status == STATUS_WAITING_INPUT_V2 || core.status == STATUS_BACKPRESSURED_V2) {
+        core.status = STATUS_RUNNING_V2;
+    }
+    val word = v2RomWord(storage.rom, core.pc);
+    val _legacyOutput = v2ExecuteInstruction(
+        mutate core,
+        word,
+        identity.runId,
+        identity.coreId,
+        storage.routes,
+        previousStateHash,
+    );
+    val executionStateHash = core.toCell().hash();
+    val stepsExecuted = (core.instructionCount - startInstructionCount) as uint16;
+    val outputsProduced = (core.outputCount - startOutputCount) as uint8;
+    val yielded = core.epoch != startEpoch;
+    val stopReason = v2StopReason(core.status, yielded);
+    val trace = stepsExecuted == 0
+        ? previousStateHash
+        : nextV2TraceCommitment(previousStateHash, word, executionStateHash);
     core.advanceCount += 1;
     core.acceptedMessageCount += 1;
     storage.core = core.toCell();
@@ -75,13 +127,22 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
         epoch: core.epoch,
         startInstructionCount,
         endInstructionCount: core.instructionCount,
-        stepsExecuted: 0,
-        outputsProduced: 0,
-        stopReason: STOP_REQUEST_LIMIT_V2,
+        stepsExecuted,
+        outputsProduced,
+        stopReason,
         detail: V2BatchDetail {
             previousStateHash,
             nextStateHash,
-            batchCommitment: 0,
+            batchCommitment: nextV2BatchCommitment(
+                previousStateHash,
+                nextStateHash,
+                startInstructionCount,
+                core.instructionCount,
+                stepsExecuted,
+                outputsProduced,
+                stopReason,
+                trace,
+            ),
             finalPc: core.pc,
             finalStatus: core.status,
         }.toCell(),
@@ -91,7 +152,7 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
 
 fun onInternalMessage(in: InMessage) {
     if (in.body.isEmpty()) {
-        throw ErrorsV2.InvalidBody;
+        return;
     }
     if (in.body.remainingBitsCount() < 32) {
         throw ErrorsV2.InvalidBody;
@@ -189,6 +250,11 @@ get fun getAdvanceCountV2(): uint64 {
 get fun getInstructionCountV2(): uint64 {
     val storage = lazy V2Storage.load();
     return storage.core.load().instructionCount;
+}
+
+get fun getPcV2(): uint10 {
+    val storage = lazy V2Storage.load();
+    return storage.core.load().pc;
 }
 
 get fun getEpochV2(): uint64 {

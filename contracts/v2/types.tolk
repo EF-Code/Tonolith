@@ -89,9 +89,87 @@ struct V2RamRoot {
     page3: Cell<V2RamPage>
 }
 
+struct V2RomLeaf {
+    firstHalf: uint256
+    secondHalf: uint256
+}
+
+struct V2RomLevel1 {
+    leaf0: Cell<V2RomLeaf>
+    leaf1: Cell<V2RomLeaf>
+    leaf2: Cell<V2RomLeaf>
+    leaf3: Cell<V2RomLeaf>
+}
+
+struct V2RomLevel2 {
+    level10: Cell<V2RomLevel1>
+    level11: Cell<V2RomLevel1>
+    level12: Cell<V2RomLevel1>
+    level13: Cell<V2RomLevel1>
+}
+
+struct V2RomRoot {
+    level20: Cell<V2RomLevel2>
+    level21: Cell<V2RomLevel2>
+    level22: Cell<V2RomLevel2>
+    level23: Cell<V2RomLevel2>
+}
+
+struct V2Memory {
+    registers: Cell<V2Registers>
+    ram: Cell<V2RamRoot>
+}
+
 struct V2QueueRoots {
     inboxRoot: cell
     outboxRoot: cell
+}
+
+struct V2Route {
+    domain: uint32
+    sourceCoreId: uint16
+    sourcePort: uint4
+    destinationCoreId: uint16
+    destinationPort: uint4
+    delay: uint8
+    maxRecordsPerEpoch: uint8
+}
+
+struct V2OutputRecord {
+    domain: uint32
+    outputId: uint256
+    sourceCoreId: uint16
+    destinationCoreId: uint16
+    sourceEpoch: uint64
+    destinationEpoch: uint64
+    sourcePort: uint4
+    destinationPort: uint4
+    sequence: uint8
+    value: uint4
+    sourceInstructionCount: uint64
+    sourceStateHash: uint256
+}
+
+struct V2InputRecord {
+    domain: uint32
+    outputId: uint256
+    sourceCoreId: uint16
+    destinationCoreId: uint16
+    sourceEpoch: uint64
+    destinationEpoch: uint64
+    sourcePort: uint4
+    destinationPort: uint4
+    sequence: uint8
+    value: uint4
+    sourceInstructionCount: uint64
+    sourceStateHash: uint256
+    consumed: uint1
+}
+
+struct V2InputCursor {
+    found: uint1
+    index: uint8
+    value: uint4
 }
 
 struct V2CoreState {
@@ -110,7 +188,7 @@ struct V2CoreState {
     inputCount: uint64
     nextOutputSequence: uint128
     commitments: Cell<V2CoreCommitments>
-    memory: cell
+    memory: Cell<V2Memory>
     queues: Cell<V2QueueRoots>
 }
 
