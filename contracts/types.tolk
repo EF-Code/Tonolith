@@ -89,3 +89,21 @@ struct OutputCommitmentPreimage {
     value: uint4
 }
 
+struct Storage {
+    magic: uint32
+    schemaVersion: uint16
+    isaVersion: uint16
+    staticCommitment: uint256
+    // Both roots are stored as raw references at the root boundary. Runtime
+    // code casts and decodes CoreState exactly once before execution.
+    core: cell
+    // ROM is immutable and validated by its committed hash before execution.
+    // Keep this root untyped at the storage boundary so serialization does not
+    // recursively revalidate the entire fixed ROM tree on every state save.
+    rom: cell
+}
+
+fun Storage.load(): Storage {
+    return Storage.fromCell(contract.getData());
+}
+
