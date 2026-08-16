@@ -94,3 +94,11 @@ fun TonolithCpu.getMagic(self): uint32 {
     return net.runGetMethod(self.address, "getMagic");
 }
 
+fun TonolithCpu.getSchemaVersion(self): uint16 {
+    return net.runGetMethod(self.address, "getSchemaVersion");
+}
+
+fun TonolithCpu.getIsaVersion(self): uint16 {
+    return net.runGetMethod(self.address, "getIsaVersion");
+}
+
