@@ -223,3 +223,21 @@ function parseNumber(text: string | undefined, line: number): number {
   return value;
 }
 
+function resolveTarget(text: string | undefined, labels: Record<string, number>, line: number): number {
+  if (text === undefined) {
+    throw new AssemblyError("branch target is required", line);
+  }
+  if (/^(?:0x[0-9a-f]+|0b[01]+|[0-9]+)$/i.test(text)) {
+    return parseNumber(text, line);
+  }
+  const target = labels[text];
+  if (target === undefined) {
+    throw new AssemblyError(`unknown label ${text}`, line);
+  }
+  return target;
+}
+
+function formatImmediate(value: number): string {
+  return `0x${value.toString(16).toUpperCase()}`;
+}
+
