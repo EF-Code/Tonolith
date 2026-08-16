@@ -102,3 +102,11 @@ fun TonolithCpu.getIsaVersion(self): uint16 {
     return net.runGetMethod(self.address, "getIsaVersion");
 }
 
+fun TonolithCpu.getStaticCommitment(self): uint256 {
+    return net.runGetMethod(self.address, "getStaticCommitment");
+}
+
+fun TonolithCpu.getCoreStateHash(self): uint256 {
+    return net.runGetMethod(self.address, "getCoreStateHash");
+}
+
