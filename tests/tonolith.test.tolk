@@ -1042,3 +1042,27 @@ get fun `test defensive selectors reject out of range indexes`() {
 }
 
 @test.fuzz({ runs: 256, seed: 42 })
+get fun `test fuzzed instruction words preserve typed state bounds`(rawWord: uint16) {
+    var core = initialCore().load();
+    try {
+        val _output = executeInstruction(mutate core, rawWord);
+        expect(core.instructionCount).toEqual(1);
+        expect(core.pc < 1024).toBeTrue();
+        expect(core.accumulator < 16).toBeTrue();
+        expect(core.outputRegister < 16).toBeTrue();
+    } catch (e) {
+        expect(e == 106 || e == 107).toBeTrue();
+    }
+}
+
+get fun `test external messages are rejected`() {
+    val deployer = testing.treasury("external-deployer");
+    val cpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0x1002)));
+    expect(
+        cpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: cpu.address });
+
+    val result = cpu.sendAnyExternal(createEmptyCell());
+    expect(result).toBeNull();
+}
+
