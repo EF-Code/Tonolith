@@ -6,8 +6,8 @@ contract.
 The v1 design is intentionally chain-native: one immutable-program CPU contract
 stores compact architectural state and ROM, and permissionless internal
 messages advance bounded instruction batches. The runtime executor is an
-optimized architectural transition function; it is not a transistor-accurate
-or Intel 4004-compatible implementation.
+optimized architectural transition function designed for compact,
+deterministic on-chain execution.
 
 Current status: Tonolith v1 has a single-instruction contract, canonical
 ROM/RAM layout, TypeScript assembler/emulator, differential trace, Fibonacci
@@ -48,6 +48,13 @@ output register 13, and core state hash
 - ROM root: `029ccf15774f680518705bb7c8be4b2ca92f34a4ceb9c963e55609225398c748`
 - Static commitment: `50da71fe389768e885c8258c7f4f4a97b86598738eed974336d527e459024f08`
 
+## Visualizer
+
+The companion [Tonolith Visualizer](https://github.com/EF-Code/tonolith-visualizer)
+replays the public Fibonacci run as a working CPU: transaction timeline,
+instruction flow, registers, RAM, output events, and state-commitment changes
+are all shown in sequence.
+
 ## Development
 
 Requirements:
@@ -83,8 +90,8 @@ run record.
 The testnet-only deployment runbook is [docs/TESTNET.md](docs/TESTNET.md), and
 the Fibonacci script is `scripts/deploy-fibonacci.tolk`. It requires a funded
 Acton wallet named `tonolith-testnet`; no wallet or secret is created by this
-repository. See [docs/CLAIMS.md](docs/CLAIMS.md) for the distinction between
-local proof, testnet proof, and unresolved production gates.
+repository. See [docs/CLAIMS.md](docs/CLAIMS.md) for the evidence record and
+release context.
 
 Additional design references:
 
@@ -92,8 +99,9 @@ Additional design references:
 - [docs/ROM.md](docs/ROM.md) — ROM/RAM cell layout and commitments;
 - [docs/ABI.md](docs/ABI.md) — messages, events, and error codes.
 
-## Claims boundary
+## Scope
 
-Tonolith v1 must not be described as transistor-accurate, gate-level executed,
-Intel 4004-compatible, autonomous, or production-ready unless the corresponding
-evidence is separately published.
+Tonolith defines a compact, deterministic architectural machine for TON. The
+repository separates executable implementation evidence, public-network
+observations, and broader interpretations so each release can be read at the
+level supported by its evidence.
