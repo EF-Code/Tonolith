@@ -198,3 +198,28 @@ function parseNoOperand(
   return encodeInstruction(opcode, operand);
 }
 
+function parseRegister(text: string | undefined, line: number): number {
+  if (text === undefined) {
+    throw new AssemblyError("register operand is required", line);
+  }
+  const match = /^R(1[0-5]|[0-9])$/i.exec(text);
+  if (match === null || match[1] === undefined) {
+    throw new AssemblyError(`invalid register ${text}`, line);
+  }
+  return Number.parseInt(match[1], 10);
+}
+
+function parseNumber(text: string | undefined, line: number): number {
+  if (text === undefined) {
+    throw new AssemblyError("numeric operand is required", line);
+  }
+  if (!/^(?:0x[0-9a-f]+|0b[01]+|[0-9]+)$/i.test(text)) {
+    throw new AssemblyError(`invalid numeric operand ${text}`, line);
+  }
+  const value = Number(text);
+  if (!Number.isSafeInteger(value)) {
+    throw new AssemblyError(`numeric operand is too large: ${text}`, line);
+  }
+  return value;
+}
+
