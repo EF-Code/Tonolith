@@ -147,7 +147,7 @@ export function buildArtifact(source: string, options: BuildArtifactOptions): Ar
     sourceHash: sha256(assembly.canonicalSource),
     compiler,
   };
-  const files = makeFiles(manifest, source, assembly, routes, peers);
+  const files = makeFiles(manifest, source, assembly, routes, peers, limits);
   return { manifest, source, assembly, routes, peers, limits, files };
 }
 
@@ -235,7 +235,7 @@ export function canonicalJson(value: unknown): string {
   return JSON.stringify(sortJson(value));
 }
 
-function makeFiles(manifest: ArtifactManifestV2, source: string, assembly: V2AssemblyResult, routes: readonly RouteDescriptor[], peers: readonly PeerDescriptor[]): Readonly<Record<string, string>> {
+function makeFiles(manifest: ArtifactManifestV2, source: string, assembly: V2AssemblyResult, routes: readonly RouteDescriptor[], peers: readonly PeerDescriptor[], limits: LimitsV2): Readonly<Record<string, string>> {
   const artifactJson = canonicalJson(manifest);
   return {
     "artifact.json": artifactJson,
@@ -244,6 +244,16 @@ function makeFiles(manifest: ArtifactManifestV2, source: string, assembly: V2Ass
     "initial-ram.boc": ramRootCell(assembly.ram).toBoc({ idx: false }).toString("base64"),
     "symbols.json": canonicalJson({ labels: assembly.labels, exports: assembly.exports }),
     "source-map.json": canonicalJson(assembly.sourceMap),
+    "assembly.json": canonicalJson({
+      words: assembly.words,
+      ram: Array.from(assembly.ram),
+      entryPc: assembly.entryPc,
+      labels: assembly.labels,
+      exports: assembly.exports,
+      sourceMap: assembly.sourceMap,
+      canonicalSource: assembly.canonicalSource,
+    }),
+    "limits.json": canonicalJson(limits),
     "routes.json": canonicalJson(routes),
     "peers.json": canonicalJson(peers),
     "BUILDINFO.json": canonicalJson({ artifactSha256: sha256(artifactJson), compiler: manifest.compiler, sourceHash: manifest.sourceHash }),
