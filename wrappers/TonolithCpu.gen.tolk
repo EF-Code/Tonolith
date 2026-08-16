@@ -4,3 +4,5 @@
 // Do not edit manually — changes will be overwritten
 
 import "@acton/build"
+import "@acton/emulation/network"
+import "@acton/testing/assert"
