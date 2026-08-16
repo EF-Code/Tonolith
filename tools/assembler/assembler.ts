@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { decodeInstruction, encodeInstruction, Opcode, SysOp } from "../isa/isa.js";
 
 export interface AssemblyResult {
@@ -15,10 +14,6 @@ export class AssemblyError extends Error {
     this.name = "AssemblyError";
     this.line = line;
   }
-}
-
-export async function assembleFile(path: string): Promise<AssemblyResult> {
-  return assemble(await readFile(path, "utf8"));
 }
 
 export function assemble(source: string): AssemblyResult {

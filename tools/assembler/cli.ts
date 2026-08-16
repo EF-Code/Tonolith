@@ -1,5 +1,5 @@
 import { writeFile } from "node:fs/promises";
-import { assembleFile } from "./assembler.js";
+import { assembleFile } from "./file.js";
 
 const [sourcePath, outputPath] = process.argv.slice(2);
 if (sourcePath === undefined || outputPath === undefined) {

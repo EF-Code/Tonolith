@@ -11,5 +11,4 @@ export type {
 } from "./isa/types.js";
 export * from "./emulator/emulator.js";
 export * from "./assembler/assembler.js";
-export { assembleFile } from "./assembler/file.js";
 export * from "./rom/rom.js";

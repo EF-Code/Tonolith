@@ -11,6 +11,11 @@
       "types": "./dist/tools/index.d.ts",
       "import": "./dist/tools/index.js",
       "default": "./dist/tools/index.js"
+    },
+    "./browser": {
+      "types": "./dist/tools/browser.d.ts",
+      "import": "./dist/tools/browser.js",
+      "default": "./dist/tools/browser.js"
     }
   },
   "files": [
