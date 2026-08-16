@@ -49,3 +49,17 @@ export function createInitialState(): CpuState {
   };
 }
 
+export function cloneState(state: CpuState): CpuState {
+  return {
+    ...state,
+    registers: [...state.registers],
+    ram: state.ram.slice(),
+  };
+}
+
+export function assertNibble(value: number, field: string): void {
+  if (!Number.isInteger(value) || value < 0 || value > NIBBLE_MASK) {
+    throw new RangeError(`${field} must be an unsigned 4-bit value`);
+  }
+}
+
