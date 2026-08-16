@@ -17,3 +17,5 @@ const ISA_VERSION: uint16 = 1
 const STATIC_NAMESPACE: uint32 = 0x544E4C01
 
 const FLAG_ZERO: uint2 = 1
+const FLAG_CARRY: uint2 = 2
+const STATUS_RUNNING: uint1 = 0
