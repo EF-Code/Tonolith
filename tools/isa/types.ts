@@ -130,3 +130,41 @@ export function ramRootCell(ram: Uint8Array): Cell {
     .endCell();
 }
 
+export function coreStateCell(state: CpuState): Cell {
+  assertNibble(state.accumulator, "accumulator");
+  assertNibble(state.outputRegister, "output register");
+  if (state.flags < 0 || state.flags > 3) {
+    throw new RangeError("flags must be a 2-bit value");
+  }
+  if (state.pc < 0 || state.pc > 1023) {
+    throw new RangeError("PC must be a 10-bit value");
+  }
+  if (state.status !== STATUS_RUNNING && state.status !== STATUS_HALTED) {
+    throw new RangeError("invalid CPU status");
+  }
+  if (state.registers.length !== REGISTER_COUNT) {
+    throw new RangeError("register file must contain 16 registers");
+  }
+  for (const value of state.registers) {
+    assertNibble(value, "register value");
+  }
+
+  return beginCell()
+    .storeUint(state.advanceCount, 64)
+    .storeUint(state.instructionCount, 64)
+    .storeUint(state.outputCount, 64)
+    .storeUint(state.pc, 10)
+    .storeUint(state.accumulator, 4)
+    .storeUint(state.flags, 2)
+    .storeUint(state.status === STATUS_HALTED ? 1 : 0, 1)
+    .storeUint(state.outputRegister, 4)
+    .storeUint(packRegisters(state.registers), 64)
+    .storeUint(state.outputCommitment, 256)
+    .storeRef(ramRootCell(state.ram))
+    .endCell();
+}
+
+export function stateHash(state: CpuState): string {
+  return coreStateCell(state).hash().toString("hex");
+}
+
