@@ -381,3 +381,78 @@ fun subtractAccumulator(mutate core: CoreState, operand: uint4) {
     core.flags = setZeroFlag(core.flags, core.accumulator);
 }
 
+fun logicalAccumulator(mutate core: CoreState, value: uint4) {
+    core.accumulator = value;
+    core.flags = setCarryFlag(core.flags, false);
+    core.flags = setZeroFlag(core.flags, core.accumulator);
+}
+
+fun executeSys(mutate core: CoreState, subop: int): CpuOutput? {
+    if (subop == 0) {
+        core.status = STATUS_HALTED;
+        return null;
+    }
+    if (subop == 1) {
+        val outputIndex = core.outputCount;
+        val value = core.accumulator;
+        val commitment = OutputCommitmentPreimage {
+            namespace: OUTPUT_NAMESPACE,
+            previousCommitment: core.outputCommitment,
+            outputIndex,
+            instructionCount: core.instructionCount,
+            value,
+        }.toCell()
+            .hash();
+        core.outputCount += 1;
+        core.outputRegister = value;
+        core.outputCommitment = commitment;
+        return CpuOutput {
+            outputIndex,
+            instructionCount: core.instructionCount,
+            value,
+            outputCommitment: commitment,
+        };
+    }
+    if (subop == 2) {
+        core.flags = setCarryFlag(core.flags, false);
+        return null;
+    }
+    if (subop == 3) {
+        core.flags = setCarryFlag(core.flags, true);
+        return null;
+    }
+    if (subop == 4) {
+        logicalAccumulator(mutate core, ((~core.accumulator) & 15) as uint4);
+        return null;
+    }
+    if (subop == 5) {
+        val before = core.accumulator;
+        core.flags = setCarryFlag(core.flags, (before & 8) != 0);
+        core.accumulator = ((before << 1) & 15) as uint4;
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    if (subop == 6) {
+        val before = core.accumulator;
+        core.flags = setCarryFlag(core.flags, (before & 1) != 0);
+        core.accumulator = (before >> 1) as uint4;
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    if (subop == 7) {
+        val before = core.accumulator;
+        core.accumulator = ((before + 1) & 15) as uint4;
+        core.flags = setCarryFlag(core.flags, before == 15);
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    if (subop == 8) {
+        val before = core.accumulator;
+        core.accumulator = ((before - 1) & 15) as uint4;
+        core.flags = setCarryFlag(core.flags, before != 0);
+        core.flags = setZeroFlag(core.flags, core.accumulator);
+        return null;
+    }
+    throw Errors.InvalidSysSubop;
+}
+
