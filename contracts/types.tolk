@@ -118,3 +118,16 @@ struct (0x544E4C01) Advance {
     maxInstructions: uint16
 }
 
+struct (0x544E4C02) TopUp {}
+
+struct (0x544E4C81) CpuAdvanced {
+    queryId: uint64
+    advanceCount: uint64
+    startInstruction: uint64
+    endInstruction: uint64
+    previousStateHash: uint256
+    nextStateHash: uint256
+    finalPc: uint10
+    status: uint1
+}
+
