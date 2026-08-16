@@ -133,3 +133,13 @@ get fun getIsaVersion(): uint16 {
     return storage.isaVersion;
 }
 
+get fun getStaticCommitment(): uint256 {
+    val storage = lazy Storage.load();
+    return storage.staticCommitment;
+}
+
+get fun getCoreStateHash(): uint256 {
+    val storage = lazy Storage.load();
+    return storage.core.hash();
+}
+
