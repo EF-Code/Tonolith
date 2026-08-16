@@ -560,3 +560,15 @@ fun makeStorage(rom: Cell<RomRoot>): Storage {
     };
 }
 
+fun staticCommitmentForRom(rom: Cell<RomRoot>): uint256 {
+    // This is the explicit bit-for-bit encoding of StaticCommitmentPreimage.
+    // Keeping the preimage builder fixed-width avoids serializer range checks
+    // in the Advance hot path while retaining a documented canonical schema.
+    return beginCell()
+        .storeUint(STATIC_NAMESPACE, 32)
+        .storeUint(SCHEMA_VERSION, 16)
+        .storeUint(ISA_VERSION, 16)
+        .storeUint(rom.hash(), 256)
+        .endCell()
+        .hash();
+}
