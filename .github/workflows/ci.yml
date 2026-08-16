@@ -30,6 +30,8 @@ jobs:
           curl --fail --silent --show-error --location \
             "https://github.com/ton-blockchain/acton/releases/download/v${ACTON_VERSION}/acton-installer.sh" \
             | sh
+          echo "$HOME/.acton/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.acton/bin:$PATH"
           acton --version
 
       - name: Install TypeScript tooling
