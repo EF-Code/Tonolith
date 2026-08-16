@@ -131,3 +131,14 @@ struct (0x544E4C81) CpuAdvanced {
     status: uint1
 }
 
+struct (0x544E4C82) CpuOutput {
+    outputIndex: uint64
+    instructionCount: uint64
+    value: uint4
+    outputCommitment: uint256
+}
+
+type AllowedMessage =
+    | Advance
+    | TopUp
+
