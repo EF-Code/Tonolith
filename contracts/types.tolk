@@ -14,3 +14,6 @@ enum Errors {
 const TONOLITH_MAGIC: uint32 = 0x544E4C31
 const SCHEMA_VERSION: uint16 = 1
 const ISA_VERSION: uint16 = 1
+const STATIC_NAMESPACE: uint32 = 0x544E4C01
+
+const FLAG_ZERO: uint2 = 1
