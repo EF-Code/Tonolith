@@ -21,6 +21,11 @@
       "types": "./dist/packages/sdk/src/index.d.ts",
       "import": "./dist/packages/sdk/src/index.js",
       "default": "./dist/packages/sdk/src/index.js"
+    },
+    "./v2/node": {
+      "types": "./dist/packages/sdk/src/node.d.ts",
+      "import": "./dist/packages/sdk/src/node.js",
+      "default": "./dist/packages/sdk/src/node.js"
     }
   },
   "files": [
