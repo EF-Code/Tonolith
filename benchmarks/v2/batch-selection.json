@@ -1,23 +1,112 @@
 {
   "schema": "tonolith-batch-selection-v2",
-  "network": "local-acton",
-  "measurementCommand": "acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42",
+  "measurement": {
+    "command": "acton test tests/v2_batch_contract.test.tolk --snapshot gas.json --fuzz-seed 42",
+    "environment": "clean temporary Acton checkout",
+    "sourceCommit": "88f5cec",
+    "paths": [
+      "full nonblocking ISA sequence",
+      "legacy OUT event",
+      "routed OUTP event",
+      "YIELD and TRAP stops",
+      "IN wait",
+      "full outbox backpressure"
+    ]
+  },
   "hardCeilingGas": 400000,
-  "observedNetworkGasReference": 44381,
-  "safetyRule": "selected worst-case must remain below both 400000 gas and 40% of the observed network reference after protocol-path measurement",
+  "testnetGasReferenceGas": null,
+  "safetyRule": "A production batch must remain below 400000 gas and below 40% of a measured testnet worst-case reference. The second comparison is intentionally unresolved until testnet measurement.",
   "selectedMaxStepsPerAdvance": 1,
-  "selectionStatus": "conservative-single-step",
+  "selectionStatus": "conservative-single-step-until-testnet-gas-baseline",
   "candidates": [
-    { "maxSteps": 1, "contractAccepted": true, "worstCaseGas": 44381, "networkGasMeasured": false, "headroomToHardCeiling": 355619, "decision": "selected" },
-    { "maxSteps": 2, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
-    { "maxSteps": 4, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
-    { "maxSteps": 8, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
-    { "maxSteps": 16, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
-    { "maxSteps": 32, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
-    { "maxSteps": 64, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" }
+    {
+      "maxSteps": 1,
+      "contractAccepted": true,
+      "worstCaseGas": 47997,
+      "worstCaseTraceGas": 48306,
+      "averageGas": 32141,
+      "worstCaseLocalFeeNano": 3559225,
+      "worstCasePath": "routed OUTP event",
+      "hardCeilingPass": true,
+      "testnet40PercentPass": null,
+      "decision": "selected-conservative"
+    },
+    {
+      "maxSteps": 2,
+      "contractAccepted": true,
+      "worstCaseGas": 47997,
+      "worstCaseTraceGas": 48306,
+      "averageGas": 34672,
+      "worstCaseLocalFeeNano": 3559225,
+      "worstCasePath": "routed OUTP event",
+      "hardCeilingPass": true,
+      "testnet40PercentPass": null,
+      "decision": "deferred-testnet-gas-reference"
+    },
+    {
+      "maxSteps": 4,
+      "contractAccepted": true,
+      "worstCaseGas": 61924,
+      "worstCaseTraceGas": 62233,
+      "averageGas": 40163,
+      "worstCaseLocalFeeNano": 4347958,
+      "worstCasePath": "full nonblocking ISA sequence",
+      "hardCeilingPass": true,
+      "testnet40PercentPass": null,
+      "decision": "deferred-testnet-gas-reference"
+    },
+    {
+      "maxSteps": 8,
+      "contractAccepted": true,
+      "worstCaseGas": 113797,
+      "worstCaseTraceGas": 114106,
+      "averageGas": 51519,
+      "worstCaseLocalFeeNano": 7806158,
+      "worstCasePath": "full nonblocking ISA sequence",
+      "hardCeilingPass": true,
+      "testnet40PercentPass": null,
+      "decision": "deferred-testnet-gas-reference"
+    },
+    {
+      "maxSteps": 16,
+      "contractAccepted": true,
+      "worstCaseGas": 209075,
+      "worstCaseTraceGas": 209384,
+      "averageGas": 73172,
+      "worstCaseLocalFeeNano": 14158025,
+      "worstCasePath": "full nonblocking ISA sequence",
+      "hardCeilingPass": true,
+      "testnet40PercentPass": null,
+      "decision": "deferred-testnet-gas-reference"
+    },
+    {
+      "maxSteps": 32,
+      "contractAccepted": true,
+      "worstCaseGas": 364979,
+      "worstCaseTraceGas": 365288,
+      "averageGas": 112148,
+      "worstCaseLocalFeeNano": 24551626,
+      "worstCasePath": "full nonblocking ISA sequence",
+      "hardCeilingPass": true,
+      "testnet40PercentPass": null,
+      "decision": "deferred-testnet-gas-reference"
+    },
+    {
+      "maxSteps": 64,
+      "contractAccepted": true,
+      "worstCaseGas": 677438,
+      "worstCaseTraceGas": 677747,
+      "averageGas": 190254,
+      "worstCaseLocalFeeNano": 45382228,
+      "worstCasePath": "full nonblocking ISA sequence",
+      "hardCeilingPass": false,
+      "testnet40PercentPass": null,
+      "decision": "rejected-hard-ceiling"
+    }
   ],
   "unresolved": [
-    "Acton currently accepts only one v2 instruction per Advance; candidates 2 through 64 require a separately proven batched loop.",
-    "The 40% rule needs a confirmed testnet gas baseline, not a local emulator estimate."
+    "No candidate can pass the 40% comparison until a real testnet worst-case reference is measured.",
+    "Acton snapshots expose gas and fees but not a stable action/cell/message-size accounting table; those release fields remain external measurement gates.",
+    "The selected implementation remains one instruction per Advance until the testnet baseline and all fee, storage, action, and message-size gates are satisfied."
   ]
 }
