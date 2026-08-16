@@ -16,6 +16,7 @@ test("v2 benchmark suite produces the canonical Fibonacci vector", async () => {
   assert.deepEqual(result.outputs, [1, 1, 2, 3, 5, 8, 13]);
   assert.equal(result.finalStatus, 3);
   assert.equal(result.frames.length, result.executedInstructions);
+  assert.equal(result.finalStateHash, "8238d6bbcd507f4a3b9cba3b1ad48b2d88fd6ab11f7068b75340a3f0044a9f1f");
 });
 
 test("v2 bounded checksum and cellular automaton terminate with deterministic outputs", async () => {

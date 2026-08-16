@@ -44,6 +44,11 @@ export function runArtifact(artifact: ArtifactBundle, maxInstructions = 10_000):
     const result = step(before, { rom: artifact.assembly.words });
     state = result.state;
     if (!result.executed) break;
+    // Each benchmark frame represents one accepted bounded Advance, not only
+    // the architectural instruction. Keep protocol counters identical to the
+    // emulator's Advance transition and the contract state commitment.
+    state.advanceCount += 1n;
+    state.acceptedMessageCount += 1n;
     executedInstructions += 1;
     if (result.legacyOutput !== undefined) outputs.push(result.legacyOutput.value);
     if (result.output !== undefined) outputs.push(result.output.value);
