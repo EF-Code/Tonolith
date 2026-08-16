@@ -6,3 +6,12 @@
 import "@acton/build"
 import "@acton/emulation/network"
 import "@acton/testing/assert"
+import "@contracts/types"
+
+/// Storage `Storage` is defined in `@contracts/types`
+struct TonolithCpu {
+    address: address
+    stateInit: ContractState? = null
+}
+
+/// Creates a contract wrapper instance from the storage data
