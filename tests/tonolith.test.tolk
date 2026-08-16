@@ -512,3 +512,533 @@ get fun `test RAM and branch opcodes`() {
     expect(cpu.getAdvanceCount()).toEqual(11);
 }
 
+get fun `test named failure paths and halted rejection`() {
+    val deployer = testing.treasury("failure-deployer");
+
+    val unknownCpu = TonolithCpu.fromStorage(makeStorage(zeroRomRoot()));
+    expect(unknownCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: unknownCpu.address,
+    });
+    val unknown = unknownCpu.sendAny(
+        deployer.address,
+        beginCell().storeUint(0x999, 32).endCell(),
+        { value: ton("0.1") },
+    );
+    expect(unknown).toHaveFailedTx({
+        from: deployer.address,
+        to: unknownCpu.address,
+        exitCode: Errors.UnknownMessage,
+    });
+    val short = unknownCpu.sendAny(
+        deployer.address,
+        beginCell().storeUint(1, 8).endCell(),
+        { value: ton("0.1") },
+    );
+    expect(short).toHaveFailedTx({
+        from: deployer.address,
+        to: unknownCpu.address,
+        exitCode: Errors.UnknownMessage,
+    });
+    val empty = unknownCpu.sendAny(deployer.address, createEmptyCell(), { value: ton("0.1") });
+    expect(empty).toHaveSuccessfulTx();
+
+    val malformedAdvanceBody = beginCell()
+        .storeUint(0x544E4C01, 32)
+        .storeUint(0, 64)
+        .storeUint(0, 64)
+        .storeUint(unknownCpu.getCoreStateHash(), 256)
+        .storeUint(1, 16)
+        .storeUint(1, 1)
+        .endCell();
+    val malformedAdvance = unknownCpu.sendAny(
+        deployer.address,
+        malformedAdvanceBody,
+        { value: ton("0.1") },
+    );
+    expect(malformedAdvance).toHaveFailedTx({
+        from: deployer.address,
+        to: unknownCpu.address,
+        exitCode: 9,
+    });
+
+    val malformedTopUp = unknownCpu.sendAny(
+        deployer.address,
+        beginCell().storeUint(0x544E4C02, 32).storeUint(1, 1).endCell(),
+        { value: ton("0.1") },
+    );
+    expect(malformedTopUp).toHaveFailedTx({
+        from: deployer.address,
+        to: unknownCpu.address,
+        exitCode: 9,
+    });
+
+    val insufficientCpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0x1000)));
+    expect(insufficientCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: insufficientCpu.address,
+    });
+    val insufficient = insufficientCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        insufficientCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.001") },
+    );
+    expect(insufficient).toHaveFailedTx({
+        from: deployer.address,
+        to: insufficientCpu.address,
+        exitCode: Errors.InsufficientValue,
+    });
+    val exactMinimum = insufficientCpu.sendAdvance(
+        deployer.address,
+        1,
+        0,
+        insufficientCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.01") },
+    );
+    expect(exactMinimum).toHaveSuccessfulTx<Advance>();
+
+    val zeroSteps = insufficientCpu.sendAdvance(
+        deployer.address,
+        2,
+        insufficientCpu.getAdvanceCount(),
+        insufficientCpu.getCoreStateHash(),
+        0,
+        { value: ton("0.1") },
+    );
+    expect(zeroSteps).toHaveFailedTx({
+        from: deployer.address,
+        to: insufficientCpu.address,
+        exitCode: Errors.InvalidStepCount,
+    });
+
+    val nonCanonicalCpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0x1010)));
+    expect(nonCanonicalCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: nonCanonicalCpu.address,
+    });
+    val nonCanonical = nonCanonicalCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonical).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalNopCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0x0001)),
+    );
+    expect(
+        nonCanonicalNopCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalNopCpu.address });
+    val nonCanonicalNop = nonCanonicalNopCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalNopCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalNop).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalNopCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalRegisterCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0x2010)),
+    );
+    expect(
+        nonCanonicalRegisterCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalRegisterCpu.address });
+    val nonCanonicalRegister = nonCanonicalRegisterCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalRegisterCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalRegister).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalRegisterCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalRamCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0xA100)),
+    );
+    expect(
+        nonCanonicalRamCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalRamCpu.address });
+    val nonCanonicalRam = nonCanonicalRamCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalRamCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalRam).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalRamCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalJumpCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0xC400)),
+    );
+    expect(
+        nonCanonicalJumpCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalJumpCpu.address });
+    val nonCanonicalJump = nonCanonicalJumpCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalJumpCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalJump).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalJumpCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalSysCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0xF010)),
+    );
+    expect(
+        nonCanonicalSysCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalSysCpu.address });
+    val nonCanonicalSys = nonCanonicalSysCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalSysCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalSys).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalSysCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalStoreCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0xB100)),
+    );
+    expect(
+        nonCanonicalStoreCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalStoreCpu.address });
+    val nonCanonicalStore = nonCanonicalStoreCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalStoreCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalStore).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalStoreCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalXorCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0x9010)),
+    );
+    expect(
+        nonCanonicalXorCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalXorCpu.address });
+    val nonCanonicalXor = nonCanonicalXorCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalXorCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalXor).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalXorCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val nonCanonicalJcCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithFirstWord(0xE400)),
+    );
+    expect(
+        nonCanonicalJcCpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: nonCanonicalJcCpu.address });
+    val nonCanonicalJc = nonCanonicalJcCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        nonCanonicalJcCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(nonCanonicalJc).toHaveFailedTx({
+        from: deployer.address,
+        to: nonCanonicalJcCpu.address,
+        exitCode: Errors.NonCanonicalInstruction,
+    });
+
+    val invalidSysCpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0xF009)));
+    expect(invalidSysCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidSysCpu.address,
+    });
+    val invalidSys = invalidSysCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        invalidSysCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(invalidSys).toHaveFailedTx({
+        from: deployer.address,
+        to: invalidSysCpu.address,
+        exitCode: Errors.InvalidSysSubop,
+    });
+
+    val haltedCpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0xF000)));
+    expect(haltedCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: haltedCpu.address,
+    });
+    val halt = haltedCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        haltedCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(halt).toHaveSuccessfulTx<Advance>();
+    val afterHalt = haltedCpu.sendAdvance(
+        deployer.address,
+        1,
+        haltedCpu.getAdvanceCount(),
+        haltedCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(afterHalt).toHaveFailedTx({
+        from: deployer.address,
+        to: haltedCpu.address,
+        exitCode: Errors.Halted,
+    });
+
+    var invalidStorage = makeStorage(zeroRomRoot());
+    invalidStorage.magic = 0;
+    val invalidStorageCpu = TonolithCpu.fromStorage(invalidStorage);
+    expect(invalidStorageCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidStorageCpu.address,
+    });
+    val invalidStorageAdvance = invalidStorageCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        invalidStorageCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(invalidStorageAdvance).toHaveFailedTx({
+        from: deployer.address,
+        to: invalidStorageCpu.address,
+        exitCode: Errors.InvalidStorage,
+    });
+
+    var invalidSchema = makeStorage(zeroRomRoot());
+    invalidSchema.schemaVersion = 2;
+    val invalidSchemaCpu = TonolithCpu.fromStorage(invalidSchema);
+    expect(invalidSchemaCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidSchemaCpu.address,
+    });
+    val invalidSchemaAdvance = invalidSchemaCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        invalidSchemaCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(invalidSchemaAdvance).toHaveFailedTx({
+        from: deployer.address,
+        to: invalidSchemaCpu.address,
+        exitCode: Errors.InvalidStorage,
+    });
+
+    var invalidIsa = makeStorage(zeroRomRoot());
+    invalidIsa.isaVersion = 2;
+    val invalidIsaCpu = TonolithCpu.fromStorage(invalidIsa);
+    expect(invalidIsaCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidIsaCpu.address,
+    });
+    val invalidIsaAdvance = invalidIsaCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        invalidIsaCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(invalidIsaAdvance).toHaveFailedTx({
+        from: deployer.address,
+        to: invalidIsaCpu.address,
+        exitCode: Errors.InvalidStorage,
+    });
+
+    var invalidStatic = makeStorage(zeroRomRoot());
+    invalidStatic.staticCommitment = 0;
+    val invalidStaticCpu = TonolithCpu.fromStorage(invalidStatic);
+    expect(invalidStaticCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidStaticCpu.address,
+    });
+    val invalidStaticAdvance = invalidStaticCpu.sendAdvance(
+        deployer.address,
+        0,
+        0,
+        invalidStaticCpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(invalidStaticAdvance).toHaveFailedTx({
+        from: deployer.address,
+        to: invalidStaticCpu.address,
+        exitCode: Errors.InvalidStorage,
+    });
+}
+
+get fun `test defensive selectors reject out of range indexes`() {
+    val level2 = zeroRomLevel2().load();
+    val ram = zeroRamRoot().load();
+
+    val distinctLevel1 = RomLevel1 {
+        leaf0: RomLeaf {
+            firstHalf: 1,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: RomLeaf {
+            firstHalf: 2,
+            secondHalf: 0,
+        }.toCell(),
+        leaf2: RomLeaf {
+            firstHalf: 3,
+            secondHalf: 0,
+        }.toCell(),
+        leaf3: RomLeaf {
+            firstHalf: 4,
+            secondHalf: 0,
+        }.toCell(),
+    }.toCell();
+    val distinctLevel2 = RomLevel2 {
+        level10: distinctLevel1,
+        level11: RomLevel1 {
+            leaf0: RomLeaf {
+                firstHalf: 5,
+                secondHalf: 0,
+            }.toCell(),
+            leaf1: RomLeaf {
+                firstHalf: 6,
+                secondHalf: 0,
+            }.toCell(),
+            leaf2: RomLeaf {
+                firstHalf: 7,
+                secondHalf: 0,
+            }.toCell(),
+            leaf3: RomLeaf {
+                firstHalf: 8,
+                secondHalf: 0,
+            }.toCell(),
+        }.toCell(),
+        level12: RomLevel1 {
+            leaf0: RomLeaf {
+                firstHalf: 9,
+                secondHalf: 0,
+            }.toCell(),
+            leaf1: RomLeaf {
+                firstHalf: 10,
+                secondHalf: 0,
+            }.toCell(),
+            leaf2: RomLeaf {
+                firstHalf: 11,
+                secondHalf: 0,
+            }.toCell(),
+            leaf3: RomLeaf {
+                firstHalf: 12,
+                secondHalf: 0,
+            }.toCell(),
+        }.toCell(),
+        level13: RomLevel1 {
+            leaf0: RomLeaf {
+                firstHalf: 13,
+                secondHalf: 0,
+            }.toCell(),
+            leaf1: RomLeaf {
+                firstHalf: 14,
+                secondHalf: 0,
+            }.toCell(),
+            leaf2: RomLeaf {
+                firstHalf: 15,
+                secondHalf: 0,
+            }.toCell(),
+            leaf3: RomLeaf {
+                firstHalf: 16,
+                secondHalf: 0,
+            }.toCell(),
+        }.toCell(),
+    }.toCell()
+        .load();
+    expect(selectRomLevel1(distinctLevel2, 0).toCell().hash()).toEqual(
+        distinctLevel2.level10.hash(),
+    );
+    expect(selectRomLevel1(distinctLevel2, 1).toCell().hash()).toEqual(
+        distinctLevel2.level11.hash(),
+    );
+    expect(selectRomLevel1(distinctLevel2, 2).toCell().hash()).toEqual(
+        distinctLevel2.level12.hash(),
+    );
+    expect(selectRomLevel1(distinctLevel2, 3).toCell().hash()).toEqual(
+        distinctLevel2.level13.hash(),
+    );
+
+    val distinctRam = RamRoot {
+        page0: RamPage { packed: 1 }.toCell(),
+        page1: RamPage { packed: 2 }.toCell(),
+        page2: RamPage { packed: 3 }.toCell(),
+        page3: RamPage { packed: 4 }.toCell(),
+    }.toCell()
+        .load();
+    expect(selectRamPage(distinctRam, 0).hash()).toEqual(distinctRam.page0.hash());
+    expect(selectRamPage(distinctRam, 1).hash()).toEqual(distinctRam.page1.hash());
+    expect(selectRamPage(distinctRam, 2).hash()).toEqual(distinctRam.page2.hash());
+    expect(selectRamPage(distinctRam, 3).hash()).toEqual(distinctRam.page3.hash());
+
+    var caughtLevel1 = false;
+    try {
+        val _ignored = selectRomLevel1(level2, 4);
+    } catch (e) {
+        caughtLevel1 = true;
+        expect(e).toEqual(108);
+    }
+    expect(caughtLevel1).toEqual(true);
+
+    var caughtPage = false;
+    try {
+        val _ignored = selectRamPage(ram, 4);
+    } catch (e) {
+        caughtPage = true;
+        expect(e).toEqual(108);
+    }
+    expect(caughtPage).toEqual(true);
+}
+
+@test.fuzz({ runs: 256, seed: 42 })
