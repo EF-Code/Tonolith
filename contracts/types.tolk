@@ -227,3 +227,48 @@ fun zeroRomRoot(): Cell<RomRoot> {
     return romRootWithFirstLeaf(zeroRomLeaf());
 }
 
+fun romWord(romCell: Cell<RomRoot>, address: uint10): uint16 {
+    val root = romCell.load();
+    val leafIndex = address >> 5;
+    val wordIndex = address & 31;
+    val rootIndex = leafIndex >> 4;
+    // 1,024 words contain 32 leaves, so the 4-way root uses only indexes 0 and 1.
+    val level2 = rootIndex == 0 ? root.level20.load() : root.level21.load();
+    val level1Index = (leafIndex >> 2) & 3;
+    val level1 = selectRomLevel1(level2, level1Index);
+    val leafIndexInLevel = leafIndex & 3;
+    var leafCell = level1.leaf0;
+    if (leafIndexInLevel == 1) {
+        leafCell = level1.leaf1;
+    }
+    if (leafIndexInLevel == 2) {
+        leafCell = level1.leaf2;
+    }
+    if (leafIndexInLevel == 3) {
+        leafCell = level1.leaf3;
+    }
+    val leaf = leafCell.load();
+    if (wordIndex < 16) {
+        val shift = (15 - wordIndex) * 16;
+        return ((leaf.firstHalf >> shift) & 0xFFFF) as uint16;
+    }
+    val shift = (31 - wordIndex) * 16;
+    return ((leaf.secondHalf >> shift) & 0xFFFF) as uint16;
+}
+
+fun selectRomLevel1(level2: RomLevel2, index: int): RomLevel1 {
+    if (index == 0) {
+        return level2.level10.load();
+    }
+    if (index == 1) {
+        return level2.level11.load();
+    }
+    if (index == 2) {
+        return level2.level12.load();
+    }
+    if (index < 0 || index > 3) {
+        throw Errors.InvalidStorage;
+    }
+    return level2.level13.load();
+}
+
