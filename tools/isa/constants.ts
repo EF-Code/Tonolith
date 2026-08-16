@@ -12,3 +12,6 @@ export const STATUS_RUNNING = "running" as const;
 export const STATUS_HALTED = "halted" as const;
 export const STATIC_COMMITMENT_NAMESPACE = 0x544e4c01;
 export const SCHEMA_VERSION = 1;
+export const ISA_VERSION = 1;
+export const OUTPUT_COMMITMENT_DOMAIN = 0x544e4c4f;
+
