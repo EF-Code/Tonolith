@@ -12,3 +12,13 @@ import {
   STATUS_HALTED,
   STATUS_RUNNING,
 } from "../tools/isa/constants.js";
+import { encodeInstruction, Opcode, SysOp } from "../tools/isa/isa.js";
+import {
+  cloneState,
+  createInitialState,
+  nextOutputCommitment,
+  type CpuState,
+} from "../tools/isa/types.js";
+
+let seed = 0x51f15e5d;
+
