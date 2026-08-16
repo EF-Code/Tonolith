@@ -142,3 +142,11 @@ fun TonolithCpu.getStatus(self): uint1 {
     return net.runGetMethod(self.address, "getStatus");
 }
 
+fun TonolithCpu.getOutputCount(self): uint64 {
+    return net.runGetMethod(self.address, "getOutputCount");
+}
+
+fun TonolithCpu.getOutputRegister(self): uint4 {
+    return net.runGetMethod(self.address, "getOutputRegister");
+}
+
