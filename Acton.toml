@@ -12,6 +12,11 @@ display-name = "TonolithCpu"
 src = "contracts/TonolithCpu.tolk"
 depends = []
 
+[contracts.TonolithCoreV2]
+display-name = "TonolithCoreV2"
+src = "contracts/TonolithCoreV2.tolk"
+depends = []
+
 [test]
 
 [scripts]
