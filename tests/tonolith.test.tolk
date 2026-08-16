@@ -316,3 +316,125 @@ get fun `test arithmetic and flag boundary outcomes`() {
     expect(cpu.getFlags()).toEqual(3);
 }
 
+get fun `test exact arithmetic carry and subtraction boundaries`() {
+    var addCore = initialCore().load();
+    executeInstruction(mutate addCore, 0x100F);
+    executeInstruction(mutate addCore, 0x3000);
+    executeInstruction(mutate addCore, 0x1001);
+    executeInstruction(mutate addCore, 0x4000);
+    expect(addCore.accumulator).toEqual(0);
+    expect(addCore.flags).toEqual(3);
+
+    var subtractCore = initialCore().load();
+    executeInstruction(mutate subtractCore, 0x1007);
+    executeInstruction(mutate subtractCore, 0x3000);
+    executeInstruction(mutate subtractCore, 0x2000);
+    executeInstruction(mutate subtractCore, 0x6000);
+    expect(subtractCore.accumulator).toEqual(0);
+    expect(subtractCore.flags).toEqual(3);
+
+    val deployer = testing.treasury("exact-arithmetic-contract-deployer");
+    val addCpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x100F,
+                0x3000,
+                0x1001,
+                0x4000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(addCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: addCpu.address,
+    });
+    repeat (4) {
+        advanceOne(addCpu, deployer.address, addCpu.getAdvanceCount());
+    }
+    expect(addCpu.getAccumulator()).toEqual(0);
+    expect(addCpu.getFlags()).toEqual(3);
+
+    val subtractCpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x1007,
+                0x3000,
+                0x2000,
+                0x6000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(subtractCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: subtractCpu.address,
+    });
+    repeat (4) {
+        advanceOne(subtractCpu, deployer.address, subtractCpu.getAdvanceCount());
+    }
+    expect(subtractCpu.getAccumulator()).toEqual(0);
+    expect(subtractCpu.getFlags()).toEqual(3);
+}
+
+get fun `test JC false path and maximum jump target`() {
+    val deployer = testing.treasury("jump-boundary-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0xE003,
+                0xF000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0xF000,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(cpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: cpu.address,
+    });
+    advanceOne(cpu, deployer.address, 0);
+    expect(cpu.getPc()).toEqual(1);
+    advanceOne(cpu, deployer.address, 1);
+    expect(cpu.getStatus()).toEqual(1);
+    expect(cpu.getPc()).toEqual(2);
+
+    val maxTargetCpu = TonolithCpu.fromStorage(makeStorage(romWithFirstWord(0xC3FF)));
+    expect(maxTargetCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: maxTargetCpu.address,
+    });
+    advanceOne(maxTargetCpu, deployer.address, 0);
+    expect(maxTargetCpu.getPc()).toEqual(1023);
+}
+
