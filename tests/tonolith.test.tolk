@@ -1204,3 +1204,92 @@ get fun `test ROM and RAM boundary pages remain addressable`() {
     expect(ramCpu.getRamNibble(192)).toEqual(4);
 }
 
+get fun `test Fibonacci contract emits the canonical output trace`() {
+    val deployer = testing.treasury("fibonacci-deployer");
+    val cpu = TonolithCpu.fromStorage(makeStorage(romWithFibonacci()));
+    expect(cpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: cpu.address,
+    });
+
+    var outputs = 0;
+    while (cpu.getStatus() == 0 && cpu.getInstructionCount() < 200) {
+        val result = cpu.sendAdvance(
+            deployer.address,
+            cpu.getAdvanceCount(),
+            cpu.getAdvanceCount(),
+            cpu.getCoreStateHash(),
+            1,
+            { value: ton("0.1") },
+        );
+        expect(result).toHaveSuccessfulTx<Advance>();
+        val event = result.findExternalOutMessage<CpuOutput>({ from: cpu.address });
+        if (event != null) {
+            val value = event!.loadBody().value;
+            if (outputs == 0) {
+                expect(value).toEqual(1);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0xa17244947c98fe3640ddc9c784c23815477d8d2e3c7c2f4d9d0acea6f4162e4d,
+                );
+            }
+            if (outputs == 1) {
+                expect(value).toEqual(1);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0xb1b5c09fee57b7fa16d6019423b85da95c2c852cf0702fdba06bfde698da1846,
+                );
+            }
+            if (outputs == 2) {
+                expect(value).toEqual(2);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0x8db1f2058704d2cd33e74e0925af15f96b74e5651d8d7c9ca6c90643636ec482,
+                );
+            }
+            if (outputs == 3) {
+                expect(value).toEqual(3);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0x6e9893574c161b2c53e055db356b2c75261bbf61c142f1e8328dafc6daa0efa6,
+                );
+            }
+            if (outputs == 4) {
+                expect(value).toEqual(5);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0x795cf3b126acb29c570dac5532b9c4d75c03c87c0ec36256d0510208dfda88c8,
+                );
+            }
+            if (outputs == 5) {
+                expect(value).toEqual(8);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0xd66201811dac47a23779bb362eddd61e9973736a1772074b21bd262a327d66d1,
+                );
+            }
+            if (outputs == 6) {
+                expect(value).toEqual(13);
+                expect(cpu.getCoreStateHash()).toEqual(
+                    0x996a1796bde76007a2ea2670c070bffe31f360fb923bc85084b1c3b9ed4b935b,
+                );
+            }
+            outputs += 1;
+        }
+    }
+
+    expect(outputs).toEqual(7);
+    expect(cpu.getStatus()).toEqual(1);
+    expect(cpu.getInstructionCount()).toEqual(97);
+    expect(cpu.getAdvanceCount()).toEqual(97);
+    expect(cpu.getAccumulator()).toEqual(0);
+    expect(cpu.getOutputCount()).toEqual(7);
+    expect(cpu.getOutputRegister()).toEqual(13);
+    expect(cpu.getCoreStateHash()).toEqual(
+        0x16925a27b1db66171cebb3d43c74702f06f4a362e302754f24026cca0a6bf2be,
+    );
+}
+
+fun romWithFirstWord(word: uint16): Cell<RomRoot> {
+    val firstHalf = (word as uint256) << 240;
+    return romRootWithFirstLeaf(
+        RomLeaf {
+            firstHalf,
+            secondHalf: 0,
+        }.toCell(),
+    );
+}
+
