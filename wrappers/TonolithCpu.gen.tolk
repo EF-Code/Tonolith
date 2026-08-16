@@ -33,3 +33,33 @@ fun TonolithCpu.fromAddress(address: address): TonolithCpu {
 }
 
 /// Deploys the contract to the blockchain
+fun TonolithCpu.deploy(self, from: address, config: SendParams = {}): SendResultList {
+    if (self.stateInit == null) {
+        Assert.fail("Cannot deploy a contract created with 'fromAddress' because it lacks state init for deployment");
+    }
+    val genericMsg = createMessage({
+        bounce: config.bounce,
+        value: config.value,
+        dest: { stateInit: self.stateInit },
+    });
+    return net.send(from, genericMsg);
+}
+
+fun TonolithCpu.sendAdvance(
+    self,
+    from: address,
+    queryId: uint64,
+    expectedAdvanceCount: uint64,
+    expectedStateHash: uint256,
+    maxInstructions: uint16,
+    config: SendParams = {},
+): SendResultList {
+    val genericMsg = createMessage({
+        bounce: config.bounce,
+        value: config.value,
+        dest: self.address,
+        body: Advance { queryId, expectedAdvanceCount, expectedStateHash, maxInstructions },
+    });
+    return net.send(from, genericMsg);
+}
+
