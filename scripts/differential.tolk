@@ -59,3 +59,47 @@ fun main() {
     }
 }
 
+fun romWithWords(
+    word0: uint16,
+    word1: uint16,
+    word2: uint16,
+    word3: uint16,
+    word4: uint16,
+    word5: uint16,
+    word6: uint16,
+    word7: uint16,
+    word8: uint16,
+    word9: uint16,
+    word10: uint16,
+    word11: uint16,
+    word12: uint16,
+    word13: uint16,
+    word14: uint16,
+    word15: uint16,
+): Cell<RomRoot> {
+    val firstBuilder = beginCell()
+        .storeUint(word0, 16)
+        .storeUint(word1, 16)
+        .storeUint(word2, 16)
+        .storeUint(word3, 16)
+        .storeUint(word4, 16)
+        .storeUint(word5, 16)
+        .storeUint(word6, 16)
+        .storeUint(word7, 16)
+        .storeUint(word8, 16)
+        .storeUint(word9, 16)
+        .storeUint(word10, 16)
+        .storeUint(word11, 16)
+        .storeUint(word12, 16)
+        .storeUint(word13, 16)
+        .storeUint(word14, 16)
+        .storeUint(word15, 16);
+    var firstSlice = firstBuilder.toSlice();
+    val firstHalf = firstSlice.loadUint(256) as uint256;
+    return romRootWithFirstLeaf(
+        RomLeaf {
+            firstHalf,
+            secondHalf: 0,
+        }.toCell(),
+    );
+}
