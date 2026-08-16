@@ -24,6 +24,8 @@ deploy-emulation = "acton script scripts/deploy.tolk"
 deploy-testnet = "acton script scripts/deploy-fibonacci.tolk --net testnet"
 deploy-fibonacci-emulation = "acton script scripts/deploy-fibonacci.tolk"
 deploy-fibonacci-testnet = "acton script scripts/deploy-fibonacci.tolk --net testnet"
+deploy-v2-fibonacci-emulation = "acton script scripts/deploy-v2-fibonacci.tolk"
+deploy-v2-fibonacci-testnet = "acton script scripts/deploy-v2-fibonacci.tolk --net testnet"
 
 [fmt]
 width = 100

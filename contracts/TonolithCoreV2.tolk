@@ -57,7 +57,7 @@ fun emitOutputAcknowledgedV2(event: V2OutputAcknowledged) {
 fun returnSafeExcessV2(sender: address) {
     val refund = createMessage({
         bounce: BounceMode.NoBounce,
-        value: MIN_DELIVERY_VALUE_V2,
+        value: 0,
         dest: sender,
     });
     refund.send(SEND_MODE_CARRY_ALL_REMAINING_MESSAGE_VALUE);
@@ -223,7 +223,6 @@ fun processDeliverInputV2(sender: address, value: coins, msg: V2DeliverInput) {
             msg.destinationEpoch,
             storage.core.hash(),
         );
-        returnSafeExcessV2(sender);
         return;
     }
     val slotCursor = v2FindInputSlot(
