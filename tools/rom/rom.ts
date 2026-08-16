@@ -117,3 +117,14 @@ export function staticCommitmentCell(romHash: bigint): Cell {
     .endCell();
 }
 
+export function staticCommitment(words: readonly number[] = []): bigint {
+  return BigInt(`0x${staticCommitmentCell(romRootHash(words)).hash().toString("hex")}`);
+}
+
+export const ROM_LAYOUT = {
+  words: ROM_WORDS,
+  wordsPerLeaf: WORDS_PER_LEAF,
+  leavesPerLevel1: LEAVES_PER_LEVEL1,
+  level1PerLevel2: LEVEL1_PER_LEVEL2,
+  leavesPerLevel2: LEAVES_PER_LEVEL2,
+} as const;
