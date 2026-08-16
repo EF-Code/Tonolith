@@ -21,3 +21,9 @@ const FLAG_CARRY: uint2 = 2
 const STATUS_RUNNING: uint1 = 0
 const STATUS_HALTED: uint1 = 1
 const OUTPUT_NAMESPACE: uint32 = 0x544E4C4F
+const MAX_STEPS_PER_ADVANCE: uint16 = 1
+
+struct RamPage {
+    packed: uint256
+}
+
