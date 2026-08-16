@@ -11,6 +11,7 @@ import { loadArtifactDirectory } from "../packages/sdk/src/node.js";
 import { buildV2StateInitFromArtifact } from "../packages/sdk/src/stateinit.js";
 import { planNextAction } from "../packages/keeper/src/planner.js";
 import type { KeeperCoreConfig, KeeperCoreObservation } from "../packages/keeper/src/types.js";
+import { decodeTrace } from "../packages/trace/src/index.js";
 import { verifyRunFromSources, type RawChainSnapshot, type ReplayEvidence, type V2VerificationExpectations } from "../packages/verifier/src/index.js";
 
 export interface CliIo {
@@ -31,7 +32,7 @@ export async function runCli(argv: readonly string[], io: CliIo = defaultIo): Pr
       case "derive-address": return await deriveAddressCommand(rest, io);
       case "deploy-plan": return await deployPlanCommand(rest, io);
       case "verify-run": return await verifyRunCommand(rest, io);
-      case "replay": return incompleteNetworkCommand("replay", io);
+      case "replay": return await replayCommand(rest, io);
       case "trace": return await traceCommand(rest, io);
       case "keeper": return await keeperCommand(rest, io);
       case "benchmark": return await benchmarkCommand(rest, io);
@@ -137,13 +138,26 @@ async function verifyRunCommand(args: readonly string[], io: CliIo): Promise<num
   return report.overall === "verified" ? 0 : 1;
 }
 
+async function replayCommand(args: readonly string[], io: CliIo): Promise<number> {
+  const manifestPath = args[0];
+  const network = option(args, "--network");
+  if (manifestPath === undefined || network === undefined) return usage(io, 2, "replay requires <run-manifest.json> --network testnet");
+  assertTestnet(network);
+  const manifest = await readJson<RunManifest>(manifestPath);
+  if (manifest.replay === undefined) return incompleteNetworkCommand("replay", io, "run manifest does not contain independent replay evidence");
+  const sources = manifest.sources.map((source) => ({ id: source.id, fetchSnapshot: async () => readJson<RawChainSnapshot>(source.snapshot) }));
+  const report = await verifyRunFromSources(manifest.address, manifest.expectations, sources, deserializeReplay(manifest.replay));
+  io.stdout(json({ command: "replay", ...report }));
+  return report.overall === "verified" ? 0 : 1;
+}
+
 async function traceCommand(args: readonly string[], io: CliIo): Promise<number> {
   const address = args[0];
   const format = option(args, "--format");
   const input = option(args, "--input");
   if (address === undefined || format === undefined || !["text", "json", "ndjson"].includes(format)) return usage(io, 2, "trace requires <address> --format text|json|ndjson --input <trace.json>");
   if (input === undefined) return incompleteNetworkCommand("trace", io, `no raw trace supplied for ${address}`);
-  const trace = await readJson<unknown>(input);
+  const trace = decodeTrace(await readFile(resolve(input), "utf8"));
   if (format === "text") io.stdout(formatTraceText(trace));
   else if (format === "json") io.stdout(json(trace));
   else io.stdout(formatNdjson(trace));
@@ -170,10 +184,10 @@ async function benchmarkCommand(args: readonly string[], io: CliIo): Promise<num
   const result = advance(state, { rom: artifact.assembly.words }, {
     expectedAdvanceCount: 0n,
     expectedStateHash: stateHash(state),
-    maxInstructions: 1,
-    maxOutputs: 1,
+    maxInstructions: artifact.limits.maxStepsPerAdvance,
+    maxOutputs: artifact.limits.maxOutputsPerAdvance,
   });
-  io.stdout(json({ command: "benchmark local", artifact: artifact.manifest.name, executed: result.executed, stopReason: result.stopReason, stateHash: stateHash(result.state) }));
+  io.stdout(json({ command: "benchmark local", artifact: artifact.manifest.name, executed: result.executed, requestedMaxInstructions: artifact.limits.maxStepsPerAdvance, requestedMaxOutputs: artifact.limits.maxOutputsPerAdvance, stopReason: result.stopReason, stateHash: stateHash(result.state) }));
   return 0;
 }
 
@@ -189,7 +203,7 @@ function artifactToInitialState(artifact: ArtifactBundle) {
     staticCommitment: artifact.manifest.staticCommitment,
     routes: artifact.routes,
     requiredInputs: [],
-    maxStepsPerAdvance: 1,
+    maxStepsPerAdvance: artifact.limits.maxStepsPerAdvance,
   });
   state.ram = artifact.assembly.ram.slice();
   return state;
