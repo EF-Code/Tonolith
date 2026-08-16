@@ -6,8 +6,12 @@ export interface KeeperCoreConfig {
   readonly runId: Hash256;
   readonly codeHash: Hash256;
   readonly network: "testnet";
+  /** The selected artifact limit; the keeper may never request more. */
+  readonly artifactMaxInstructions: number;
+  readonly artifactMaxOutputs: number;
   readonly maxInstructions: number;
   readonly maxOutputs: number;
+  readonly advanceValueNano: bigint;
   readonly dispatchValueNano: bigint;
 }
 

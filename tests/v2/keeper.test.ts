@@ -10,8 +10,11 @@ const base = {
   runId: artifact.manifest.runId,
   codeHash: "ab".repeat(32),
   network: "testnet" as const,
+  artifactMaxInstructions: 1,
+  artifactMaxOutputs: 16,
   maxInstructions: 1,
   maxOutputs: 1,
+  advanceValueNano: 10_000_000n,
   dispatchValueNano: 20_000_000n,
 };
 
@@ -42,6 +45,7 @@ test("keeper plans a single bounded advance only for a fresh runnable core", () 
   assert.equal(action?.kind, "advance");
   assert.equal(action?.expectedAdvanceCount, 4n);
   assert.throws(() => planNextAction(base, observation({ codeHash: "cd".repeat(32) })), /code hash mismatch/);
+  assert.throws(() => planNextAction({ ...base, maxInstructions: 2 }, observation()), /exceeds artifact limit/);
   assert.equal(planNextAction(base, observation({ status: STATUS.waitingInput })), undefined);
 });
 
