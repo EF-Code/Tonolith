@@ -37,3 +37,14 @@ export class CpuExecutionError extends Error {
   }
 }
 
+export interface StepResult {
+  state: CpuState;
+  output?: CpuOutput;
+}
+
+export interface BatchResult {
+  state: CpuState;
+  outputs: CpuOutput[];
+  executed: number;
+}
+
