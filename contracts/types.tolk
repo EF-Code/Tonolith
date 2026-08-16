@@ -342,3 +342,17 @@ fun hasFlag(flags: uint2, flag: uint2): bool {
     return (flags & flag) != 0;
 }
 
+fun setZeroFlag(flags: uint2, value: uint4): uint2 {
+    if (value == 0) {
+        return (flags | FLAG_ZERO) as uint2;
+    }
+    return (flags & ~FLAG_ZERO) as uint2;
+}
+
+fun setCarryFlag(flags: uint2, carry: bool): uint2 {
+    if (carry) {
+        return (flags | FLAG_CARRY) as uint2;
+    }
+    return (flags & ~FLAG_CARRY) as uint2;
+}
+
