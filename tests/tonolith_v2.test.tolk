@@ -102,6 +102,24 @@ fun outputRecordV2ForTest(sequence: uint8): cell {
     }.toCell();
 }
 
+fun inputRecordV2ForTest(epoch: uint64, port: uint4, sequence: uint8, outputId: uint256): cell {
+    return V2InputRecord {
+        domain: DOMAIN_INPUT_V2,
+        outputId,
+        sourceCoreId: 1,
+        destinationCoreId: 0,
+        sourceEpoch: epoch - 1,
+        destinationEpoch: epoch,
+        sourcePort: 0,
+        destinationPort: port,
+        sequence,
+        value: 1,
+        sourceInstructionCount: 1,
+        sourceStateHash: 2,
+        consumed: 0,
+    }.toCell();
+}
+
 fun sendAdvanceV2ForTest(
     core: TonolithCoreV2,
     from: address,
@@ -970,6 +988,41 @@ get fun `test v2 bounded memory ROM queues routes peers and commitments`() {
     expect(v2FindInput(inputs, 1, 2)!.value).toEqual(9);
     expect(v2FindInputSlot(inputs, 1, 2, 0).found).toEqual(1);
     expect(v2FindRecordById(inputs, 1).found).toEqual(1);
+
+    var orderedInputs = emptyV2RecordRoot();
+    orderedInputs = v2InsertInputRecord(
+        orderedInputs,
+        inputRecordV2ForTest(1, 2, 0, 10),
+    );
+    orderedInputs = v2InsertInputRecord(
+        orderedInputs,
+        inputRecordV2ForTest(1, 2, 2, 12),
+    );
+    orderedInputs = v2InsertInputRecord(
+        orderedInputs,
+        inputRecordV2ForTest(1, 2, 1, 11),
+    );
+    orderedInputs = v2InsertInputRecord(
+        orderedInputs,
+        inputRecordV2ForTest(0, 9, 0, 9),
+    );
+    orderedInputs = v2InsertInputRecord(
+        orderedInputs,
+        inputRecordV2ForTest(1, 1, 0, 8),
+    );
+    expect(v2InputAt(orderedInputs, 0).outputId).toEqual(9);
+    expect(v2InputAt(orderedInputs, 1).outputId).toEqual(8);
+    expect(v2InputAt(orderedInputs, 2).outputId).toEqual(10);
+    expect(v2InputAt(orderedInputs, 3).outputId).toEqual(11);
+    expect(v2InputAt(orderedInputs, 4).outputId).toEqual(12);
+
+    var onePage = emptyV2RecordRoot();
+    onePage = v2AppendQueueRoot(onePage, route0);
+    expect(v2QueueCount(v2ReplaceRecordAt(onePage, 0, route0))).toEqual(1);
+    val twoPage = v2AppendQueueRoot(onePage, route0);
+    expect(v2QueueCount(v2ReplaceRecordAt(twoPage, 1, route0))).toEqual(2);
+    val threePage = v2AppendQueueRoot(twoPage, route0);
+    expect(v2QueueCount(v2ReplaceRecordAt(threePage, 2, route0))).toEqual(3);
     val consumed = V2InputRecord {
         domain: DOMAIN_INPUT_V2,
         outputId: 1,
