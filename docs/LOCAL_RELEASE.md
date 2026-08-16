@@ -51,3 +51,8 @@ npm run build
   `MAX_STEPS_PER_ADVANCE` is 1; no batching was enabled before measuring a
   worst-case path.
 
+## Release decision
+
+The local v1 candidate is suitable for a testnet attempt only. It is not a
+mainnet or production release. Testnet remains gated on a funded
+`tonolith-testnet` wallet and reachable provider credentials.
