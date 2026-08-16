@@ -5,6 +5,7 @@ import "@acton/testing/expect"
 import "@contracts/TonolithCoreV2"
 import "@wrappers/TonolithCoreV2.gen"
 import "@contracts/v2/commitments"
+import "@contracts/v2/execution"
 import "@contracts/v2/memory"
 import "@contracts/v2/peers"
 import "@contracts/v2/queues"
@@ -82,6 +83,23 @@ fun romWithFirstWordV2(word: uint16): Cell<V2RomRoot> {
             secondHalf: 0,
         }.toCell(),
     );
+}
+
+fun outputRecordV2ForTest(sequence: uint8): cell {
+    return V2OutputRecord {
+        domain: DOMAIN_OUTPUT_V2,
+        outputId: (sequence as uint256) + 100,
+        sourceCoreId: 0,
+        destinationCoreId: 1,
+        sourceEpoch: 0,
+        destinationEpoch: 1,
+        sourcePort: 0,
+        destinationPort: 0,
+        sequence,
+        value: 1,
+        sourceInstructionCount: 1,
+        sourceStateHash: 0,
+    }.toCell();
 }
 
 fun sendAdvanceV2ForTest(
@@ -1144,6 +1162,202 @@ get fun `test v2 bounded structures cover every fixed slot and selector`() {
     expect(v2RomWord(rom, 768)).toEqual(0);
     expect(v2RomWord(rom, 896)).toEqual(0);
     expect(v2RomWord(rom, 1023)).toEqual(0);
+}
+
+get fun `test v2 execution edge paths preserve bounded progress`() {
+    val deployer = testing.treasury("v2-execution-edge-paths");
+
+    var waitingStorage = makeV2StorageForTest(romWithFirstWordV2(0));
+    var waitingCore = waitingStorage.core.load();
+    waitingCore.status = STATUS_WAITING_INPUT_V2;
+    waitingStorage.core = waitingCore.toCell();
+    val waiting = TonolithCoreV2.fromStorage(waitingStorage);
+    expect(waiting.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: waiting.address,
+    });
+    expect(advanceV2OnceForTest(waiting, deployer.address)).toHaveSuccessfulTx<V2Advance>();
+    expect(waiting.getStatusV2()).toEqual(STATUS_RUNNING_V2);
+
+    var backpressureStorage = makeV2StorageForTest(romWithFirstWordV2(0));
+    var backpressureCore = backpressureStorage.core.load();
+    backpressureCore.status = STATUS_BACKPRESSURED_V2;
+    backpressureStorage.core = backpressureCore.toCell();
+    val backpressure = TonolithCoreV2.fromStorage(backpressureStorage);
+    expect(
+        backpressure.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: backpressure.address });
+    expect(
+        advanceV2OnceForTest(backpressure, deployer.address),
+    ).toHaveSuccessfulTx<V2Advance>();
+    expect(backpressure.getStatusV2()).toEqual(STATUS_RUNNING_V2);
+
+    var jzStorage = makeV2StorageForTest(romWithFirstWordV2(0xD123));
+    var jzCore = jzStorage.core.load();
+    jzCore.flags = FLAG_ZERO_V2;
+    jzStorage.core = jzCore.toCell();
+    val jzTakenWithFlag = TonolithCoreV2.fromStorage(jzStorage);
+    expect(
+        jzTakenWithFlag.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: jzTakenWithFlag.address });
+    expect(
+        advanceV2OnceForTest(jzTakenWithFlag, deployer.address),
+    ).toHaveSuccessfulTx<V2Advance>();
+    expect(jzTakenWithFlag.getPcV2()).toEqual(0x123);
+
+    val jzNotTaken = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0xD123)));
+    expect(jzNotTaken.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: jzNotTaken.address,
+    });
+    expect(advanceV2OnceForTest(jzNotTaken, deployer.address)).toHaveSuccessfulTx<V2Advance>();
+    expect(jzNotTaken.getPcV2()).toEqual(1);
+
+    var jcStorage = makeV2StorageForTest(romWithFirstWordV2(0xE123));
+    var jcCore = jcStorage.core.load();
+    jcCore.flags = FLAG_CARRY_V2;
+    jcStorage.core = jcCore.toCell();
+    val jcTaken = TonolithCoreV2.fromStorage(jcStorage);
+    expect(jcTaken.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: jcTaken.address,
+    });
+    expect(advanceV2OnceForTest(jcTaken, deployer.address)).toHaveSuccessfulTx<V2Advance>();
+    expect(jcTaken.getPcV2()).toEqual(0x123);
+
+    var adcStorage = makeV2StorageForTest(romWithFirstWordV2(0x5000));
+    var adcCore = adcStorage.core.load();
+    adcCore.flags = FLAG_CARRY_V2;
+    adcStorage.core = adcCore.toCell();
+    val adc = TonolithCoreV2.fromStorage(adcStorage);
+    expect(adc.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: adc.address,
+    });
+    expect(advanceV2OnceForTest(adc, deployer.address)).toHaveSuccessfulTx<V2Advance>();
+    expect(adc.getAccumulatorV2()).toEqual(1);
+
+    val invalidNop = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0x0001)));
+    expect(invalidNop.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidNop.address,
+    });
+    expect(advanceV2OnceForTest(invalidNop, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidLdi = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0x10FF)));
+    expect(invalidLdi.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidLdi.address,
+    });
+    expect(advanceV2OnceForTest(invalidLdi, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidRegister = TonolithCoreV2.fromStorage(
+        makeV2StorageForTest(romWithFirstWordV2(0x2FF)),
+    );
+    expect(invalidRegister.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidRegister.address,
+    });
+    expect(advanceV2OnceForTest(invalidRegister, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidRam = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0xA100)));
+    expect(invalidRam.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidRam.address,
+    });
+    expect(advanceV2OnceForTest(invalidRam, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidJump = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0xC400)));
+    expect(invalidJump.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidJump.address,
+    });
+    expect(advanceV2OnceForTest(invalidJump, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidSys = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0xF00D)));
+    expect(invalidSys.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidSys.address,
+    });
+    expect(advanceV2OnceForTest(invalidSys, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+
+    val missingRoute = TonolithCoreV2.fromStorage(
+        makeV2StorageForNetwork(
+            romWithFirstWordV2(0xF03A),
+            emptyV2RecordRoot(),
+            onePeerV2(V2Peer {
+                domain: DOMAIN_PEER_V2,
+                coreId: 1,
+                peerAddress: deployer.address,
+            }),
+        ),
+    );
+    expect(missingRoute.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: missingRoute.address,
+    });
+    expect(advanceV2OnceForTest(missingRoute, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidRoute,
+    });
+
+    val route = V2Route {
+        domain: DOMAIN_ROUTE_V2,
+        sourceCoreId: 0,
+        sourcePort: 3,
+        destinationCoreId: 1,
+        destinationPort: 4,
+        delay: 1,
+        maxRecordsPerEpoch: 4,
+    };
+    var sequenceStorage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0xF03A),
+        oneRouteV2(route),
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var sequenceCore = sequenceStorage.core.load();
+    sequenceCore.nextOutputSequence = (255 as uint128) << 24;
+    sequenceStorage.core = sequenceCore.toCell();
+    val sequenceLimit = TonolithCoreV2.fromStorage(sequenceStorage);
+    expect(sequenceLimit.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: sequenceLimit.address,
+    });
+    expect(advanceV2OnceForTest(sequenceLimit, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidSequence,
+    });
+
+    var fullOutboxStorage = makeV2StorageForTest(romWithFirstWordV2(0xF03A));
+    var fullOutboxCore = fullOutboxStorage.core.load();
+    var fullOutboxQueues = fullOutboxCore.queues.load();
+    repeat (16) {
+        fullOutboxQueues.outboxRoot = v2AppendQueueRoot(
+            fullOutboxQueues.outboxRoot,
+            outputRecordV2ForTest(0),
+        );
+    }
+    fullOutboxCore.queues = fullOutboxQueues.toCell();
+    fullOutboxCore.pc = 0;
+    fullOutboxCore.instructionCount = 0;
+    fullOutboxStorage.core = fullOutboxCore.toCell();
+    var directFullOutboxCore = fullOutboxCore;
+    v2ExecuteSys(
+        mutate directFullOutboxCore,
+        0x3A,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    expect(directFullOutboxCore.status).toEqual(STATUS_BACKPRESSURED_V2);
+    val fullOutbox = TonolithCoreV2.fromStorage(fullOutboxStorage);
+    expect(fullOutbox.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: fullOutbox.address,
+    });
+    expect(fullOutbox.getOutboxCountV2()).toEqual(16);
+    expect(advanceV2OnceForTest(fullOutbox, deployer.address)).toHaveSuccessfulTx<V2Advance>();
+    expect(fullOutbox.getStatusV2()).toEqual(STATUS_BACKPRESSURED_V2);
+    expect(fullOutbox.getPcV2()).toEqual(0);
+    expect(fullOutbox.getInstructionCountV2()).toEqual(0);
+    expect(fullOutbox.getOutboxCountV2()).toEqual(16);
 }
 
 get fun `test v2 advance validation and storage guards`() {
