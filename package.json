@@ -4,8 +4,23 @@
   "private": true,
   "description": "A deterministic, verifiable 4-bit processor on TON",
   "type": "module",
+  "main": "./dist/tools/index.js",
+  "types": "./dist/tools/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js",
+      "default": "./dist/tools/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:coverage": "c8 --reporter=text --reporter=lcov node --import tsx --test tests/*.test.ts",
