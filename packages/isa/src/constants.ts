@@ -31,6 +31,8 @@ export const DOMAIN = {
   route: 0x544c5232,
   batch: 0x544c4232,
   acknowledgement: 0x544c4132,
+  run: 0x544c4432,
+  limits: 0x544c4c32,
 } as const;
 
 export const MESSAGE_PREFIX = {
