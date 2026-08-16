@@ -116,3 +116,10 @@ fun onExternalMessage(_in: slice) {
     throw Errors.ExternalMessageRejected;
 }
 
+fun onBouncedMessage(_in: InMessageBounced) {}
+
+get fun getMagic(): uint32 {
+    val storage = lazy Storage.load();
+    return storage.magic;
+}
+
