@@ -63,3 +63,13 @@ export function assertNibble(value: number, field: string): void {
   }
 }
 
+export function setZeroFlag(flags: number, value: number): number {
+  assertNibble(value, "value");
+  return value === 0 ? flags | FLAG_ZERO : flags & ~FLAG_ZERO;
+}
+
+export function readRegister(state: CpuState, index: number): number {
+  assertRegister(index);
+  return state.registers[index] ?? 0;
+}
+
