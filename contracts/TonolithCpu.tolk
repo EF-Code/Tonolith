@@ -143,3 +143,13 @@ get fun getCoreStateHash(): uint256 {
     return storage.core.hash();
 }
 
+get fun getRomRootHash(): uint256 {
+    val storage = lazy Storage.load();
+    return storage.rom.hash();
+}
+
+get fun getRomWord(address: uint10): uint16 {
+    val storage = lazy Storage.load();
+    return romWord(storage.rom as Cell<RomRoot>, address);
+}
+
