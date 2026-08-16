@@ -123,3 +123,13 @@ get fun getMagic(): uint32 {
     return storage.magic;
 }
 
+get fun getSchemaVersion(): uint16 {
+    val storage = lazy Storage.load();
+    return storage.schemaVersion;
+}
+
+get fun getIsaVersion(): uint16 {
+    val storage = lazy Storage.load();
+    return storage.isaVersion;
+}
+
