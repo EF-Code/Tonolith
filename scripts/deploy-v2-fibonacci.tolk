@@ -42,8 +42,8 @@ fun main() {
             V2_RUN_ID,
             advanceCount,
             stateHash,
-            1,
-            1,
+            MAX_STEPS_PER_ADVANCE_V2,
+            MAX_OUTPUT_RECORDS_V2,
             { value: ton("0.01") },
         );
         println(tick.waitForTrace());
