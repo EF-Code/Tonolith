@@ -173,3 +173,13 @@ get fun getAccumulator(): uint4 {
     return (storage.core as Cell<CoreState>).load().accumulator;
 }
 
+get fun getFlags(): uint2 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().flags;
+}
+
+get fun getStatus(): uint1 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().status;
+}
+
