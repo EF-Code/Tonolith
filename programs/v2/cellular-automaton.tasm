@@ -1,0 +1,55 @@
+; A bounded four-cell Rule-90-style update, repeated twice.
+.nibble 0 1
+.nibble 1 0
+.nibble 2 1
+.nibble 3 0
+LDM 0
+STR R0
+LDM 1
+XOR R0
+STM 4
+LDM 1
+STR R0
+LDM 2
+XOR R0
+STM 5
+LDM 2
+STR R0
+LDM 3
+XOR R0
+STM 6
+LDM 4
+STR R0
+LDM 5
+XOR R0
+STM 7
+LDM 4
+STR R0
+LDM 5
+XOR R0
+STM 0
+LDM 5
+STR R0
+LDM 6
+XOR R0
+STM 1
+LDM 6
+STR R0
+LDM 7
+XOR R0
+STM 2
+LDM 7
+STR R0
+LDM 0
+XOR R0
+STM 3
+LDM 0
+XOR R0
+LDM 1
+XOR R0
+LDM 2
+XOR R0
+LDM 3
+XOR R0
+OUT
+HALT

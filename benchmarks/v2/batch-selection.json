@@ -1,0 +1,23 @@
+{
+  "schema": "tonolith-batch-selection-v2",
+  "network": "local-acton",
+  "measurementCommand": "acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42",
+  "hardCeilingGas": 400000,
+  "observedNetworkGasReference": 44381,
+  "safetyRule": "selected worst-case must remain below both 400000 gas and 40% of the observed network reference after protocol-path measurement",
+  "selectedMaxStepsPerAdvance": 1,
+  "selectionStatus": "conservative-single-step",
+  "candidates": [
+    { "maxSteps": 1, "contractAccepted": true, "worstCaseGas": 44381, "networkGasMeasured": false, "headroomToHardCeiling": 355619, "decision": "selected" },
+    { "maxSteps": 2, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
+    { "maxSteps": 4, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
+    { "maxSteps": 8, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
+    { "maxSteps": 16, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
+    { "maxSteps": 32, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" },
+    { "maxSteps": 64, "contractAccepted": false, "worstCaseGas": null, "networkGasMeasured": false, "headroomToHardCeiling": null, "decision": "deferred-until-batched-core-is-implemented" }
+  ],
+  "unresolved": [
+    "Acton currently accepts only one v2 instruction per Advance; candidates 2 through 64 require a separately proven batched loop.",
+    "The 40% rule needs a confirmed testnet gas baseline, not a local emulator estimate."
+  ]
+}
