@@ -100,3 +100,20 @@ export function romRootHash(words: readonly number[] = []): bigint {
   return BigInt(`0x${romRootCell(words).hash().toString("hex")}`);
 }
 
+export function romWord(words: readonly number[], address: number): number {
+  if (!Number.isInteger(address) || address < 0 || address >= ROM_WORDS) {
+    throw new RangeError(`ROM address must be in 0..${ROM_WORDS - 1}`);
+  }
+  const normalized = normalizeWords(words);
+  return normalized[address] ?? 0;
+}
+
+export function staticCommitmentCell(romHash: bigint): Cell {
+  return beginCell()
+    .storeUint(STATIC_COMMITMENT_NAMESPACE, 32)
+    .storeUint(SCHEMA_VERSION, 16)
+    .storeUint(ISA_VERSION, 16)
+    .storeUint(romHash, 256)
+    .endCell();
+}
+
