@@ -2,3 +2,5 @@ export const NIBBLE_MASK = 0x0f;
 export const REGISTER_COUNT = 16;
 export const RAM_SIZE = 256;
 export const ROM_WORDS = 1024;
+export const WORD_BITS = 16;
+export const WORD_MASK = (1 << WORD_BITS) - 1;
