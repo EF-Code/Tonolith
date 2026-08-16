@@ -183,3 +183,13 @@ get fun getStatus(): uint1 {
     return (storage.core as Cell<CoreState>).load().status;
 }
 
+get fun getOutputCount(): uint64 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().outputCount;
+}
+
+get fun getOutputRegister(): uint4 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().outputRegister;
+}
+
