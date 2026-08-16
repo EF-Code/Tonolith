@@ -29,3 +29,15 @@ network-dependent.
 
 `TopUp` has no fields. It accepts value and leaves the CPU state unchanged.
 
+### Empty body
+
+An empty internal body is accepted as a no-op. A short non-empty body or an
+unknown prefix throws `UnknownMessage`.
+
+## External messages
+
+External input is rejected with `ExternalMessageRejected` (109). Acton’s local
+external-message shim returns no transaction and does not execute the contract
+hook, so that hook is documented as a local-emulation boundary and remains a
+testnet verification item.
+
