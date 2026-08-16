@@ -295,3 +295,50 @@ fun readRamNibble(core: CoreState, address: int): uint4 {
     return ((page.packed >> shift) & 15) as uint4;
 }
 
+fun writeRamNibble(ramCell: Cell<RamRoot>, address: int, value: uint4): Cell<RamRoot> {
+    val root = ramCell.load();
+    val pageIndex = address >> 6;
+    val offset = address & 63;
+    val oldPage = selectRamPage(root, pageIndex).load();
+    val shift = offset * 4;
+    val mask = 15 << shift;
+    val packed = ((oldPage.packed & ~mask) | (value << shift)) as uint256;
+    val newPage = RamPage { packed }.toCell();
+    if (pageIndex == 0) {
+        return RamRoot {
+            page0: newPage,
+            page1: root.page1,
+            page2: root.page2,
+            page3: root.page3,
+        }.toCell();
+    }
+    if (pageIndex == 1) {
+        return RamRoot {
+            page0: root.page0,
+            page1: newPage,
+            page2: root.page2,
+            page3: root.page3,
+        }.toCell();
+    }
+    if (pageIndex == 2) {
+        return RamRoot {
+            page0: root.page0,
+            page1: root.page1,
+            page2: newPage,
+            page3: root.page3,
+        }.toCell();
+    }
+    // selectRamPage above proves that pageIndex is in 0..3; page 3 is the
+    // remaining valid case after the first three branches.
+    return RamRoot {
+        page0: root.page0,
+        page1: root.page1,
+        page2: root.page2,
+        page3: newPage,
+    }.toCell();
+}
+
+fun hasFlag(flags: uint2, flag: uint2): bool {
+    return (flags & flag) != 0;
+}
+
