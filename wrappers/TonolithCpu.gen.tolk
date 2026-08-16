@@ -110,3 +110,11 @@ fun TonolithCpu.getCoreStateHash(self): uint256 {
     return net.runGetMethod(self.address, "getCoreStateHash");
 }
 
+fun TonolithCpu.getRomRootHash(self): uint256 {
+    return net.runGetMethod(self.address, "getRomRootHash");
+}
+
+fun TonolithCpu.getRomWord(self, address: uint10): uint16 {
+    return net.runGetMethod(self.address, "getRomWord", [address]);
+}
+
