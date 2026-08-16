@@ -168,3 +168,32 @@ export function stateHash(state: CpuState): string {
   return coreStateCell(state).hash().toString("hex");
 }
 
+export function packRegisters(registers: readonly number[]): bigint {
+  if (registers.length !== REGISTER_COUNT) {
+    throw new RangeError("register file must contain 16 registers");
+  }
+
+  let packed = 0n;
+  registers.forEach((value, index) => {
+    assertNibble(value, "register value");
+    packed |= BigInt(value) << BigInt(index * 4);
+  });
+  return packed;
+}
+
+export function outputCommitmentCell(
+  previousCommitment: bigint,
+  outputIndex: bigint,
+  instructionCount: bigint,
+  value: number,
+): Cell {
+  assertNibble(value, "output value");
+  return beginCell()
+    .storeUint(OUTPUT_COMMITMENT_DOMAIN, 32)
+    .storeUint(previousCommitment, 256)
+    .storeUint(outputIndex, 64)
+    .storeUint(instructionCount, 64)
+    .storeUint(value, 4)
+    .endCell();
+}
+
