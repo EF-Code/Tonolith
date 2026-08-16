@@ -1,5 +1,5 @@
 import { buildArtifact, type ArtifactBundle, type BuildArtifactOptions } from "../../artifact/src/manifest.js";
-import { acknowledgeOutput, deliverInput, dispatchOutput, step, type V2StepResult } from "../../emulator/src/executor.js";
+import { acknowledgeOutput, advance, deliverInput, dispatchOutput, step, type V2StepResult } from "../../emulator/src/executor.js";
 import { createInitialState, type V2State } from "../../emulator/src/model.js";
 import { stateHash } from "../../emulator/src/commitments.js";
 import { STATUS } from "../../isa/src/constants.js";
@@ -39,20 +39,35 @@ export function runArtifact(artifact: ArtifactBundle, maxInstructions = 10_000):
   let executedInstructions = 0;
   const outputs: number[] = [];
   const frames: TraceFrame[] = [];
-  for (let index = 0; index < maxInstructions && state.status !== STATUS.halted && state.status !== STATUS.faulted; index += 1) {
-    const before = state;
-    const result = step(before, { rom: artifact.assembly.words });
-    state = result.state;
-    if (!result.executed) break;
-    // Each benchmark frame represents one accepted bounded Advance, not only
-    // the architectural instruction. Keep protocol counters identical to the
-    // emulator's Advance transition and the contract state commitment.
-    state.advanceCount += 1n;
-    state.acceptedMessageCount += 1n;
-    executedInstructions += 1;
-    if (result.legacyOutput !== undefined) outputs.push(result.legacyOutput.value);
-    if (result.output !== undefined) outputs.push(result.output.value);
-    frames.push(frame(frames.length, artifact.manifest.coreId, before, state, result));
+  while (executedInstructions < maxInstructions && state.status !== STATUS.halted && state.status !== STATUS.faulted) {
+    const beforeBatch = state;
+    const requestedSteps = Math.min(
+      artifact.limits.maxStepsPerAdvance,
+      maxInstructions - executedInstructions,
+    );
+    const batch = advance(state, { rom: artifact.assembly.words }, {
+      expectedAdvanceCount: state.advanceCount,
+      expectedStateHash: stateHash(state),
+      maxInstructions: requestedSteps,
+      maxOutputs: artifact.limits.maxOutputsPerAdvance,
+    });
+    if (batch.executed === 0) break;
+
+    // Reconstruct instruction-level frames independently for the visualizer,
+    // while taking the accepted state and protocol counters from Advance.
+    let simulation = beforeBatch;
+    for (let offset = 0; offset < batch.executed; offset += 1) {
+      const before = simulation;
+      const result = step(before, { rom: artifact.assembly.words });
+      if (!result.executed) break;
+      simulation = result.state;
+      const after = offset === batch.executed - 1 ? batch.state : simulation;
+      if (result.legacyOutput !== undefined) outputs.push(result.legacyOutput.value);
+      if (result.output !== undefined) outputs.push(result.output.value);
+      frames.push(frame(frames.length, artifact.manifest.coreId, before, after, result));
+    }
+    state = batch.state;
+    executedInstructions += batch.executed;
   }
   return {
     name: artifact.manifest.name,
