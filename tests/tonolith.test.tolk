@@ -1337,3 +1337,102 @@ fun romWithFibonacci(): Cell<RomRoot> {
     );
 }
 
+fun romWithLevel1Sentinels(): Cell<RomRoot> {
+    val zeroLeaf = zeroRomLeaf();
+    val level10 = RomLevel1 {
+        leaf0: romWithFirstWord(1).load().level20.load().level10.load().leaf0,
+        leaf1: RomLeaf {
+            firstHalf: (5 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf2: RomLeaf {
+            firstHalf: (6 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf3: RomLeaf {
+            firstHalf: (7 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+    }.toCell();
+    val level11 = RomLevel1 {
+        leaf0: RomLeaf {
+            firstHalf: (2 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: zeroLeaf,
+        leaf2: zeroLeaf,
+        leaf3: zeroLeaf,
+    }.toCell();
+    val level12 = RomLevel1 {
+        leaf0: RomLeaf {
+            firstHalf: (3 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: zeroLeaf,
+        leaf2: zeroLeaf,
+        leaf3: zeroLeaf,
+    }.toCell();
+    val level13 = RomLevel1 {
+        leaf0: RomLeaf {
+            firstHalf: (4 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: zeroLeaf,
+        leaf2: zeroLeaf,
+        leaf3: zeroLeaf,
+    }.toCell();
+    val level2 = RomLevel2 { level10, level11, level12, level13 }.toCell();
+    val zeroLevel2 = zeroRomLevel2();
+    return RomRoot {
+        level20: level2,
+        level21: zeroLevel2,
+        level22: zeroLevel2,
+        level23: zeroLevel2,
+    }.toCell();
+}
+
+fun romWithWords(
+    word0: uint16,
+    word1: uint16,
+    word2: uint16,
+    word3: uint16,
+    word4: uint16,
+    word5: uint16,
+    word6: uint16,
+    word7: uint16,
+    word8: uint16,
+    word9: uint16,
+    word10: uint16,
+    word11: uint16,
+    word12: uint16,
+    word13: uint16,
+    word14: uint16,
+    word15: uint16,
+): Cell<RomRoot> {
+    val firstBuilder = beginCell()
+        .storeUint(word0, 16)
+        .storeUint(word1, 16)
+        .storeUint(word2, 16)
+        .storeUint(word3, 16)
+        .storeUint(word4, 16)
+        .storeUint(word5, 16)
+        .storeUint(word6, 16)
+        .storeUint(word7, 16)
+        .storeUint(word8, 16)
+        .storeUint(word9, 16)
+        .storeUint(word10, 16)
+        .storeUint(word11, 16)
+        .storeUint(word12, 16)
+        .storeUint(word13, 16)
+        .storeUint(word14, 16)
+        .storeUint(word15, 16);
+    var firstSlice = firstBuilder.toSlice();
+    val firstHalf = firstSlice.loadUint(256) as uint256;
+    return romRootWithFirstLeaf(
+        RomLeaf {
+            firstHalf,
+            secondHalf: 0,
+        }.toCell(),
+    );
+}
+
