@@ -55,11 +55,15 @@ export interface V2VerificationExpectations {
   readonly romRoot: Hash256;
   readonly routeRoot: Hash256;
   readonly staticCommitment: Hash256;
+  readonly coreId?: number;
+  readonly maxStepsPerAdvance?: number;
 }
 
 export interface ReplayEvidence {
   readonly initialState: import("../../emulator/src/model.js").V2State;
   readonly rom: readonly number[];
+  /** Optional address-to-core bindings used to prove authenticated deliveries. */
+  readonly peerIdsByAddress?: Readonly<Record<string, number>>;
 }
 
 export interface VerificationReport {
@@ -67,6 +71,14 @@ export interface VerificationReport {
   readonly network: string;
   readonly address: string;
   readonly sources: readonly string[];
+  readonly commitments: {
+    readonly programId: Hash256;
+    readonly runId: Hash256;
+    readonly romRoot: Hash256;
+    readonly routeRoot: Hash256;
+    readonly staticCommitment: Hash256;
+  };
+  readonly providerAgreement: boolean;
   readonly deployment?: {
     readonly transactionHash?: string;
     readonly transactionLt?: string;
@@ -84,6 +96,8 @@ export interface VerificationReport {
   readonly finalPc?: number;
   readonly outputCommitment?: Hash256;
   readonly totalFeesNano?: string;
+  readonly stateSnapshotsChecked: number;
+  readonly replayedMessageKinds: readonly string[];
   readonly errors: readonly string[];
   readonly unresolved: readonly string[];
 }
