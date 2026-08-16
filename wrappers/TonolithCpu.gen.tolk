@@ -63,3 +63,25 @@ fun TonolithCpu.sendAdvance(
     return net.send(from, genericMsg);
 }
 
+fun TonolithCpu.sendTopUp(self, from: address, config: SendParams = {}): SendResultList {
+    val genericMsg = createMessage({
+        bounce: config.bounce,
+        value: config.value,
+        dest: self.address,
+        body: TopUp {},
+    });
+    return net.send(from, genericMsg);
+}
+
+/// Send message to the contract with a custom body cell
+fun TonolithCpu.sendAny(self, from: address, body: cell, config: SendParams = {}): SendResultList {
+    val genericMsg = createMessage({
+        bounce: config.bounce,
+        value: config.value,
+        dest: self.address,
+        body,
+    });
+    return net.send(from, genericMsg);
+}
+
+/// Send an external-in message to the contract with a custom body cell
