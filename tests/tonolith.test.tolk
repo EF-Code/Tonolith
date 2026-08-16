@@ -1436,3 +1436,14 @@ fun romWithWords(
     );
 }
 
+fun advanceOne(cpu: TonolithCpu, sender: address, queryId: uint64) {
+    val result = cpu.sendAdvance(
+        sender,
+        queryId,
+        cpu.getAdvanceCount(),
+        cpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(result).toHaveSuccessfulTx<Advance>();
+}
