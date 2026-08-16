@@ -22,3 +22,22 @@ import {
 
 let seed = 0x51f15e5d;
 
+function randomUint32(): number {
+  seed = (Math.imul(seed, 1_664_525) + 1_013_904_223) >>> 0;
+  return seed;
+}
+
+function randomState(): CpuState {
+  const state = createInitialState();
+  state.accumulator = randomUint32() & 0x0f;
+  state.flags = randomUint32() & 0x03;
+  state.outputRegister = randomUint32() & 0x0f;
+  state.registers = state.registers.map(() => randomUint32() & 0x0f);
+  state.ram = state.ram.map(() => randomUint32() & 0x0f);
+  state.advanceCount = BigInt(randomUint32());
+  state.instructionCount = BigInt(randomUint32());
+  state.outputCount = BigInt(randomUint32());
+  state.outputCommitment = BigInt(randomUint32()) << 224n | BigInt(randomUint32());
+  return state;
+}
+
