@@ -142,3 +142,17 @@ type AllowedMessage =
     | Advance
     | TopUp
 
+fun zeroRamPage(): Cell<RamPage> {
+    return RamPage { packed: 0 }.toCell();
+}
+
+fun zeroRamRoot(): Cell<RamRoot> {
+    val page = zeroRamPage();
+    return RamRoot {
+        page0: page,
+        page1: page,
+        page2: page,
+        page3: page,
+    }.toCell();
+}
+
