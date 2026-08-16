@@ -241,3 +241,10 @@ function formatImmediate(value: number): string {
   return `0x${value.toString(16).toUpperCase()}`;
 }
 
+function decodeInstructionForDisplay(word: number) {
+  try {
+    return decodeInstruction(word);
+  } catch (error) {
+    throw new AssemblyError(error instanceof Error ? error.message : String(error));
+  }
+}
