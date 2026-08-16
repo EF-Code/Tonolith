@@ -210,3 +210,4 @@ export function flagsContain(flags: number, flag: number): boolean {
   return (flags & flag) !== 0;
 }
 
+export { FLAG_CARRY, FLAG_ZERO };
