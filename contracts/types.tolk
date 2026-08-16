@@ -19,3 +19,5 @@ const STATIC_NAMESPACE: uint32 = 0x544E4C01
 const FLAG_ZERO: uint2 = 1
 const FLAG_CARRY: uint2 = 2
 const STATUS_RUNNING: uint1 = 0
+const STATUS_HALTED: uint1 = 1
+const OUTPUT_NAMESPACE: uint32 = 0x544E4C4F
