@@ -438,3 +438,77 @@ get fun `test JC false path and maximum jump target`() {
     expect(maxTargetCpu.getPc()).toEqual(1023);
 }
 
+get fun `test INC sets carry and zero on nibble wrap`() {
+    val deployer = testing.treasury("inc-boundary-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x100F,
+                0xF007,
+                0xF000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(cpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: cpu.address,
+    });
+    repeat (3) {
+        advanceOne(cpu, deployer.address, cpu.getAdvanceCount());
+    }
+    expect(cpu.getAccumulator()).toEqual(0);
+    expect(cpu.getFlags()).toEqual(3);
+}
+
+get fun `test RAM and branch opcodes`() {
+    val deployer = testing.treasury("memory-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x100A,
+                0xB0FF,
+                0x1000,
+                0xD005,
+                0x100F,
+                0xA0FF,
+                0xD008,
+                0xF003,
+                0xE00B,
+                0x100D,
+                0xF002,
+                0xE00E,
+                0xC00F,
+                0x100E,
+                0x0000,
+                0xF000,
+            ),
+        ),
+    );
+    expect(
+        cpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: cpu.address });
+
+    while (cpu.getStatus() == 0) {
+        advanceOne(cpu, deployer.address, cpu.getAdvanceCount());
+    }
+
+    expect(cpu.getRamNibble(0xFF)).toEqual(10);
+    expect(cpu.getAccumulator()).toEqual(10);
+    expect(cpu.getPc()).toEqual(16);
+    expect(cpu.getStatus()).toEqual(1);
+    expect(cpu.getInstructionCount()).toEqual(11);
+    expect(cpu.getAdvanceCount()).toEqual(11);
+}
+
