@@ -197,3 +197,16 @@ export function outputCommitmentCell(
     .endCell();
 }
 
+export function nextOutputCommitment(
+  previousCommitment: bigint,
+  outputIndex: bigint,
+  instructionCount: bigint,
+  value: number,
+): bigint {
+  return BigInt(`0x${outputCommitmentCell(previousCommitment, outputIndex, instructionCount, value).hash().toString("hex")}`);
+}
+
+export function flagsContain(flags: number, flag: number): boolean {
+  return (flags & flag) !== 0;
+}
+
