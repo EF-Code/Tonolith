@@ -272,3 +272,26 @@ fun selectRomLevel1(level2: RomLevel2, index: int): RomLevel1 {
     return level2.level13.load();
 }
 
+fun selectRamPage(root: RamRoot, index: int): Cell<RamPage> {
+    if (index == 0) {
+        return root.page0;
+    }
+    if (index == 1) {
+        return root.page1;
+    }
+    if (index == 2) {
+        return root.page2;
+    }
+    if (index < 0 || index > 3) {
+        throw Errors.InvalidStorage;
+    }
+    return root.page3;
+}
+
+fun readRamNibble(core: CoreState, address: int): uint4 {
+    val root = core.ram.load();
+    val page = selectRamPage(root, address >> 6).load();
+    val shift = (address & 63) * 4;
+    return ((page.packed >> shift) & 15) as uint4;
+}
+
