@@ -96,3 +96,23 @@ export function encodeInstruction(opcode: Opcode, operand = 0): number {
   return ((opcode & NIBBLE_MASK) << 12) | operand;
 }
 
+export function decodeInstruction(word: number): DecodedInstruction {
+  if (!Number.isInteger(word) || word < 0 || word > WORD_MASK) {
+    throw new IsaError("INVALID_WORD", "instruction word must be a 16-bit unsigned integer");
+  }
+
+  const opcode = (word >>> 12) as Opcode;
+  const operand = word & 0xfff;
+  const canonicalWord = encodeInstruction(opcode, operand);
+  if (canonicalWord !== word) {
+    throw new IsaError("NON_CANONICAL", `instruction 0x${word.toString(16)} is not canonical`);
+  }
+  return { word, opcode, operand };
+}
+
+function requireOperand(opcode: Opcode, condition: boolean, message: string): void {
+  if (!condition) {
+    throw new IsaError("NON_CANONICAL", `${opcodeName(opcode)}: ${message}`);
+  }
+}
+
