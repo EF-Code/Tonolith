@@ -16,6 +16,11 @@
       "types": "./dist/tools/browser.d.ts",
       "import": "./dist/tools/browser.js",
       "default": "./dist/tools/browser.js"
+    },
+    "./v2": {
+      "types": "./dist/packages/sdk/src/index.d.ts",
+      "import": "./dist/packages/sdk/src/index.js",
+      "default": "./dist/packages/sdk/src/index.js"
     }
   },
   "files": [
