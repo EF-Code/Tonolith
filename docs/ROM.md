@@ -59,3 +59,17 @@ uint256 romRootHash
 
 This is a binding to the complete ROM root hash, not a proof that a particular
 instruction was produced by a gate-level or Intel 4004 implementation. The
+contract recomputes and checks the commitment before every accepted `Advance`.
+
+## Fibonacci v1 vector
+
+The assembled program in `programs/fibonacci.tasm` has 21 words. Its expected
+commitments are:
+
+```text
+ROM root:          029ccf15774f680518705bb7c8be4b2ca92f34a4ceb9c963e55609225398c748
+static commitment: 50da71fe389768e885c8258c7f4f4a97b86598738eed974336d527e459024f08
+```
+
+These values are checked by the TypeScript ROM tests and are used by the Tolk
+Fibonacci contract test and the testnet deployment script.
