@@ -15,3 +15,21 @@ struct TonolithCpu {
 }
 
 /// Creates a contract wrapper instance from the storage data
+fun TonolithCpu.fromStorage(
+    storage: Storage,
+    toShard: AddressShardingOptions? = null,
+): TonolithCpu {
+    val stateInit = ContractState {
+        code: build("TonolithCpu"),
+        data: storage.toCell(),
+    };
+    val address = AutoDeployAddress { stateInit, toShard }.calculateAddress();
+    return TonolithCpu { address, stateInit };
+}
+
+/// Creates a contract wrapper instance from the address
+fun TonolithCpu.fromAddress(address: address): TonolithCpu {
+    return TonolithCpu { address };
+}
+
+/// Deploys the contract to the blockchain
