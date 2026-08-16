@@ -1,0 +1,138 @@
+{
+  "schema": "tonolith-program-v1",
+  "isa": "tonolith-isa-v1",
+  "words": [
+    "1001",
+    "3000",
+    "1001",
+    "3001",
+    "1007",
+    "3002",
+    "2000",
+    "f001",
+    "2002",
+    "f008",
+    "3002",
+    "d014",
+    "2000",
+    "4001",
+    "3003",
+    "2001",
+    "3000",
+    "2003",
+    "3001",
+    "c006",
+    "f000"
+  ],
+  "labels": {
+    "LOOP": 6,
+    "DONE": 20
+  },
+  "sourceMap": [
+    {
+      "address": 0,
+      "line": 4,
+      "source": "LDI 1"
+    },
+    {
+      "address": 1,
+      "line": 5,
+      "source": "STR R0"
+    },
+    {
+      "address": 2,
+      "line": 6,
+      "source": "LDI 1"
+    },
+    {
+      "address": 3,
+      "line": 7,
+      "source": "STR R1"
+    },
+    {
+      "address": 4,
+      "line": 8,
+      "source": "LDI 7"
+    },
+    {
+      "address": 5,
+      "line": 9,
+      "source": "STR R2"
+    },
+    {
+      "address": 6,
+      "line": 12,
+      "source": "LDR R0"
+    },
+    {
+      "address": 7,
+      "line": 13,
+      "source": "OUT"
+    },
+    {
+      "address": 8,
+      "line": 14,
+      "source": "LDR R2"
+    },
+    {
+      "address": 9,
+      "line": 15,
+      "source": "DEC"
+    },
+    {
+      "address": 10,
+      "line": 16,
+      "source": "STR R2"
+    },
+    {
+      "address": 11,
+      "line": 17,
+      "source": "JZ DONE"
+    },
+    {
+      "address": 12,
+      "line": 19,
+      "source": "LDR R0"
+    },
+    {
+      "address": 13,
+      "line": 20,
+      "source": "ADD R1"
+    },
+    {
+      "address": 14,
+      "line": 21,
+      "source": "STR R3"
+    },
+    {
+      "address": 15,
+      "line": 22,
+      "source": "LDR R1"
+    },
+    {
+      "address": 16,
+      "line": 23,
+      "source": "STR R0"
+    },
+    {
+      "address": 17,
+      "line": 24,
+      "source": "LDR R3"
+    },
+    {
+      "address": 18,
+      "line": 25,
+      "source": "STR R1"
+    },
+    {
+      "address": 19,
+      "line": 26,
+      "source": "JMP LOOP"
+    },
+    {
+      "address": 20,
+      "line": 29,
+      "source": "HALT"
+    }
+  ]
+}
