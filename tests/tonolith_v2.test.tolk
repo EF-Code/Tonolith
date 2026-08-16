@@ -273,7 +273,8 @@ fun advanceV2OnceForTest(core: TonolithCoreV2, from: address): SendResultList {
 
 get fun `test v2 deploy exposes immutable metadata and a canonical initial state`() {
     val deployer = testing.treasury("v2-metadata-deployer");
-    val core = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0x0000)));
+    val storage = makeV2StorageForTest(romWithFirstWordV2(0x0000));
+    val core = TonolithCoreV2.fromStorage(storage);
     expect(
         core.deploy(deployer.address, SendParams { value: ton("1") }),
     ).toHaveSuccessfulDeploy({ to: core.address });
@@ -287,6 +288,27 @@ get fun `test v2 deploy exposes immutable metadata and a canonical initial state
     expect(core.getStatusV2()).toEqual(0);
     expect(core.getEpochV2()).toEqual(0);
     expect(core.getInstructionCountV2()).toEqual(0);
+    expect(core.getStateHashV2()).toEqual(core.getCoreStateHashV2());
+    expect(core.getStaticIdentityV2().hash()).toEqual(storage.identity.hash());
+    expect(core.getRegistersV2()).toEqual(0);
+    expect(core.getRamRootV2()).toEqual(storage.core.load().memory.load().ram.hash());
+    expect(core.getMemoryPageV2(0)).toEqual(0);
+    expect(core.getFaultCodeV2()).toEqual(0);
+    expect(core.getInboxSummaryV2()).toEqual(4096);
+    expect(core.getOutboxSummaryV2()).toEqual(4096);
+    expect(core.getEpochStateV2().hash()).toEqual(
+        beginCell()
+            .storeUint(DOMAIN_EPOCH_V2, 32)
+            .storeUint(0, 64)
+            .storeUint(STATUS_RUNNING_V2, 3)
+            .storeUint(0, 64)
+            .storeUint(0, 256)
+            .endCell()
+            .hash(),
+    );
+    expect(core.estimateRequiredValueV2(0)).toEqual(MIN_ADVANCE_VALUE_V2 as uint64);
+    expect(core.estimateRequiredValueV2(1)).toEqual(MIN_DISPATCH_VALUE_V2 as uint64);
+    expect(core.estimateRequiredValueV2(2)).toEqual(MIN_DELIVERY_VALUE_V2 as uint64);
     expect(
         core.getCoreStateHashV2(),
     ).toEqual(0x0782faed379592a6d47134282b8c495e6073033acb733ed5e629f8b24ddb14b9);
@@ -434,6 +456,17 @@ get fun `test v2 OUTP appends a routed output and commits it`() {
     expect(core.getOutputCommitmentV2()).toEqual(
         0xbef05e20c0bfad82f96fadd6cd4d085e08d26804ae52ec28d063f48d48fe886b,
     );
+    expect(core.getPeerRootV2()).toEqual(
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }).hash(),
+    );
+    expect(core.getRouteV2(0, 3).hash()).toEqual(route.toCell().hash());
+    expect(
+        core.getOutputV2(0x18f93e46534eae22589575988cee189065e808d771d9eb925991245077a826fe).hash(),
+    ).toNotEqual(0);
     expect(core.getCoreStateHashV2()).toEqual(
         0x0eed2e36924e740c884530155b6c8f079f1e342a2ff3ee0a1b7b672ba88c7c42,
     );
@@ -570,6 +603,7 @@ get fun `test v2 IN waits, accepts authenticated input, deduplicates, and consum
     expect(core.getStatusV2()).toEqual(STATUS_RUNNING_V2);
     expect(core.getInboxCountV2()).toEqual(1);
     expect(core.getInputCountV2()).toEqual(1);
+    expect(core.getInboxSlotV2(1, 2, 0)).toEqual(0x107);
     val duplicate = sendDeliverInputV2ForTest(
         core,
         deployer.address,

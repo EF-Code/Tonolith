@@ -230,6 +230,10 @@ fun TonolithCoreV2.getStaticCommitmentV2(self): uint256 {
     return net.runGetMethod(self.address, "getStaticCommitmentV2");
 }
 
+fun TonolithCoreV2.getStaticIdentityV2(self): cell {
+    return net.runGetMethod(self.address, "getStaticIdentityV2");
+}
+
 fun TonolithCoreV2.getProgramIdV2(self): uint256 {
     return net.runGetMethod(self.address, "getProgramIdV2");
 }
@@ -242,8 +246,16 @@ fun TonolithCoreV2.getRouteRootV2(self): uint256 {
     return net.runGetMethod(self.address, "getRouteRootV2");
 }
 
+fun TonolithCoreV2.getPeerRootV2(self): uint256 {
+    return net.runGetMethod(self.address, "getPeerRootV2");
+}
+
 fun TonolithCoreV2.getCoreStateHashV2(self): uint256 {
     return net.runGetMethod(self.address, "getCoreStateHashV2");
+}
+
+fun TonolithCoreV2.getStateHashV2(self): uint256 {
+    return net.runGetMethod(self.address, "getStateHashV2");
 }
 
 fun TonolithCoreV2.getAdvanceCountV2(self): uint64 {
@@ -266,12 +278,32 @@ fun TonolithCoreV2.getStatusV2(self): uint3 {
     return net.runGetMethod(self.address, "getStatusV2");
 }
 
+fun TonolithCoreV2.getFaultCodeV2(self): uint8 {
+    return net.runGetMethod(self.address, "getFaultCodeV2");
+}
+
 fun TonolithCoreV2.getAccumulatorV2(self): uint4 {
     return net.runGetMethod(self.address, "getAccumulatorV2");
 }
 
 fun TonolithCoreV2.getFlagsV2(self): uint2 {
     return net.runGetMethod(self.address, "getFlagsV2");
+}
+
+fun TonolithCoreV2.getRegistersV2(self): uint64 {
+    return net.runGetMethod(self.address, "getRegistersV2");
+}
+
+fun TonolithCoreV2.getRamRootV2(self): uint256 {
+    return net.runGetMethod(self.address, "getRamRootV2");
+}
+
+fun TonolithCoreV2.getMemoryPageV2(self, pageIndex: uint8): uint256 {
+    return net.runGetMethod(self.address, "getMemoryPageV2", [pageIndex]);
+}
+
+fun TonolithCoreV2.getEpochStateV2(self): cell {
+    return net.runGetMethod(self.address, "getEpochStateV2");
 }
 
 fun TonolithCoreV2.getAcceptedMessageCountV2(self): uint64 {
@@ -292,6 +324,30 @@ fun TonolithCoreV2.getInboxCountV2(self): uint8 {
 
 fun TonolithCoreV2.getOutboxCountV2(self): uint8 {
     return net.runGetMethod(self.address, "getOutboxCountV2");
+}
+
+fun TonolithCoreV2.getInboxSummaryV2(self): uint16 {
+    return net.runGetMethod(self.address, "getInboxSummaryV2");
+}
+
+fun TonolithCoreV2.getOutboxSummaryV2(self): uint16 {
+    return net.runGetMethod(self.address, "getOutboxSummaryV2");
+}
+
+fun TonolithCoreV2.getInboxSlotV2(self, epoch: uint64, port: uint4, sequence: uint8): uint16 {
+    return net.runGetMethod(self.address, "getInboxSlotV2", [epoch, port, sequence]);
+}
+
+fun TonolithCoreV2.getOutputV2(self, outputId: uint256): cell {
+    return net.runGetMethod(self.address, "getOutputV2", [outputId]);
+}
+
+fun TonolithCoreV2.getRouteV2(self, sourceCoreId: uint16, sourcePort: uint4): cell {
+    return net.runGetMethod(self.address, "getRouteV2", [sourceCoreId, sourcePort]);
+}
+
+fun TonolithCoreV2.estimateRequiredValueV2(self, messageClass: uint8): uint64 {
+    return net.runGetMethod(self.address, "estimateRequiredValueV2", [messageClass]);
 }
 
 fun TonolithCoreV2.getOutputCommitmentV2(self): uint256 {

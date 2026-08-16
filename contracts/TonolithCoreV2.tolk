@@ -1,5 +1,6 @@
 import "v2/commitments"
 import "v2/execution"
+import "v2/memory"
 import "v2/peers"
 import "v2/queues"
 import "v2/rom"
@@ -595,6 +596,12 @@ get fun getStaticCommitmentV2(): uint256 {
     return storage.identity.load().staticCommitment;
 }
 
+/// Returns the immutable identity cell used by the off-chain verifier.
+get fun getStaticIdentityV2(): cell {
+    val storage = lazy V2Storage.load();
+    return storage.identity;
+}
+
 get fun getProgramIdV2(): uint256 {
     val storage = lazy V2Storage.load();
     return storage.identity.load().programId;
@@ -610,7 +617,17 @@ get fun getRouteRootV2(): uint256 {
     return storage.identity.load().roots.load().routeRoot;
 }
 
+get fun getPeerRootV2(): uint256 {
+    val storage = lazy V2Storage.load();
+    return storage.identity.load().roots.load().peers.load().peerRoot;
+}
+
 get fun getCoreStateHashV2(): uint256 {
+    val storage = lazy V2Storage.load();
+    return storage.core.hash();
+}
+
+get fun getStateHashV2(): uint256 {
     val storage = lazy V2Storage.load();
     return storage.core.hash();
 }
@@ -640,6 +657,11 @@ get fun getStatusV2(): uint3 {
     return storage.core.load().status;
 }
 
+get fun getFaultCodeV2(): uint8 {
+    val storage = lazy V2Storage.load();
+    return storage.core.load().faultCode;
+}
+
 get fun getAccumulatorV2(): uint4 {
     val storage = lazy V2Storage.load();
     return storage.core.load().accumulator;
@@ -648,6 +670,36 @@ get fun getAccumulatorV2(): uint4 {
 get fun getFlagsV2(): uint2 {
     val storage = lazy V2Storage.load();
     return storage.core.load().flags;
+}
+
+get fun getRegistersV2(): uint64 {
+    val storage = lazy V2Storage.load();
+    return storage.core.load().memory.load().registers.load().packed;
+}
+
+get fun getRamRootV2(): uint256 {
+    val storage = lazy V2Storage.load();
+    return storage.core.load().memory.load().ram.hash();
+}
+
+get fun getMemoryPageV2(pageIndex: uint8): uint256 {
+    val storage = lazy V2Storage.load();
+    val page = selectV2RamPage(storage.core.load().memory.load().ram.load(), pageIndex);
+    return page.load().packed;
+}
+
+/// Returns a compact epoch view cell: domain, epoch, status, instruction count,
+/// and the cumulative epoch-history commitment.
+get fun getEpochStateV2(): cell {
+    val storage = lazy V2Storage.load();
+    val core = storage.core.load();
+    return beginCell()
+        .storeUint(DOMAIN_EPOCH_V2, 32)
+        .storeUint(core.epoch, 64)
+        .storeUint(core.status, 3)
+        .storeUint(core.instructionCount, 64)
+        .storeUint(core.commitments.load().epochHistoryCommitment, 256)
+        .endCell();
 }
 
 get fun getAcceptedMessageCountV2(): uint64 {
@@ -673,6 +725,64 @@ get fun getInboxCountV2(): uint8 {
 get fun getOutboxCountV2(): uint8 {
     val storage = lazy V2Storage.load();
     return v2QueueCount(storage.core.load().queues.load().outboxRoot) as uint8;
+}
+
+/// High byte is the fixed capacity; low byte is the current count.
+get fun getInboxSummaryV2(): uint16 {
+    val storage = lazy V2Storage.load();
+    return (v2QueueCount(storage.core.load().queues.load().inboxRoot) |
+    (MAX_INPUT_RECORDS_V2 << 8)) as uint16;
+}
+
+get fun getOutboxSummaryV2(): uint16 {
+    val storage = lazy V2Storage.load();
+    return (v2QueueCount(storage.core.load().queues.load().outboxRoot) |
+    (MAX_OUTPUT_RECORDS_V2 << 8)) as uint16;
+}
+
+/// Returns found in bit 8 and the four-bit input value in bits 0..3.
+get fun getInboxSlotV2(epoch: uint64, port: uint4, sequence: uint8): uint16 {
+    val storage = lazy V2Storage.load();
+    val cursor = v2FindInputSlot(
+        storage.core.load().queues.load().inboxRoot,
+        epoch,
+        port,
+        sequence,
+    );
+    if (cursor.found == 0) {
+        return 0;
+    }
+    val input = v2InputAt(storage.core.load().queues.load().inboxRoot, cursor.index);
+    return (0x100 | input.value) as uint16;
+}
+
+get fun getOutputV2(outputId: uint256): cell {
+    val storage = lazy V2Storage.load();
+    val cursor = v2FindRecordById(storage.core.load().queues.load().outboxRoot, outputId);
+    assert (cursor.found != 0) throw ErrorsV2.NotFound;
+    return v2RecordAt(storage.core.load().queues.load().outboxRoot, cursor.index);
+}
+
+get fun getRouteV2(sourceCoreId: uint16, sourcePort: uint4): cell {
+    val storage = lazy V2Storage.load();
+    val route = v2FindRoute(storage.network.load().routes, sourceCoreId, sourcePort);
+    assert (route != null) throw ErrorsV2.NotFound;
+    return route!.toCell();
+}
+
+/// Returns the minimum attached value for the public message class:
+/// 0 = AdvanceV2, 1 = DispatchOutputV2, 2 = DeliverInputV2.
+get fun estimateRequiredValueV2(messageClass: uint8): uint64 {
+    if (messageClass == 0) {
+        return MIN_ADVANCE_VALUE_V2 as uint64;
+    }
+    if (messageClass == 1) {
+        return MIN_DISPATCH_VALUE_V2 as uint64;
+    }
+    if (messageClass == 2) {
+        return MIN_DELIVERY_VALUE_V2 as uint64;
+    }
+    throw ErrorsV2.InvalidBody;
 }
 
 get fun getOutputCommitmentV2(): uint256 {
