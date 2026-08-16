@@ -73,3 +73,15 @@ export function readRegister(state: CpuState, index: number): number {
   return state.registers[index] ?? 0;
 }
 
+export function writeRegister(state: CpuState, index: number, value: number): void {
+  assertRegister(index);
+  assertNibble(value, "register value");
+  state.registers[index] = value;
+}
+
+export function assertRamAddress(address: number): void {
+  if (!Number.isInteger(address) || address < 0 || address >= RAM_SIZE) {
+    throw new RangeError(`RAM address must be in 0..${RAM_SIZE - 1}`);
+  }
+}
+
