@@ -532,7 +532,28 @@ fun onExternalMessage(_in: slice) {
     throw ErrorsV2.ExternalMessageRejected;
 }
 
-fun onBouncedMessage(_in: InMessageBounced) {}
+/// A bounced dispatch or acknowledgement is deliberately non-destructive.
+///
+/// The outbox is the retry journal: an output is removed only after the
+/// destination has accepted it and returned `MESSAGE_INPUT_ACCEPTED_V2`.
+/// Therefore a bounce must not advance a sequence, clear an output, or write
+/// a speculative retry record.  A keeper can safely dispatch the same output
+/// again with a new query id.  We still parse the bounded bounce prefix so a
+/// malformed bounce is ignored without touching persistent state.
+fun onBouncedMessage(in: InMessageBounced) {
+    if (in.bouncedBody.remainingBitsCount() < 32) {
+        return;
+    }
+    var body = in.bouncedBody;
+    body.skipBouncedPrefix();
+    if (body.remainingBitsCount() < 32) {
+        return;
+    }
+    val opcode = body.preloadUint(32);
+    if (opcode == MESSAGE_DELIVER_INPUT_V2 || opcode == MESSAGE_INPUT_ACCEPTED_V2) {
+        return;
+    }
+}
 
 get fun getMagicV2(): uint32 {
     val storage = lazy V2Storage.load();

@@ -753,6 +753,105 @@ get fun `test v2 acknowledgement retires output and rejects wrong peer`() {
     expect(pressured.getStatusV2()).toEqual(STATUS_RUNNING_V2);
 }
 
+get fun `test v2 bounced delivery keeps the outbox retryable`() {
+    val deployer = testing.treasury("v2-bounce-deployer");
+    val route = V2Route {
+        domain: DOMAIN_ROUTE_V2,
+        sourceCoreId: 0,
+        sourcePort: 0,
+        destinationCoreId: 1,
+        destinationPort: 0,
+        delay: 1,
+        maxRecordsPerEpoch: 4,
+    };
+    var storage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0),
+        oneRouteV2(route),
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var coreState = storage.core.load();
+    val outputId = v2OutputId(
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        3,
+        1,
+    );
+    val output = V2OutputRecord {
+        domain: DOMAIN_OUTPUT_V2,
+        outputId,
+        sourceCoreId: 0,
+        destinationCoreId: 1,
+        sourceEpoch: 0,
+        destinationEpoch: 1,
+        sourcePort: 0,
+        destinationPort: 0,
+        sequence: 0,
+        value: 3,
+        sourceInstructionCount: 1,
+        sourceStateHash: 0,
+    }.toCell();
+    var queues = coreState.queues.load();
+    queues.outboxRoot = v2AppendQueueRoot(queues.outboxRoot, output);
+    coreState.queues = queues.toCell();
+    storage.core = coreState.toCell();
+    val core = TonolithCoreV2.fromStorage(storage);
+    expect(
+        core.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: core.address });
+
+    val originalDelivery = createMessage({
+        bounce: BounceMode.Only256BitsOfBody,
+        value: ton("0.02"),
+        dest: core.address,
+        body: V2DeliverInput {
+            abiVersion: ABI_VERSION_V2,
+            queryId: 91,
+            runId: 0,
+            outputId,
+            sourceCoreId: 0,
+            destinationCoreId: 1,
+            sourceEpoch: 0,
+            destinationEpoch: 1,
+            sourcePort: 0,
+            destinationPort: 0,
+            sequence: 0,
+            value: 3,
+            sourceInstructionCount: 1,
+            sourceState: V2Hash { value: 0 }.toCell(),
+        },
+    });
+    val bouncedDelivery = originalDelivery.bounced();
+    val bounceResult = testing.processSingleTraceStep(
+        deployer.address,
+        bouncedDelivery,
+    );
+    expect(bounceResult.gasUsed > 0).toEqual(true);
+    expect(core.getOutboxCountV2()).toEqual(1);
+
+    val malformedBounce = createMessage({
+        bounce: BounceMode.Only256BitsOfBody,
+        value: ton("0.02"),
+        dest: core.address,
+        body: beginCell().storeUint(0xFFFFFFFF, 32).endCell(),
+    }).bounced();
+    val malformedResult = testing.processSingleTraceStep(
+        deployer.address,
+        malformedBounce,
+    );
+    expect(malformedResult.gasUsed > 0).toEqual(true);
+    expect(core.getOutboxCountV2()).toEqual(1);
+}
+
 get fun `test v2 inherited opcode families execute through the contract`() {
     val deployer = testing.treasury("v2-opcode-deployer");
     val nop = TonolithCoreV2.fromStorage(makeV2StorageForTest(romWithFirstWordV2(0x0000)));
