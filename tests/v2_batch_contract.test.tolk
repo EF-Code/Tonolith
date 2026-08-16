@@ -150,8 +150,7 @@ get fun `test v2 bounded advance traverses every nonblocking ISA family`() {
 
     batchAdvance(core, deployer.address);
 
-    val expectedSteps = MAX_STEPS_PER_ADVANCE_V2 < 16 ? MAX_STEPS_PER_ADVANCE_V2 : (16 as uint16);
-    expect(core.getInstructionCountV2()).toEqual(expectedSteps);
+    expect(core.getInstructionCountV2()).toEqual(MAX_STEPS_PER_ADVANCE_V2);
     expect(core.getOutputCountV2()).toEqual(0);
     expect(core.getStatusV2()).toEqual(STATUS_RUNNING_V2);
 }
