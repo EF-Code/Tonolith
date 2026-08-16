@@ -27,3 +27,24 @@ struct RamPage {
     packed: uint256
 }
 
+struct RamRoot {
+    page0: Cell<RamPage>
+    page1: Cell<RamPage>
+    page2: Cell<RamPage>
+    page3: Cell<RamPage>
+}
+
+struct CoreState {
+    advanceCount: uint64
+    instructionCount: uint64
+    outputCount: uint64
+    pc: uint10
+    accumulator: uint4
+    flags: uint2
+    status: uint1
+    outputRegister: uint4
+    registers: uint64
+    outputCommitment: uint256
+    ram: Cell<RamRoot>
+}
+
