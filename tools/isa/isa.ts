@@ -124,3 +124,6 @@ export function sysName(op: SysOp): string {
   return SysOp[op] ?? `SYS_${op.toString(16).toUpperCase()}`;
 }
 
+export function formatWord(word: number): string {
+  return `0x${word.toString(16).padStart(4, "0")}`;
+}
