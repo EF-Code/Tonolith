@@ -399,13 +399,14 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
     while (keepRunning && stepsExecuted < msg.maxInstructions && core.status == STATUS_RUNNING_V2) {
         val word = v2RomWord(storage.rom, core.pc);
         val beforeInstructionCount = core.instructionCount;
+        val instructionStateHash = core.toCell().hash();
         val _legacyOutput = v2ExecuteInstruction(
             mutate core,
             word,
             identity.runId,
             identity.coreId,
             storage.network.load().routes,
-            previousStateHash,
+            instructionStateHash,
         );
         if (core.instructionCount == beforeInstructionCount) {
             keepRunning = false;
