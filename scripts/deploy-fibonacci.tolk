@@ -56,3 +56,36 @@ fun main() {
     println("FINAL|{}|{}|{}", cpu.getStatus(), cpu.getOutputCount(), cpu.getOutputRegister());
 }
 
+fun fibonacciRom(): Cell<RomRoot> {
+    val firstHalf = beginCell()
+        .storeUint(0x1001, 16)
+        .storeUint(0x3000, 16)
+        .storeUint(0x1001, 16)
+        .storeUint(0x3001, 16)
+        .storeUint(0x1007, 16)
+        .storeUint(0x3002, 16)
+        .storeUint(0x2000, 16)
+        .storeUint(0xF001, 16)
+        .storeUint(0x2002, 16)
+        .storeUint(0xF008, 16)
+        .storeUint(0x3002, 16)
+        .storeUint(0xD014, 16)
+        .storeUint(0x2000, 16)
+        .storeUint(0x4001, 16)
+        .storeUint(0x3003, 16)
+        .storeUint(0x2001, 16)
+        .toSlice()
+        .loadUint(256) as uint256;
+    val secondHalf = beginCell()
+        .storeUint(0x3000, 16)
+        .storeUint(0x2003, 16)
+        .storeUint(0x3001, 16)
+        .storeUint(0xC006, 16)
+        .storeUint(0xF000, 16)
+        .storeUint(0, 176)
+        .toSlice()
+        .loadUint(256) as uint256;
+    return romRootWithFirstLeaf(
+        RomLeaf { firstHalf, secondHalf }.toCell(),
+    );
+}
