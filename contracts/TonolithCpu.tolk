@@ -14,3 +14,21 @@ contract TonolithCpu {
     thrownErrors: Errors
 }
 
+fun emitAdvanced(event: CpuAdvanced) {
+    val message = createExternalLogMessage({
+        dest: createAddressNone(),
+        body: event,
+    });
+    message.send(SEND_MODE_REGULAR);
+}
+
+fun emitOutput(event: CpuOutput?) {
+    if (event != null) {
+        val message = createExternalLogMessage({
+            dest: createAddressNone(),
+            body: event,
+        });
+        message.send(SEND_MODE_REGULAR);
+    }
+}
+
