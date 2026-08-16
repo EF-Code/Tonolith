@@ -59,3 +59,8 @@ Additional design references:
 - [docs/ROM.md](docs/ROM.md) — ROM/RAM cell layout and commitments;
 - [docs/ABI.md](docs/ABI.md) — messages, events, and error codes.
 
+## Claims boundary
+
+Tonolith v1 must not be described as transistor-accurate, gate-level executed,
+Intel 4004-compatible, autonomous, or production-ready unless the corresponding
+evidence is separately published.
