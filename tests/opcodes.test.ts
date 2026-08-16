@@ -12,3 +12,6 @@ import {
   Opcode,
   SysOp,
 } from "../tools/isa/isa.js";
+import { CpuExecutionError, executeBatch, executeInstruction } from "../tools/emulator/emulator.js";
+import { createInitialState } from "../tools/isa/types.js";
+
