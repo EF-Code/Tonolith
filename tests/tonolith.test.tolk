@@ -188,3 +188,131 @@ get fun `test arithmetic logical and SYS opcodes`() {
     expect(cpu.getRegisters()).toEqual(15);
 }
 
+get fun `test register load jump and ADC without carry`() {
+    val deployer = testing.treasury("register-jump-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x100A,
+                0x300F,
+                0x200F,
+                0xC005,
+                0x1000,
+                0xE007,
+                0x0000,
+                0xF000,
+                0x0000,
+                0x0000,
+                0x0000,
+                0x0000,
+                0x0000,
+                0x0000,
+                0x0000,
+                0x0000,
+            ),
+        ),
+    );
+    expect(cpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: cpu.address,
+    });
+    while (cpu.getStatus() == 0) {
+        advanceOne(cpu, deployer.address, cpu.getAdvanceCount());
+    }
+    expect(cpu.getAccumulator()).toEqual(10);
+    expect(cpu.getRegisters()).toEqual(10 << (15 * 4));
+    expect(cpu.getPc()).toEqual(8);
+
+    val adcCpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x1001,
+                0x5000,
+                0xF000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(adcCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: adcCpu.address,
+    });
+    while (adcCpu.getStatus() == 0) {
+        advanceOne(adcCpu, deployer.address, adcCpu.getAdvanceCount());
+    }
+    expect(adcCpu.getAccumulator()).toEqual(1);
+    expect(adcCpu.getFlags()).toEqual(0);
+}
+
+get fun `test arithmetic and flag boundary outcomes`() {
+    val deployer = testing.treasury("arithmetic-boundary-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x1001,
+                0x3000,
+                0xF003,
+                0x4000,
+                0x1002,
+                0x3001,
+                0xF003,
+                0x5001,
+                0x6001,
+                0xF002,
+                0x7000,
+                0xF005,
+                0xF006,
+                0x100F,
+                0xF007,
+                0xF000,
+            ),
+        ),
+    );
+    expect(cpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: cpu.address,
+    });
+
+    advanceOne(cpu, deployer.address, 0);
+    advanceOne(cpu, deployer.address, 1);
+    advanceOne(cpu, deployer.address, 2);
+    advanceOne(cpu, deployer.address, 3);
+    expect(cpu.getAccumulator()).toEqual(2);
+    expect(cpu.getFlags()).toEqual(0);
+
+    advanceOne(cpu, deployer.address, 4);
+    advanceOne(cpu, deployer.address, 5);
+    advanceOne(cpu, deployer.address, 6);
+    advanceOne(cpu, deployer.address, 7);
+    expect(cpu.getAccumulator()).toEqual(5);
+
+    advanceOne(cpu, deployer.address, 8);
+    expect(cpu.getAccumulator()).toEqual(3);
+    expect(cpu.getFlags()).toEqual(2);
+
+    advanceOne(cpu, deployer.address, 9);
+    expect(cpu.getFlags()).toEqual(0);
+    advanceOne(cpu, deployer.address, 10);
+    expect(cpu.getAccumulator()).toEqual(1);
+    expect(cpu.getFlags()).toEqual(0);
+    advanceOne(cpu, deployer.address, 11);
+    expect(cpu.getAccumulator()).toEqual(2);
+    expect(cpu.getFlags()).toEqual(0);
+    advanceOne(cpu, deployer.address, 12);
+    expect(cpu.getAccumulator()).toEqual(1);
+    expect(cpu.getFlags()).toEqual(0);
+    advanceOne(cpu, deployer.address, 13);
+    advanceOne(cpu, deployer.address, 14);
+    expect(cpu.getAccumulator()).toEqual(0);
+    expect(cpu.getFlags()).toEqual(3);
+}
+
