@@ -71,6 +71,29 @@ fun batchRom(word: uint16): Cell<V2RomRoot> {
     );
 }
 
+fun batchIsaRom(): Cell<V2RomRoot> {
+    val firstHalf = ((0x0000 as uint256) << 240) | ((0x1001 as uint256) << 224) |
+    ((0x2000 as uint256) << 208) |
+    ((0x3000 as uint256) << 192) |
+    ((0x4000 as uint256) << 176) |
+    ((0x5000 as uint256) << 160) |
+    ((0x6000 as uint256) << 144) |
+    ((0x7000 as uint256) << 128) |
+    ((0x8000 as uint256) << 112) |
+    ((0x9000 as uint256) << 96) |
+    ((0xA000 as uint256) << 80) |
+    ((0xB000 as uint256) << 64) |
+    ((0x1001 as uint256) << 48) |
+    ((0xD00F as uint256) << 32) |
+    ((0xE00F as uint256) << 16);
+    return v2RomWithFirstLeaf(
+        V2RomLeaf {
+            firstHalf,
+            secondHalf: 0,
+        }.toCell(),
+    );
+}
+
 fun batchAdvance(core: TonolithCoreV2, from: address, maxOutputs: uint8 = MAX_OUTPUT_RECORDS_V2) {
     val result = core.sendV2Advance(
         from,
@@ -115,6 +138,21 @@ get fun `test v2 bounded advance executes the full configured nop batch`() {
     expect(core.getInstructionCountV2()).toEqual(MAX_STEPS_PER_ADVANCE_V2);
     expect(core.getAdvanceCountV2()).toEqual(1);
     expect(core.getAcceptedMessageCountV2()).toEqual(1);
+    expect(core.getStatusV2()).toEqual(STATUS_RUNNING_V2);
+}
+
+get fun `test v2 bounded advance traverses every nonblocking ISA family`() {
+    val deployer = testing.treasury("v2-batch-isa-families");
+    val core = TonolithCoreV2.fromStorage(batchStorage(batchIsaRom(), emptyV2RecordRoot()));
+    expect(core.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: core.address,
+    });
+
+    batchAdvance(core, deployer.address);
+
+    val expectedSteps = MAX_STEPS_PER_ADVANCE_V2 < 16 ? MAX_STEPS_PER_ADVANCE_V2 : (16 as uint16);
+    expect(core.getInstructionCountV2()).toEqual(expectedSteps);
+    expect(core.getOutputCountV2()).toEqual(0);
     expect(core.getStatusV2()).toEqual(STATUS_RUNNING_V2);
 }
 
