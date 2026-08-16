@@ -199,3 +199,31 @@ fun zeroRomLevel2(): Cell<RomLevel2> {
     }.toCell();
 }
 
+fun romRootWithFirstLeaf(firstLeaf: Cell<RomLeaf>): Cell<RomRoot> {
+    val zeroLeaf = zeroRomLeaf();
+    val firstLevel1 = RomLevel1 {
+        leaf0: firstLeaf,
+        leaf1: zeroLeaf,
+        leaf2: zeroLeaf,
+        leaf3: zeroLeaf,
+    }.toCell();
+    val zeroLevel1 = zeroRomLevel1();
+    val firstLevel2 = RomLevel2 {
+        level10: firstLevel1,
+        level11: zeroLevel1,
+        level12: zeroLevel1,
+        level13: zeroLevel1,
+    }.toCell();
+    val zeroLevel2 = zeroRomLevel2();
+    return RomRoot {
+        level20: firstLevel2,
+        level21: zeroLevel2,
+        level22: zeroLevel2,
+        level23: zeroLevel2,
+    }.toCell();
+}
+
+fun zeroRomRoot(): Cell<RomRoot> {
+    return romRootWithFirstLeaf(zeroRomLeaf());
+}
+
