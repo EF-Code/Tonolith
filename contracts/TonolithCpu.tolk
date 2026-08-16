@@ -153,3 +153,13 @@ get fun getRomWord(address: uint10): uint16 {
     return romWord(storage.rom as Cell<RomRoot>, address);
 }
 
+get fun getAdvanceCount(): uint64 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().advanceCount;
+}
+
+get fun getInstructionCount(): uint64 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().instructionCount;
+}
+
