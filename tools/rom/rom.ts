@@ -46,3 +46,28 @@ function romLeafCell(words: readonly number[]): Cell {
     .endCell();
 }
 
+function level1Cell(leaves: readonly Cell[]): Cell {
+  if (leaves.length !== LEAVES_PER_LEVEL1) {
+    throw new RangeError(`ROM level 1 nodes must contain exactly ${LEAVES_PER_LEVEL1} leaves`);
+  }
+  return beginCell()
+    .storeRef(leaves[0]!)
+    .storeRef(leaves[1]!)
+    .storeRef(leaves[2]!)
+    .storeRef(leaves[3]!)
+    .endCell();
+}
+
+function level2Cell(level1Nodes: readonly Cell[]): Cell {
+  if (level1Nodes.length !== LEVEL1_PER_LEVEL2) {
+    throw new RangeError(`ROM level 2 nodes must contain exactly ${LEVEL1_PER_LEVEL2} children`);
+  }
+  return beginCell()
+    .storeRef(level1Nodes[0]!)
+    .storeRef(level1Nodes[1]!)
+    .storeRef(level1Nodes[2]!)
+    .storeRef(level1Nodes[3]!)
+    .endCell();
+}
+
+/** Build the canonical 1024-word, 4-way ROM tree used by the Tolk contract. */
