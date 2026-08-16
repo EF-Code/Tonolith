@@ -366,3 +366,18 @@ fun writeRegister(mutate core: CoreState, index: int, value: uint4) {
     core.registers = ((core.registers & ~mask) | (value << shift)) as uint64;
 }
 
+fun addAccumulator(mutate core: CoreState, operand: uint4, includeCarry: bool) {
+    val incomingCarry = includeCarry && hasFlag(core.flags, FLAG_CARRY) ? 1 : 0;
+    val sum = core.accumulator + operand + incomingCarry;
+    core.accumulator = (sum & 15) as uint4;
+    core.flags = setCarryFlag(core.flags, sum >= 16);
+    core.flags = setZeroFlag(core.flags, core.accumulator);
+}
+
+fun subtractAccumulator(mutate core: CoreState, operand: uint4) {
+    val before = core.accumulator;
+    core.accumulator = ((before - operand) & 15) as uint4;
+    core.flags = setCarryFlag(core.flags, before >= operand);
+    core.flags = setZeroFlag(core.flags, core.accumulator);
+}
+
