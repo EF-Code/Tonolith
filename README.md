@@ -13,8 +13,8 @@ Current status: the v1 single-instruction contract, canonical ROM/RAM layout,
 TypeScript assembler/emulator, differential trace, Fibonacci vector, fuzz and
 property tests, coverage, mutation evidence, and gas snapshot are implemented.
 The local candidate is testnet-ready but has not been testnet-proven. The
-implementation plan and acceptance criteria are in
-[TONOLITH_IMPLEMENTATION_GUIDE.md](TONOLITH_IMPLEMENTATION_GUIDE.md).
+The implementation status and acceptance evidence are summarized below and in
+the linked release documentation.
 
 ## Development
 
@@ -43,7 +43,7 @@ acton test --mutate --mutate-contract TonolithCpu --mutation-levels critical,maj
 ```
 
 The selected `MAX_STEPS_PER_ADVANCE` is one instruction. The measured local
-worst-case accepted `Advance` path is 19,527 gas, below the guide’s 800,000-gas
+worst-case accepted `Advance` path is 19,527 gas, below the v1 800,000-gas
 ceiling. See [docs/LOCAL_RELEASE.md](docs/LOCAL_RELEASE.md) for the complete
 evidence and known local-emulation boundaries.
 
