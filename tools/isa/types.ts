@@ -117,3 +117,16 @@ export function packRamPage(ram: Uint8Array, pageIndex: number): bigint {
   return packed;
 }
 
+export function ramPageCell(ram: Uint8Array, pageIndex: number): Cell {
+  return beginCell().storeUint(packRamPage(ram, pageIndex), 256).endCell();
+}
+
+export function ramRootCell(ram: Uint8Array): Cell {
+  return beginCell()
+    .storeRef(ramPageCell(ram, 0))
+    .storeRef(ramPageCell(ram, 1))
+    .storeRef(ramPageCell(ram, 2))
+    .storeRef(ramPageCell(ram, 3))
+    .endCell();
+}
+
