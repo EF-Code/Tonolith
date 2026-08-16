@@ -33,6 +33,7 @@ jobs:
           echo "$HOME/.acton/bin" >> "$GITHUB_PATH"
           export PATH="$HOME/.acton/bin:$PATH"
           acton --version
+          acton init --stdlib-only
 
       - name: Install TypeScript tooling
         run: npm ci
