@@ -156,3 +156,26 @@ fun zeroRamRoot(): Cell<RamRoot> {
     }.toCell();
 }
 
+fun initialCore(): Cell<CoreState> {
+    return CoreState {
+        advanceCount: 0,
+        instructionCount: 0,
+        outputCount: 0,
+        pc: 0,
+        accumulator: 0,
+        flags: 0,
+        status: STATUS_RUNNING,
+        outputRegister: 0,
+        registers: 0,
+        outputCommitment: 0,
+        ram: zeroRamRoot(),
+    }.toCell();
+}
+
+fun zeroRomLeaf(): Cell<RomLeaf> {
+    return RomLeaf {
+        firstHalf: 0,
+        secondHalf: 0,
+    }.toCell();
+}
+
