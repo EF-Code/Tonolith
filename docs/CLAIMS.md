@@ -16,3 +16,21 @@
 - The measured worst-case local accepted `Advance` gas is 19,527 gas with
   `MAX_STEPS_PER_ADVANCE = 1`, below the guide’s 800,000-gas ceiling.
 
+## Not yet testnet-proven
+
+- contract address and code/data commitments;
+- inclusion/finality, actual fees, storage balance, and refund behavior;
+- permissionless ticking from an independent keeper;
+- stale-state rejection on the public network;
+- public-network Fibonacci outputs and hashes.
+
+## Explicitly unresolved or out of scope
+
+- This is an architectural executor, not gate-level execution.
+- It is not Intel 4004-compatible.
+- Local emulation is not a TON testnet or mainnet proof.
+- No mainnet deployment or production-readiness claim is made.
+- The local Acton external-message shim does not execute the contract’s
+  `onExternalMessage` hook; the rejection code remains a testnet/runtime gate.
+- Security review, economic review, operational keeper design, and a real
+  network release review remain production gates.
