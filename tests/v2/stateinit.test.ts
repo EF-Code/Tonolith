@@ -29,7 +29,21 @@ test("v2 StateInit and address derivation are deterministic and content-bound", 
   assert.equal(first.initialStateHash, second.initialStateHash);
   assert.equal(first.staticCommitment, artifact.manifest.staticCommitment);
   assert.equal(first.initialState.config.staticCommitment, artifact.manifest.staticCommitment);
+  assert.equal(first.initialState.config.maxStepsPerAdvance, artifact.limits.maxStepsPerAdvance);
   assert.equal(Cell.fromBoc(first.stateInitCell.toBoc({ idx: false }))[0]?.hash().toString("hex"), first.stateInitHash);
+});
+
+test("v2 StateInit rejects artifacts outside the selected execution limit", () => {
+  const artifact = buildArtifact("NOP\n", {
+    name: "batch-limit-fixture",
+    compiler,
+    limits: { maxStepsPerAdvance: 2 },
+  });
+  const code = beginCell().storeUint(1, 1).endCell();
+  assert.throws(
+    () => buildV2StateInitFromArtifact(code, artifact),
+    /selected single-step limit/,
+  );
 });
 
 test("peer addresses are bound to the static commitment and StateInit data", () => {

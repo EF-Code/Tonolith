@@ -10,6 +10,7 @@ import { staticCommitmentCell } from "../../artifact/src/commitments.js";
 import { peerRoot, peerRootCell, type PeerDescriptor } from "../../artifact/src/peers.js";
 import { routeRootCell, type RouteDescriptor } from "../../artifact/src/routes.js";
 import { normalizeRam, ramRoot, romRootCell } from "../../artifact/src/memory.js";
+import { INITIAL_MAX_STEPS_PER_ADVANCE } from "../../isa/src/constants.js";
 import { createInitialState, type CoreConfig } from "../../emulator/src/model.js";
 import { coreStateCell, stateHash } from "../../emulator/src/commitments.js";
 import type { ArtifactBundle, ArtifactManifestV2 } from "../../artifact/src/manifest.js";
@@ -34,6 +35,7 @@ export interface V2StateInitDescriptor {
   readonly routes: readonly RouteDescriptor[];
   readonly peers: readonly PeerDescriptor[];
   readonly initialRam?: readonly number[] | Uint8Array;
+  readonly maxStepsPerAdvance?: number;
   readonly workchain?: number;
 }
 
@@ -73,6 +75,10 @@ export function buildV2StateInit(code: Cell, descriptor: V2StateInitDescriptor):
   });
   const computedStatic = staticCell.hash().toString("hex");
   if (computedStatic !== descriptor.manifest.staticCommitment) throw new Error("static commitment does not match the deployment manifest");
+  const maxStepsPerAdvance = descriptor.maxStepsPerAdvance ?? INITIAL_MAX_STEPS_PER_ADVANCE;
+  if (maxStepsPerAdvance !== INITIAL_MAX_STEPS_PER_ADVANCE) {
+    throw new Error(`v2 StateInit only accepts the selected single-step limit (${INITIAL_MAX_STEPS_PER_ADVANCE})`);
+  }
 
   const config: CoreConfig = {
     runId: descriptor.manifest.runId,
@@ -84,7 +90,7 @@ export function buildV2StateInit(code: Cell, descriptor: V2StateInitDescriptor):
     staticCommitment: descriptor.manifest.staticCommitment,
     routes: normalizedRoutes,
     requiredInputs: [],
-    maxStepsPerAdvance: 1,
+    maxStepsPerAdvance,
   };
   const initialState = createInitialState(config);
   initialState.ram = normalizeRam(descriptor.initialRam ?? []);
@@ -143,6 +149,7 @@ export function buildV2StateInitFromArtifact(code: Cell, artifact: ArtifactBundl
     routes: artifact.routes,
     peers: artifact.peers,
     initialRam: artifact.assembly.ram,
+    maxStepsPerAdvance: artifact.limits.maxStepsPerAdvance,
     workchain,
   });
 }
