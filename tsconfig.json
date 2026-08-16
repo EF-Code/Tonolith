@@ -17,6 +17,6 @@
     "rootDir": ".",
     "types": ["node"]
   },
-  "include": ["tools/**/*.ts", "tests/**/*.ts"],
+  "include": ["tools/**/*.ts", "packages/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist", "build", "gen"]
 }
