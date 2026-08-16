@@ -1,0 +1,12 @@
+{
+  "schema": "tonolith-fuzz-seeds-v2",
+  "property": {
+    "seed": "0x7a11ce55",
+    "iterations": 10000
+  },
+  "statefulBatch": {
+    "seed": "0x4b41544f",
+    "iterations": 2048,
+    "batchSize": 4
+  }
+}
