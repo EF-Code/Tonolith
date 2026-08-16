@@ -41,3 +41,18 @@ external-message shim returns no transaction and does not execute the contract
 hook, so that hook is documented as a local-emulation boundary and remains a
 testnet verification item.
 
+## Events
+
+### `CpuAdvanced` — `0x544E4C81`
+
+```text
+uint64  queryId
+uint64  advanceCount
+uint64  startInstruction
+uint64  endInstruction
+uint256 previousStateHash
+uint256 nextStateHash
+uint10  finalPc
+uint1   status
+```
+
