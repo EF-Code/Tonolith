@@ -116,3 +116,11 @@ function requireOperand(opcode: Opcode, condition: boolean, message: string): vo
   }
 }
 
+export function opcodeName(opcode: Opcode): string {
+  return Opcode[opcode] ?? `OP_${opcode.toString(16).toUpperCase()}`;
+}
+
+export function sysName(op: SysOp): string {
+  return SysOp[op] ?? `SYS_${op.toString(16).toUpperCase()}`;
+}
+
