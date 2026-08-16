@@ -1066,3 +1066,141 @@ get fun `test external messages are rejected`() {
     expect(result).toBeNull();
 }
 
+get fun `test OUT updates the commitment and emits a bounded event`() {
+    val deployer = testing.treasury("output-deployer");
+    val cpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x1007,
+                0xF001,
+                0xF000,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(
+        cpu.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: cpu.address });
+
+    advanceOne(cpu, deployer.address, 0);
+    val outputAdvance = cpu.sendAdvance(
+        deployer.address,
+        1,
+        cpu.getAdvanceCount(),
+        cpu.getCoreStateHash(),
+        1,
+        { value: ton("0.1") },
+    );
+    expect(outputAdvance).toHaveSuccessfulTx<Advance>();
+    expect(outputAdvance).toEmitExternalMessage<CpuOutput>();
+    val output = outputAdvance.findExternalOutMessage<CpuOutput>({ from: cpu.address });
+    expect(output).toBeNotNull();
+    expect(output!.loadBody()).toEqual(CpuOutput {
+        outputIndex: 0,
+        instructionCount: 2,
+        value: 7,
+        outputCommitment: 0x3c4d5aceb4cc26b45a034fb7ee8adf0f343b59fcca702c961d9505f9059f60c1,
+    });
+    expect(cpu.getOutputCount()).toEqual(1);
+    expect(cpu.getOutputRegister()).toEqual(7);
+    expect(cpu.getCoreStateHash()).toEqual(
+        0xefb7695c3370ea45d0c0fe1ccae2c8999d95592699c5701be90b1e614d34e028,
+    );
+}
+
+get fun `test ROM and RAM boundary pages remain addressable`() {
+    val deployer = testing.treasury("boundary-deployer");
+    val romCpu = TonolithCpu.fromStorage(makeStorage(zeroRomRoot()));
+    expect(romCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: romCpu.address,
+    });
+    expect(romCpu.getRomWord(0)).toEqual(0);
+    expect(romCpu.getRomWord(31)).toEqual(0);
+    expect(romCpu.getRomWord(32)).toEqual(0);
+    expect(romCpu.getRomWord(64)).toEqual(0);
+    expect(romCpu.getRomWord(96)).toEqual(0);
+    expect(romCpu.getRomWord(128)).toEqual(0);
+    expect(romCpu.getRomWord(256)).toEqual(0);
+    expect(romCpu.getRomWord(384)).toEqual(0);
+    expect(romCpu.getRomWord(512)).toEqual(0);
+    expect(romCpu.getRomWord(768)).toEqual(0);
+    expect(romCpu.getRomWord(1023)).toEqual(0);
+
+    val secondHalfCpu = TonolithCpu.fromStorage(
+        makeStorage(romWithWord16(0xBEEF)),
+    );
+    expect(secondHalfCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: secondHalfCpu.address,
+    });
+    expect(secondHalfCpu.getRomWord(16)).toEqual(0xBEEF);
+
+    val sentinelCpu = TonolithCpu.fromStorage(makeStorage(romWithLevel1Sentinels()));
+    expect(sentinelCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: sentinelCpu.address,
+    });
+    expect(sentinelCpu.getRomWord(0)).toEqual(1);
+    expect(sentinelCpu.getRomWord(32)).toEqual(5);
+    expect(sentinelCpu.getRomWord(64)).toEqual(6);
+    expect(sentinelCpu.getRomWord(96)).toEqual(7);
+    expect(sentinelCpu.getRomWord(128)).toEqual(2);
+    expect(sentinelCpu.getRomWord(256)).toEqual(3);
+    expect(sentinelCpu.getRomWord(384)).toEqual(4);
+    val sentinelRom = romWithLevel1Sentinels();
+    expect(romWord(sentinelRom, 0)).toEqual(1);
+    expect(romWord(sentinelRom, 32)).toEqual(5);
+    expect(romWord(sentinelRom, 64)).toEqual(6);
+    expect(romWord(sentinelRom, 96)).toEqual(7);
+    expect(romWord(sentinelRom, 128)).toEqual(2);
+    expect(romWord(sentinelRom, 256)).toEqual(3);
+    expect(romWord(sentinelRom, 384)).toEqual(4);
+    expect(romCpu.getRamNibble(0)).toEqual(0);
+    expect(romCpu.getRamNibble(64)).toEqual(0);
+    expect(romCpu.getRamNibble(128)).toEqual(0);
+    expect(romCpu.getRamNibble(192)).toEqual(0);
+
+    val ramCpu = TonolithCpu.fromStorage(
+        makeStorage(
+            romWithWords(
+                0x1001,
+                0xB000,
+                0x1002,
+                0xB040,
+                0x1003,
+                0xB080,
+                0x1004,
+                0xB0C0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ),
+        ),
+    );
+    expect(ramCpu.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: ramCpu.address,
+    });
+    repeat (8) {
+        advanceOne(ramCpu, deployer.address, ramCpu.getAdvanceCount());
+    }
+    expect(ramCpu.getRamNibble(0)).toEqual(1);
+    expect(ramCpu.getRamNibble(64)).toEqual(2);
+    expect(ramCpu.getRamNibble(128)).toEqual(3);
+    expect(ramCpu.getRamNibble(192)).toEqual(4);
+}
+
