@@ -134,3 +134,11 @@ fun TonolithCpu.getAccumulator(self): uint4 {
     return net.runGetMethod(self.address, "getAccumulator");
 }
 
+fun TonolithCpu.getFlags(self): uint2 {
+    return net.runGetMethod(self.address, "getFlags");
+}
+
+fun TonolithCpu.getStatus(self): uint1 {
+    return net.runGetMethod(self.address, "getStatus");
+}
+
