@@ -6,6 +6,9 @@
   "type": "module",
   "main": "./dist/tools/index.js",
   "types": "./dist/tools/index.d.ts",
+  "bin": {
+    "tonolith": "./dist/tools/tonolith-v2.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/tools/index.d.ts",
