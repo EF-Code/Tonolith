@@ -35,3 +35,4 @@ export const EXIT_CODE = {
   externalMessageRejected: 109,
 } as const;
 
+export const MAX_STEPS_PER_ADVANCE = 1;
