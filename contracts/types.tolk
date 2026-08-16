@@ -74,3 +74,18 @@ struct RomRoot {
     level23: Cell<RomLevel2>
 }
 
+struct StaticCommitmentPreimage {
+    namespace: uint32
+    schemaVersion: uint16
+    isaVersion: uint16
+    romRoot: uint256
+}
+
+struct OutputCommitmentPreimage {
+    namespace: uint32
+    previousCommitment: uint256
+    outputIndex: uint64
+    instructionCount: uint64
+    value: uint4
+}
+
