@@ -8,3 +8,5 @@ export const PC_MASK = ROM_WORDS - 1;
 export const ADDRESS8_MASK = 0xff;
 export const FLAG_ZERO = 1;
 export const FLAG_CARRY = 2;
+export const STATUS_RUNNING = "running" as const;
+export const STATUS_HALTED = "halted" as const;
