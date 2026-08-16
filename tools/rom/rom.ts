@@ -7,3 +7,5 @@ import {
   WORD_MASK,
 } from "../isa/constants.js";
 
+const WORDS_PER_LEAF = 32;
+const WORDS_PER_HALF = 16;
