@@ -24,3 +24,21 @@ export enum Opcode {
   SYS = 0xf,
 }
 
+export enum SysOp {
+  HALT = 0x0,
+  OUT = 0x1,
+  CLC = 0x2,
+  STC = 0x3,
+  NOT = 0x4,
+  SHL = 0x5,
+  SHR = 0x6,
+  INC = 0x7,
+  DEC = 0x8,
+}
+
+export interface DecodedInstruction {
+  word: number;
+  opcode: Opcode;
+  operand: number;
+}
+
