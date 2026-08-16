@@ -85,6 +85,129 @@ fun romWithFirstWordV2(word: uint16): Cell<V2RomRoot> {
     );
 }
 
+fun routeForCoverageV2(port: uint4): cell {
+    return V2Route {
+        domain: DOMAIN_ROUTE_V2,
+        sourceCoreId: 0,
+        sourcePort: port,
+        destinationCoreId: 1,
+        destinationPort: port,
+        delay: 1,
+        maxRecordsPerEpoch: 16,
+    }.toCell();
+}
+
+fun romWithDistinctSelectorsV2(): Cell<V2RomRoot> {
+    val level10 = V2RomLevel1 {
+        leaf0: V2RomLeaf {
+            firstHalf: (1 as uint256) << 240,
+            secondHalf: ((11 as uint256) << 240) | 12,
+        }.toCell(),
+        leaf1: V2RomLeaf {
+            firstHalf: (2 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf2: V2RomLeaf {
+            firstHalf: (3 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf3: V2RomLeaf {
+            firstHalf: (4 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+    }.toCell();
+    val level11 = V2RomLevel1 {
+        leaf0: V2RomLeaf {
+            firstHalf: (5 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: V2RomLeaf {
+            firstHalf: (6 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf2: V2RomLeaf {
+            firstHalf: (7 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf3: V2RomLeaf {
+            firstHalf: (8 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+    }.toCell();
+    val level12 = V2RomLevel1 {
+        leaf0: V2RomLeaf {
+            firstHalf: (9 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: V2RomLeaf {
+            firstHalf: (10 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf2: V2RomLeaf {
+            firstHalf: (11 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf3: V2RomLeaf {
+            firstHalf: (12 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+    }.toCell();
+    val level13 = V2RomLevel1 {
+        leaf0: V2RomLeaf {
+            firstHalf: (13 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf1: V2RomLeaf {
+            firstHalf: (14 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf2: V2RomLeaf {
+            firstHalf: (15 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+        leaf3: V2RomLeaf {
+            firstHalf: (16 as uint256) << 240,
+            secondHalf: 0,
+        }.toCell(),
+    }.toCell();
+    val level20 = V2RomLevel2 {
+        level10: level10,
+        level11: level11,
+        level12: level12,
+        level13: level13,
+    }.toCell();
+    val level21 = V2RomLevel2 {
+        level10: V2RomLevel1 {
+            leaf0: V2RomLeaf {
+                firstHalf: (17 as uint256) << 240,
+                secondHalf: 0,
+            }.toCell(),
+            leaf1: V2RomLeaf {
+                firstHalf: 0,
+                secondHalf: 0,
+            }.toCell(),
+            leaf2: V2RomLeaf {
+                firstHalf: 0,
+                secondHalf: 0,
+            }.toCell(),
+            leaf3: V2RomLeaf {
+                firstHalf: 0,
+                secondHalf: 0,
+            }.toCell(),
+        }.toCell(),
+        level11: zeroV2RomLevel1(),
+        level12: zeroV2RomLevel1(),
+        level13: zeroV2RomLevel1(),
+    }.toCell();
+    val zeroLevel2 = zeroV2RomLevel2();
+    return V2RomRoot {
+        level20,
+        level21,
+        level22: zeroLevel2,
+        level23: zeroLevel2,
+    }.toCell();
+}
+
 fun outputRecordV2ForTest(sequence: uint8): cell {
     return V2OutputRecord {
         domain: DOMAIN_OUTPUT_V2,
@@ -2343,4 +2466,85 @@ get fun `test v2 delivery validation rejects malformed routes epochs and replays
             0,
         ),
     ).toHaveFailedTx({ exitCode: ErrorsV2.ConflictingReplay });
+}
+
+get fun `test v2 ROM and queue selectors preserve distinct boundary records`() {
+    val rom = romWithDistinctSelectorsV2();
+    expect(v2RomWord(rom, 0)).toEqual(1);
+    expect(v2RomWord(rom, 16)).toEqual(11);
+    expect(v2RomWord(rom, 31)).toEqual(12);
+    expect(v2RomWord(rom, 32)).toEqual(2);
+    expect(v2RomWord(rom, 64)).toEqual(3);
+    expect(v2RomWord(rom, 96)).toEqual(4);
+    expect(v2RomWord(rom, 128)).toEqual(5);
+    expect(v2RomWord(rom, 160)).toEqual(6);
+    expect(v2RomWord(rom, 192)).toEqual(7);
+    expect(v2RomWord(rom, 224)).toEqual(8);
+    expect(v2RomWord(rom, 256)).toEqual(9);
+    expect(v2RomWord(rom, 480)).toEqual(16);
+    expect(v2RomWord(rom, 512)).toEqual(17);
+
+    var routes = emptyV2RecordRoot();
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(0));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(1));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(2));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(3));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(4));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(5));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(6));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(7));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(8));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(9));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(10));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(11));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(12));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(13));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(14));
+    routes = v2AppendQueueRoot(routes, routeForCoverageV2(15));
+    expect(v2QueueCount(routes)).toEqual(16);
+    expect((v2RecordAt(routes, 0) as Cell<V2Route>).load().sourcePort).toEqual(0);
+    expect((v2RecordAt(routes, 1) as Cell<V2Route>).load().sourcePort).toEqual(1);
+    expect((v2RecordAt(routes, 2) as Cell<V2Route>).load().sourcePort).toEqual(2);
+    expect((v2RecordAt(routes, 3) as Cell<V2Route>).load().sourcePort).toEqual(3);
+    expect((v2RecordAt(routes, 4) as Cell<V2Route>).load().sourcePort).toEqual(4);
+    expect((v2RecordAt(routes, 8) as Cell<V2Route>).load().sourcePort).toEqual(8);
+    expect((v2RecordAt(routes, 12) as Cell<V2Route>).load().sourcePort).toEqual(12);
+    expect((v2RecordAt(routes, 15) as Cell<V2Route>).load().sourcePort).toEqual(15);
+    expect(
+        (v2RecordAt(v2ReplaceRecordAt(routes, 0, routeForCoverageV2(15)), 0) as Cell<V2Route>)
+            .load()
+            .sourcePort,
+    ).toEqual(15);
+    expect(
+        (v2RecordAt(v2ReplaceRecordAt(routes, 3, routeForCoverageV2(14)), 3) as Cell<V2Route>)
+            .load()
+            .sourcePort,
+    ).toEqual(14);
+    expect(
+        (v2RecordAt(v2ReplaceRecordAt(routes, 4, routeForCoverageV2(13)), 4) as Cell<V2Route>)
+            .load()
+            .sourcePort,
+    ).toEqual(13);
+    expect(
+        (v2RecordAt(v2ReplaceRecordAt(routes, 8, routeForCoverageV2(12)), 8) as Cell<V2Route>)
+            .load()
+            .sourcePort,
+    ).toEqual(12);
+    expect(
+        (v2RecordAt(v2ReplaceRecordAt(routes, 12, routeForCoverageV2(11)), 12) as Cell<V2Route>)
+            .load()
+            .sourcePort,
+    ).toEqual(11);
+    expect(
+        (v2RecordAt(v2RemoveRecordAt(routes, 0), 0) as Cell<V2Route>).load().sourcePort,
+    ).toEqual(1);
+    expect(
+        (v2RecordAt(v2RemoveRecordAt(routes, 4), 4) as Cell<V2Route>).load().sourcePort,
+    ).toEqual(5);
+    expect(
+        (v2RecordAt(v2RemoveRecordAt(routes, 8), 8) as Cell<V2Route>).load().sourcePort,
+    ).toEqual(9);
+    expect(
+        (v2RecordAt(v2RemoveRecordAt(routes, 12), 12) as Cell<V2Route>).load().sourcePort,
+    ).toEqual(13);
 }
