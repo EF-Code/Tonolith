@@ -34,3 +34,28 @@ npm run typecheck
 npm test
 npm run build
 
+# Contract coverage and gas evidence
+acton test --coverage --coverage-format text --coverage-minimum-percent 89
+acton test --snapshot benchmarks/gas-v1.json --fuzz-seed 42
+
+# Critical and major mutation gate
+acton test --mutate --mutate-contract TonolithCpu --mutation-levels critical,major
+```
+
+The selected `MAX_STEPS_PER_ADVANCE` is one instruction. The measured local
+worst-case accepted `Advance` path is 19,527 gas, below the guide’s 800,000-gas
+ceiling. See [docs/LOCAL_RELEASE.md](docs/LOCAL_RELEASE.md) for the complete
+evidence and known local-emulation boundaries.
+
+The testnet-only deployment runbook is [docs/TESTNET.md](docs/TESTNET.md), and
+the Fibonacci script is `scripts/deploy-fibonacci.tolk`. It requires a funded
+Acton wallet named `tonolith-testnet`; no wallet or secret is created by this
+repository. See [docs/CLAIMS.md](docs/CLAIMS.md) for the distinction between
+local proof, testnet proof, and unresolved production gates.
+
+Additional design references:
+
+- [docs/ISA.md](docs/ISA.md) — canonical instruction encoding and state model;
+- [docs/ROM.md](docs/ROM.md) — ROM/RAM cell layout and commitments;
+- [docs/ABI.md](docs/ABI.md) — messages, events, and error codes.
+
