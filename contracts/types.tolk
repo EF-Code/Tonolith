@@ -356,3 +356,13 @@ fun setCarryFlag(flags: uint2, carry: bool): uint2 {
     return (flags & ~FLAG_CARRY) as uint2;
 }
 
+fun readRegister(core: CoreState, index: int): uint4 {
+    return ((core.registers >> (index * 4)) & 15) as uint4;
+}
+
+fun writeRegister(mutate core: CoreState, index: int, value: uint4) {
+    val shift = index * 4;
+    val mask = 15 << shift;
+    core.registers = ((core.registers & ~mask) | (value << shift)) as uint64;
+}
+
