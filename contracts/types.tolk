@@ -48,3 +48,15 @@ struct CoreState {
     ram: Cell<RamRoot>
 }
 
+struct RomLeaf {
+    firstHalf: uint256
+    secondHalf: uint256
+}
+
+struct RomLevel1 {
+    leaf0: Cell<RomLeaf>
+    leaf1: Cell<RomLeaf>
+    leaf2: Cell<RomLeaf>
+    leaf3: Cell<RomLeaf>
+}
+
