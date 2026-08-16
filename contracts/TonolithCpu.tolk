@@ -163,3 +163,13 @@ get fun getInstructionCount(): uint64 {
     return (storage.core as Cell<CoreState>).load().instructionCount;
 }
 
+get fun getPc(): uint10 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().pc;
+}
+
+get fun getAccumulator(): uint4 {
+    val storage = lazy Storage.load();
+    return (storage.core as Cell<CoreState>).load().accumulator;
+}
+
