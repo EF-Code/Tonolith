@@ -179,3 +179,23 @@ fun zeroRomLeaf(): Cell<RomLeaf> {
     }.toCell();
 }
 
+fun zeroRomLevel1(): Cell<RomLevel1> {
+    val leaf = zeroRomLeaf();
+    return RomLevel1 {
+        leaf0: leaf,
+        leaf1: leaf,
+        leaf2: leaf,
+        leaf3: leaf,
+    }.toCell();
+}
+
+fun zeroRomLevel2(): Cell<RomLevel2> {
+    val level1 = zeroRomLevel1();
+    return RomLevel2 {
+        level10: level1,
+        level11: level1,
+        level12: level1,
+        level13: level1,
+    }.toCell();
+}
+
