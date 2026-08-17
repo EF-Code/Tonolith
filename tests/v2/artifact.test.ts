@@ -69,3 +69,8 @@ test("artifact build rejects invalid compiler metadata and noncanonical limits",
   assert.throws(() => buildArtifact("NOP\n", { name: "bad", compiler: { ...compiler, gitCommit: "not-a-commit" } }), /compiler metadata/);
   assert.throws(() => buildArtifact("NOP\n", { name: "bad", compiler, limits: { maxOutputRecords: 17 } }), /maxOutputRecords/);
 });
+
+test("artifact verification accepts a run-manifest supplied multi-core run ID", () => {
+  const artifact = buildArtifact("NOP\n", { name: "multi-core-member", compiler, runId: "ab".repeat(32) });
+  assert.equal(verifyArtifact(artifact).valid, true);
+});

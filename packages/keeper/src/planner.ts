@@ -81,6 +81,7 @@ function assertObservation(config: KeeperCoreConfig, observation: KeeperCoreObse
   if (observation.advanceCount < 0n) throw new KeeperSafetyError("invalid observed advance count");
   const outputIds = new Set<string>();
   for (const output of observation.pendingOutputs) {
+    if (output === undefined) throw new KeeperSafetyError("pending output observation is missing");
     assertHash(output.outputId, "pending output ID");
     const normalized = output.outputId.toLowerCase();
     if (outputIds.has(normalized)) throw new KeeperSafetyError("duplicate pending output ID");

@@ -164,6 +164,7 @@ export function verifyArtifact(bundle: ArtifactBundle): ArtifactVerificationRepo
   for (const field of ["runId", "runSalt", "romRoot", "initialRamRoot", "routeRoot", "peerRoot", "programId", "limitsHash", "staticCommitment", "sourceHash"] as const) {
     if (!/^[0-9a-f]{64}$/.test(manifest[field])) errors.push(`${field} is not canonical lowercase uint256 hex`);
   }
+  if (manifest.coreId < 0 || manifest.coreId > 0xffff || !Number.isInteger(manifest.coreId)) errors.push("coreId is out of range");
   try {
     const computedRomRoot = romRoot(bundle.assembly.words);
     const computedRamRoot = ramRoot(bundle.assembly.ram);
@@ -207,11 +208,15 @@ export function verifyArtifact(bundle: ArtifactBundle): ArtifactVerificationRepo
     };
     computedValues = computed;
     for (const [field, value] of Object.entries(computed)) {
+      // A single-core run can be derived locally.  Multi-core runs receive a
+      // run ID from the ordered run manifest, so an individual artifact must
+      // not reject a valid externally supplied run ID merely because it does
+      // not equal the single-core derivation.
+      if (field === "derivedRunId") continue;
       const manifestField = field === "derivedRunId" ? "runId" : field;
       if (manifest[manifestField as keyof ArtifactManifestV2] !== value) errors.push(`${manifestField} does not match recomputed commitment`);
     }
     if (manifest.entryPc !== bundle.assembly.entryPc) errors.push("entryPc does not match assembly");
-    if (manifest.coreId < 0 || manifest.coreId > 0xffff || !Number.isInteger(manifest.coreId)) errors.push("coreId is out of range");
     validateCompiler(manifest.compiler);
     validateLimits(bundle.limits);
     const artifactJson = bundle.files["artifact.json"];

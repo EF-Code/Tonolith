@@ -101,7 +101,14 @@ export function deriveRunId(programIds: readonly Hash256[], routeRoot: Hash256, 
     .storeUint(programIds.length, 8)
     .storeUint(toBigInt(routeRoot), 256)
     .storeUint(toBigInt(salt), 256);
-  programIds.forEach((id, index) => builder.storeUint(index, 16).storeUint(toBigInt(id), 256));
+  if (programIds.length === 1) {
+    builder.storeUint(0, 16).storeUint(toBigInt(programIds[0]! ), 256);
+  } else {
+    // Keep the single-core preimage byte-for-byte stable, but move the
+    // multi-core ordered list into a bounded 4-ary cell tree.  An inline
+    // encoding overflows a TON cell after the first program ID.
+    builder.storeRef(programIdTree(programIds));
+  }
   return builder.endCell().hash().toString("hex");
 }
 
@@ -112,4 +119,32 @@ export function protocolVersions(): { schemaVersion: number; isaVersion: number;
 function toBigInt(value: Hash256): bigint {
   if (!/^[0-9a-f]{64}$/i.test(value)) throw new RangeError("commitment must be a 256-bit hexadecimal value");
   return BigInt(`0x${value}`);
+}
+
+interface ProgramTreeNode {
+  readonly cell: Cell;
+  readonly count: number;
+}
+
+function programIdTree(programIds: readonly Hash256[]): Cell {
+  let level: ProgramTreeNode[] = [];
+  for (let index = 0; index < programIds.length; index += 3) {
+    const chunk = programIds.slice(index, index + 3);
+    const leaf = beginCell().storeUint(0, 1).storeUint(chunk.length, 8);
+    chunk.forEach((id) => leaf.storeUint(toBigInt(id), 256));
+    level.push({ cell: leaf.endCell(), count: chunk.length });
+  }
+  while (level.length > 4) {
+    const next: ProgramTreeNode[] = [];
+    for (let index = 0; index < level.length; index += 4) {
+      const children = level.slice(index, index + 4);
+      const node = beginCell().storeUint(1, 1).storeUint(children.reduce((sum, child) => sum + child.count, 0), 8).storeUint(children.length, 3);
+      children.forEach((child) => node.storeRef(child.cell));
+      next.push({ cell: node.endCell(), count: children.reduce((sum, child) => sum + child.count, 0) });
+    }
+    level = next;
+  }
+  const root = beginCell().storeUint(1, 1).storeUint(programIds.length, 8).storeUint(level.length, 3);
+  level.forEach((child) => root.storeRef(child.cell));
+  return root.endCell();
 }

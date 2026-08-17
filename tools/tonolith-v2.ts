@@ -166,7 +166,20 @@ async function traceCommand(args: readonly string[], io: CliIo): Promise<number>
 
 async function keeperCommand(args: readonly string[], io: CliIo): Promise<number> {
   if (args[0] !== "run" || args[1] === undefined) return usage(io, 2, "keeper run requires <config>");
-  const config = await readJson<KeeperConfigFile>(args[1]);
+  const encoded = await readJson<KeeperConfigFileJson>(args[1]);
+  const config: KeeperConfigFile = {
+    core: {
+      ...encoded.core,
+      advanceValueNano: BigInt(encoded.core.advanceValueNano),
+      dispatchValueNano: BigInt(encoded.core.dispatchValueNano),
+    },
+    observation: {
+      ...encoded.observation,
+      advanceCount: BigInt(encoded.observation.advanceCount),
+      inputCount: BigInt(encoded.observation.inputCount),
+    },
+    ...(encoded.queryId === undefined ? {} : { queryId: encoded.queryId }),
+  };
   assertTestnet(config.core.network);
   const action = planNextAction(config.core, config.observation, BigInt(config.queryId ?? "0"));
   io.stdout(json({ command: "keeper run", mode: "read-only", action, unresolved: ["wallet and provider adapters are external to this CLI invocation"] }));
@@ -241,6 +254,11 @@ function deserializeReplay(value: RunManifest["replay"]): ReplayEvidence | undef
 interface DeployRunConfig { readonly artifactDir: string; readonly codeBoc: string; readonly workchain?: number; readonly requiredBalanceNano?: string; }
 interface RunManifest { readonly address: string; readonly expectations: V2VerificationExpectations; readonly sources: readonly { readonly id: string; readonly snapshot: string }[]; readonly replay?: { readonly rom: readonly number[]; readonly initialState: ReplayStateJson }; }
 interface KeeperConfigFile { readonly core: KeeperCoreConfig; readonly observation: KeeperCoreObservation; readonly queryId?: string; }
+interface KeeperConfigFileJson {
+  readonly core: Omit<KeeperCoreConfig, "advanceValueNano" | "dispatchValueNano"> & { readonly advanceValueNano: string | number; readonly dispatchValueNano: string | number };
+  readonly observation: Omit<KeeperCoreObservation, "advanceCount" | "inputCount"> & { readonly advanceCount: string | number; readonly inputCount: string | number };
+  readonly queryId?: string;
+}
 
 interface ReplayRecordJson extends Omit<InputRecord, "sourceEpoch" | "destinationEpoch" | "sourceInstructionCount"> {
   readonly sourceEpoch: string;

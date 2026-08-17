@@ -27,3 +27,13 @@ test("static commitment is deterministic and changes with ROM", () => {
   assert.notEqual(changed, zero);
   assert.equal(staticCommitment([0x1001]), changed);
 });
+
+test("TypeScript ROM validation rejects oversized, malformed, and out-of-range inputs", () => {
+  assert.throws(() => romRootCell(new Array(1025).fill(0)), /maximum/);
+  assert.throws(() => romRootCell([Number.NaN]), /16-bit/);
+  assert.throws(() => romRootCell([-1]), /16-bit/);
+  assert.throws(() => romRootCell([0x10000]), /16-bit/);
+  assert.throws(() => romWord([], -1), /ROM address/);
+  assert.throws(() => romWord([], 1024), /ROM address/);
+  assert.equal(romWord([1], 1023), 0);
+});

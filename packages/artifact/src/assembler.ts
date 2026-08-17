@@ -258,7 +258,8 @@ function resolveSymbolOrNumber(value: string | undefined, labels: Readonly<Recor
 }
 
 function parseRange(value: string | undefined, minimum: number, maximum: number, source: SourceLine, field: string): number {
-  if (value === undefined || !/^(?:0x[0-9a-f]+|0b[01]+|[0-9]+)$/i.test(value)) throw new V2AssemblyError("INVALID_NUMBER", `${field} must be decimal, binary, or hexadecimal`, source);
+  if (value === undefined) throw new V2AssemblyError("MISSING_OPERAND", `${field} is required`, source);
+  if (!/^(?:0x[0-9a-f]+|0b[01]+|[0-9]+)$/i.test(value)) throw new V2AssemblyError("INVALID_NUMBER", `${field} must be decimal, binary, or hexadecimal`, source);
   const parsed = Number(value);
   if (!Number.isSafeInteger(parsed) || parsed < minimum || parsed > maximum) throw new V2AssemblyError("OUT_OF_RANGE", `${field} must be in ${minimum}..${maximum}`, source);
   return parsed;
