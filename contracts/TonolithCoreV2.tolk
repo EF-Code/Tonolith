@@ -622,14 +622,16 @@ get fun getPeerRootV2(): uint256 {
     return storage.identity.load().roots.load().peers.load().peerRoot;
 }
 
-get fun getCoreStateHashV2(): uint256 {
-    val storage = lazy V2Storage.load();
+fun v2CoreStateHash(storage: V2Storage): uint256 {
     return storage.core.hash();
 }
 
+get fun getCoreStateHashV2(): uint256 {
+    return v2CoreStateHash(V2Storage.load());
+}
+
 get fun getStateHashV2(): uint256 {
-    val storage = lazy V2Storage.load();
-    return storage.core.hash();
+    return getCoreStateHashV2();
 }
 
 get fun getAdvanceCountV2(): uint64 {
@@ -772,7 +774,7 @@ get fun getRouteV2(sourceCoreId: uint16, sourcePort: uint4): cell {
 
 /// Returns the minimum attached value for the public message class:
 /// 0 = AdvanceV2, 1 = DispatchOutputV2, 2 = DeliverInputV2.
-get fun estimateRequiredValueV2(messageClass: uint8): uint64 {
+fun estimateRequiredValueV2Internal(messageClass: uint8): uint64 {
     if (messageClass == 0) {
         return MIN_ADVANCE_VALUE_V2 as uint64;
     }
@@ -783,6 +785,10 @@ get fun estimateRequiredValueV2(messageClass: uint8): uint64 {
         return MIN_DELIVERY_VALUE_V2 as uint64;
     }
     throw ErrorsV2.InvalidBody;
+}
+
+get fun estimateRequiredValueV2(messageClass: uint8): uint64 {
+    return estimateRequiredValueV2Internal(messageClass);
 }
 
 get fun getOutputCommitmentV2(): uint256 {

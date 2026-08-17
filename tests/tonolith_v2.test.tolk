@@ -407,11 +407,20 @@ get fun `test v2 deploy exposes immutable metadata and a canonical initial state
     expect(core.getEpochV2()).toEqual(0);
     expect(core.getInstructionCountV2()).toEqual(0);
     expect(core.getStateHashV2()).toEqual(core.getCoreStateHashV2());
+    expect(net.runGetMethod<uint256>(core.address, "getCoreStateHashV2")).toEqual(
+        storage.core.hash(),
+    );
+    expect(core.getStaticCommitmentV2()).toEqual(0);
     expect(core.getStaticIdentityV2().hash()).toEqual(storage.identity.hash());
+    expect(core.getProgramIdV2()).toEqual(0);
+    expect(core.getRomRootV2()).toEqual(storage.identity.load().roots.load().romRoot);
+    expect(core.getRouteRootV2()).toEqual(storage.identity.load().roots.load().routeRoot);
     expect(core.getRegistersV2()).toEqual(0);
     expect(core.getRamRootV2()).toEqual(storage.core.load().memory.load().ram.hash());
     expect(core.getMemoryPageV2(0)).toEqual(0);
+    expect(core.getInboxSlotV2(9, 9, 9)).toEqual(0);
     expect(core.getFaultCodeV2()).toEqual(0);
+    expect(core.getFlagsV2()).toEqual(0);
     expect(core.getInboxSummaryV2()).toEqual(4096);
     expect(core.getOutboxSummaryV2()).toEqual(4096);
     expect(core.getEpochStateV2().hash()).toEqual(
@@ -427,6 +436,17 @@ get fun `test v2 deploy exposes immutable metadata and a canonical initial state
     expect(core.estimateRequiredValueV2(0)).toEqual(MIN_ADVANCE_VALUE_V2 as uint64);
     expect(core.estimateRequiredValueV2(1)).toEqual(MIN_DISPATCH_VALUE_V2 as uint64);
     expect(core.estimateRequiredValueV2(2)).toEqual(MIN_DELIVERY_VALUE_V2 as uint64);
+    var caughtInvalidValueClass = false;
+    try {
+        val _ignoredValueClass = estimateRequiredValueV2Internal(3);
+    } catch (e) {
+        caughtInvalidValueClass = true;
+        expect(e).toEqual(103);
+    }
+    expect(caughtInvalidValueClass).toEqual(true);
+    expect(core.getInputCommitmentV2()).toEqual(0);
+    expect(core.getOutputCommitmentV2()).toEqual(0);
+    expect(core.getEpochHistoryCommitmentV2()).toEqual(0);
     expect(
         core.getCoreStateHashV2(),
     ).toEqual(0x0782faed379592a6d47134282b8c495e6073033acb733ed5e629f8b24ddb14b9);
@@ -588,6 +608,36 @@ get fun `test v2 OUTP appends a routed output and commits it`() {
     expect(core.getCoreStateHashV2()).toEqual(
         0x0eed2e36924e740c884530155b6c8f079f1e342a2ff3ee0a1b7b672ba88c7c42,
     );
+    val insufficientDispatch = core.sendV2DispatchOutput(
+        deployer.address,
+        ABI_VERSION_V2,
+        3,
+        0,
+        core.getCoreStateHashV2(),
+        0x18f93e46534eae22589575988cee189065e808d771d9eb925991245077a826fe,
+        { bounce: false, value: ton("0.001") },
+    );
+    expect(insufficientDispatch).toHaveFailedTx({ exitCode: ErrorsV2.InsufficientValue });
+    val invalidRunDispatch = core.sendV2DispatchOutput(
+        deployer.address,
+        ABI_VERSION_V2,
+        3,
+        1,
+        core.getCoreStateHashV2(),
+        0x18f93e46534eae22589575988cee189065e808d771d9eb925991245077a826fe,
+        { bounce: false, value: ton("0.1") },
+    );
+    expect(invalidRunDispatch).toHaveFailedTx({ exitCode: ErrorsV2.InvalidRun });
+    val wrongStateDispatch = core.sendV2DispatchOutput(
+        deployer.address,
+        ABI_VERSION_V2,
+        3,
+        0,
+        1,
+        0x18f93e46534eae22589575988cee189065e808d771d9eb925991245077a826fe,
+        { bounce: false, value: ton("0.1") },
+    );
+    expect(wrongStateDispatch).toHaveFailedTx({ exitCode: ErrorsV2.StateHashMismatch });
     val dispatch = core.sendV2DispatchOutput(
         deployer.address,
         ABI_VERSION_V2,
@@ -644,6 +694,77 @@ get fun `test v2 OUTP appends a routed output and commits it`() {
         { bounce: false, value: ton("0.1") },
     );
     expect(encodedMissingDispatch).toHaveFailedTx({ exitCode: ErrorsV2.NotFound });
+
+    var invalidOutputStorage = makeV2StorageForNetwork(
+        zeroV2RomRoot(),
+        emptyV2RecordRoot(),
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var invalidOutputCore = invalidOutputStorage.core.load();
+    var invalidOutputQueues = invalidOutputCore.queues.load();
+    invalidOutputQueues.outboxRoot = v2AppendQueueRoot(
+        invalidOutputQueues.outboxRoot,
+        V2OutputRecord {
+            domain: 0,
+            outputId: 100,
+            sourceCoreId: 0,
+            destinationCoreId: 1,
+            sourceEpoch: 0,
+            destinationEpoch: 1,
+            sourcePort: 0,
+            destinationPort: 0,
+            sequence: 0,
+            value: 1,
+            sourceInstructionCount: 1,
+            sourceStateHash: 0,
+        }.toCell(),
+    );
+    invalidOutputCore.queues = invalidOutputQueues.toCell();
+    invalidOutputStorage.core = invalidOutputCore.toCell();
+    val invalidOutput = TonolithCoreV2.fromStorage(invalidOutputStorage);
+    expect(
+        invalidOutput.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: invalidOutput.address });
+    expect(
+        invalidOutput.sendV2DispatchOutput(
+            deployer.address,
+            ABI_VERSION_V2,
+            9,
+            0,
+            invalidOutput.getCoreStateHashV2(),
+            100,
+            { bounce: false, value: ton("0.1") },
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.InvalidStorage });
+
+    var missingPeerStorage = makeV2StorageForTest(zeroV2RomRoot());
+    var missingPeerCore = missingPeerStorage.core.load();
+    var missingPeerQueues = missingPeerCore.queues.load();
+    missingPeerQueues.outboxRoot = v2AppendQueueRoot(
+        missingPeerQueues.outboxRoot,
+        outputRecordV2ForTest(0),
+    );
+    missingPeerCore.queues = missingPeerQueues.toCell();
+    missingPeerStorage.core = missingPeerCore.toCell();
+    val missingPeer = TonolithCoreV2.fromStorage(missingPeerStorage);
+    expect(
+        missingPeer.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: missingPeer.address });
+    expect(
+        missingPeer.sendV2DispatchOutput(
+            deployer.address,
+            ABI_VERSION_V2,
+            10,
+            0,
+            missingPeer.getCoreStateHashV2(),
+            100,
+            { bounce: false, value: ton("0.1") },
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.UnauthorizedPeer });
 }
 
 get fun `test v2 IN waits, accepts authenticated input, deduplicates, and consumes`() {
@@ -834,6 +955,62 @@ get fun `test v2 acknowledgement retires output and rejects wrong peer`() {
     expect(
         core.deploy(deployer.address, SendParams { value: ton("1") }),
     ).toHaveSuccessfulDeploy({ to: core.address });
+    val invalidAckVersion = core.sendV2InputAccepted(
+        deployer.address,
+        1,
+        1,
+        0,
+        V2AcknowledgementDetail {
+            outputId,
+            destinationCoreId: 1,
+            destinationEpoch: 1,
+            destinationStateHash: 0,
+        },
+        { bounce: false, value: ton("0.1") },
+    );
+    expect(invalidAckVersion).toHaveFailedTx({ exitCode: ErrorsV2.InvalidVersion });
+    val invalidAckRun = core.sendV2InputAccepted(
+        deployer.address,
+        ABI_VERSION_V2,
+        2,
+        1,
+        V2AcknowledgementDetail {
+            outputId,
+            destinationCoreId: 1,
+            destinationEpoch: 1,
+            destinationStateHash: 0,
+        },
+        { bounce: false, value: ton("0.1") },
+    );
+    expect(invalidAckRun).toHaveFailedTx({ exitCode: ErrorsV2.InvalidRun });
+    val missingAckPeer = core.sendV2InputAccepted(
+        deployer.address,
+        ABI_VERSION_V2,
+        3,
+        0,
+        V2AcknowledgementDetail {
+            outputId,
+            destinationCoreId: 99,
+            destinationEpoch: 1,
+            destinationStateHash: 0,
+        },
+        { bounce: false, value: ton("0.1") },
+    );
+    expect(missingAckPeer).toHaveFailedTx({ exitCode: ErrorsV2.UnauthorizedPeer });
+    val invalidAckEpoch = core.sendV2InputAccepted(
+        deployer.address,
+        ABI_VERSION_V2,
+        4,
+        0,
+        V2AcknowledgementDetail {
+            outputId,
+            destinationCoreId: 1,
+            destinationEpoch: 2,
+            destinationStateHash: 0,
+        },
+        { bounce: false, value: ton("0.1") },
+    );
+    expect(invalidAckEpoch).toHaveFailedTx({ exitCode: ErrorsV2.InvalidEpoch });
     val wrong = sendInputAcceptedV2ForTest(
         core,
         testing.treasury("v2-wrong-ack").address,
@@ -903,6 +1080,93 @@ get fun `test v2 acknowledgement retires output and rejects wrong peer`() {
         ),
     ).toHaveSuccessfulTx<V2InputAccepted>();
     expect(pressured.getStatusV2()).toEqual(STATUS_RUNNING_V2);
+
+    var invalidAckStorage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0),
+        oneRouteV2(route),
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var invalidAckCore = invalidAckStorage.core.load();
+    var invalidAckQueues = invalidAckCore.queues.load();
+    invalidAckQueues.outboxRoot = v2AppendQueueRoot(
+        invalidAckQueues.outboxRoot,
+        V2OutputRecord {
+            domain: 0,
+            outputId,
+            sourceCoreId: 0,
+            destinationCoreId: 1,
+            sourceEpoch: 0,
+            destinationEpoch: 1,
+            sourcePort: 0,
+            destinationPort: 0,
+            sequence: 0,
+            value: 3,
+            sourceInstructionCount: 1,
+            sourceStateHash: 0,
+        }.toCell(),
+    );
+    invalidAckCore.queues = invalidAckQueues.toCell();
+    invalidAckStorage.core = invalidAckCore.toCell();
+    val invalidAckDomain = TonolithCoreV2.fromStorage(invalidAckStorage);
+    expect(
+        invalidAckDomain.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: invalidAckDomain.address });
+    expect(
+        sendInputAcceptedV2ForTest(
+            invalidAckDomain,
+            deployer.address,
+            5,
+            0,
+            outputId,
+            1,
+            1,
+            0,
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.InvalidStorage });
+
+    var mismatchPeers = onePeerV2(V2Peer {
+        domain: DOMAIN_PEER_V2,
+        coreId: 1,
+        peerAddress: deployer.address,
+    });
+    mismatchPeers = v2AppendQueueRoot(
+        mismatchPeers,
+        V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 2,
+            peerAddress: deployer.address,
+        }.toCell(),
+    );
+    var mismatchStorage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0),
+        oneRouteV2(route),
+        mismatchPeers,
+    );
+    var mismatchCore = mismatchStorage.core.load();
+    var mismatchQueues = mismatchCore.queues.load();
+    mismatchQueues.outboxRoot = v2AppendQueueRoot(mismatchQueues.outboxRoot, output);
+    mismatchCore.queues = mismatchQueues.toCell();
+    mismatchStorage.core = mismatchCore.toCell();
+    val mismatch = TonolithCoreV2.fromStorage(mismatchStorage);
+    expect(mismatch.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: mismatch.address,
+    });
+    expect(
+        sendInputAcceptedV2ForTest(
+            mismatch,
+            deployer.address,
+            6,
+            0,
+            outputId,
+            2,
+            1,
+            0,
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.UnauthorizedPeer });
 }
 
 get fun `test v2 bounced delivery keeps the outbox retryable`() {
@@ -1002,6 +1266,44 @@ get fun `test v2 bounced delivery keeps the outbox retryable`() {
     );
     expect(malformedResult.gasUsed > 0).toEqual(true);
     expect(core.getOutboxCountV2()).toEqual(1);
+
+    val emptyBounce = createMessage({
+        bounce: BounceMode.Only256BitsOfBody,
+        value: ton("0.02"),
+        dest: core.address,
+        body: createEmptyCell(),
+    }).bounced();
+    val emptyBounceResult = testing.processSingleTraceStep(
+        deployer.address,
+        emptyBounce,
+    );
+    expect(emptyBounceResult.gasUsed > 0).toEqual(true);
+
+    val deliverOpcodeBounce = createMessage({
+        bounce: BounceMode.Only256BitsOfBody,
+        value: ton("0.02"),
+        dest: core.address,
+        body: beginCell()
+            .storeUint(0xFFFFFFFF, 32)
+            .storeUint(MESSAGE_DELIVER_INPUT_V2, 32)
+            .endCell(),
+    }).bounced();
+    expect(
+        testing.processSingleTraceStep(deployer.address, deliverOpcodeBounce).gasUsed > 0,
+    ).toEqual(true);
+
+    val acceptedOpcodeBounce = createMessage({
+        bounce: BounceMode.Only256BitsOfBody,
+        value: ton("0.02"),
+        dest: core.address,
+        body: beginCell()
+            .storeUint(0xFFFFFFFF, 32)
+            .storeUint(MESSAGE_INPUT_ACCEPTED_V2, 32)
+            .endCell(),
+    }).bounced();
+    expect(
+        testing.processSingleTraceStep(deployer.address, acceptedOpcodeBounce).gasUsed > 0,
+    ).toEqual(true);
 }
 
 get fun `test v2 inherited opcode families execute through the contract`() {
@@ -1139,6 +1441,123 @@ get fun `test v2 SYS controls cover flags shifts arithmetic and architectural st
     ).toHaveSuccessfulDeploy({ to: trap.address });
     expect(advanceV2OnceForTest(trap, deployer.address)).toHaveSuccessfulTx<V2Advance>();
     expect(trap.getStatusV2()).toEqual(STATUS_FAULTED_V2);
+
+    var directSysCore = makeV2StorageForTest(zeroV2RomRoot()).core.load();
+    v2ExecuteSys(
+        mutate directSysCore,
+        1,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        2,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        3,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        4,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        5,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        6,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        7,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    v2ExecuteSys(
+        mutate directSysCore,
+        8,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    expect(directSysCore.outputCount).toEqual(1);
+
+    var waitingSysCore = makeV2StorageForTest(zeroV2RomRoot()).core.load();
+    waitingSysCore.pc = 1;
+    waitingSysCore.instructionCount = 1;
+    v2ExecuteSys(
+        mutate waitingSysCore,
+        9,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    expect(waitingSysCore.status).toEqual(STATUS_WAITING_INPUT_V2);
+
+    var inputSysCore = makeV2StorageForTest(zeroV2RomRoot()).core.load();
+    inputSysCore.epoch = 1;
+    var inputSysQueues = inputSysCore.queues.load();
+    inputSysQueues.inboxRoot = v2AppendQueueRoot(
+        inputSysQueues.inboxRoot,
+        inputRecordV2ForTest(1, 2, 0, 123),
+    );
+    inputSysCore.queues = inputSysQueues.toCell();
+    v2ExecuteSys(
+        mutate inputSysCore,
+        0x29,
+        0,
+        0,
+        emptyV2RecordRoot(),
+        0,
+    );
+    expect(inputSysCore.accumulator).toEqual(1);
+    expect(inputSysCore.queues.load().inboxRoot.hash()).toNotEqual(
+        inputSysQueues.inboxRoot.hash(),
+    );
+
+    var caughtInvalidSys = false;
+    try {
+        v2ExecuteSys(
+            mutate directSysCore,
+            13,
+            0,
+            0,
+            emptyV2RecordRoot(),
+            0,
+        );
+    } catch (e) {
+        caughtInvalidSys = true;
+        expect(e).toEqual(140);
+    }
+    expect(caughtInvalidSys).toEqual(true);
 }
 
 get fun `test v2 bounded memory ROM queues routes peers and commitments`() {
@@ -1267,6 +1686,19 @@ get fun `test v2 bounded memory ROM queues routes peers and commitments`() {
     expect(v2InputAt(orderedInputs, 3).outputId).toEqual(11);
     expect(v2InputAt(orderedInputs, 4).outputId).toEqual(12);
 
+    val epochBefore = (inputRecordV2ForTest(0, 2, 0, 20) as Cell<V2InputRecord>).load();
+    val laterEpoch = (inputRecordV2ForTest(1, 2, 0, 21) as Cell<V2InputRecord>).load();
+    val earlierPort = (inputRecordV2ForTest(1, 1, 0, 22) as Cell<V2InputRecord>).load();
+    val laterPort = (inputRecordV2ForTest(1, 2, 0, 23) as Cell<V2InputRecord>).load();
+    val earlierSequence = (inputRecordV2ForTest(1, 2, 0, 24) as Cell<V2InputRecord>).load();
+    val laterSequence = (inputRecordV2ForTest(1, 2, 1, 25) as Cell<V2InputRecord>).load();
+    expect(v2InputBefore(epochBefore, laterEpoch)).toEqual(true);
+    expect(v2InputBefore(earlierPort, laterPort)).toEqual(true);
+    expect(v2InputBefore(earlierSequence, laterSequence)).toEqual(true);
+    expect(v2InputBefore(laterEpoch, epochBefore)).toEqual(false);
+    expect(v2FindRoute(v2AppendQueueRoot(emptyV2RecordRoot(), route1), 0, 1)).toEqual(null);
+    expect(v2FindInputSlot(inputs, 1, 2, 1).found).toEqual(0);
+
     var onePage = emptyV2RecordRoot();
     onePage = v2AppendQueueRoot(onePage, route0);
     expect(v2QueueCount(v2ReplaceRecordAt(onePage, 0, route0))).toEqual(1);
@@ -1274,6 +1706,24 @@ get fun `test v2 bounded memory ROM queues routes peers and commitments`() {
     expect(v2QueueCount(v2ReplaceRecordAt(twoPage, 1, route0))).toEqual(2);
     val threePage = v2AppendQueueRoot(twoPage, route0);
     expect(v2QueueCount(v2ReplaceRecordAt(threePage, 2, route0))).toEqual(3);
+    var directPage = v2EmptyQueuePage();
+    directPage = v2AppendQueuePage(directPage, route0);
+    directPage = v2AppendQueuePage(directPage, route0);
+    directPage = v2AppendQueuePage(directPage, route0);
+    directPage = v2AppendQueuePage(directPage, route0);
+    expect(v2QueuePageCount(directPage)).toEqual(4);
+    expect(v2ReplaceQueuePageRecord(directPage, 0, route0).hash()).toNotEqual(0);
+    expect(v2ReplaceQueuePageRecord(directPage, 1, route0).hash()).toNotEqual(0);
+    expect(v2ReplaceQueuePageRecord(directPage, 2, route0).hash()).toNotEqual(0);
+    expect(v2ReplaceQueuePageRecord(directPage, 3, route0).hash()).toNotEqual(0);
+    var caughtPageFull = false;
+    try {
+        val _ignoredPage = v2AppendQueuePage(directPage, route0);
+    } catch (e) {
+        caughtPageFull = true;
+        expect(e).toEqual(165);
+    }
+    expect(caughtPageFull).toEqual(true);
     val consumed = V2InputRecord {
         domain: DOMAIN_INPUT_V2,
         outputId: 1,
@@ -1290,6 +1740,9 @@ get fun `test v2 bounded memory ROM queues routes peers and commitments`() {
         consumed: 1,
     }.toCell();
     expect(v2InputAt(v2ReplaceRecordAt(inputs, 0, consumed), 0).consumed).toEqual(1);
+    var consumedInputs = emptyV2RecordRoot();
+    consumedInputs = v2AppendQueueRoot(consumedInputs, consumed);
+    expect(v2FindInput(consumedInputs, 1, 2).found).toEqual(0);
     expect(v2FindInput(inputs, 9, 9).found).toEqual(0);
     expect(v2FindInputSlot(inputs, 9, 9, 9).found).toEqual(0);
     expect(v2FindRecordById(inputs, 99).found).toEqual(0);
@@ -1466,6 +1919,118 @@ get fun `test v2 bounded structures cover every fixed slot and selector`() {
     expect(v2RomWord(rom, 768)).toEqual(0);
     expect(v2RomWord(rom, 896)).toEqual(0);
     expect(v2RomWord(rom, 1023)).toEqual(0);
+
+    var caughtV2RomSelector = false;
+    try {
+        val _ignoredRom = selectV2RomLevel1(level2, 4);
+    } catch (e) {
+        caughtV2RomSelector = true;
+        expect(e).toEqual(190);
+    }
+    expect(caughtV2RomSelector).toEqual(true);
+
+    var caughtV2RamSelector = false;
+    try {
+        val _ignoredRam = selectV2RamPage(memCore.memory.load().ram.load(), 4);
+    } catch (e) {
+        caughtV2RamSelector = true;
+        expect(e).toEqual(190);
+    }
+    expect(caughtV2RamSelector).toEqual(true);
+
+    var caughtV2RegisterRead = false;
+    try {
+        val _ignoredRegister = readV2Register(memCore, 16);
+    } catch (e) {
+        caughtV2RegisterRead = true;
+        expect(e).toEqual(142);
+    }
+    expect(caughtV2RegisterRead).toEqual(true);
+
+    var caughtV2RegisterWrite = false;
+    try {
+        writeV2Register(mutate memCore, -1, 0);
+    } catch (e) {
+        caughtV2RegisterWrite = true;
+        expect(e).toEqual(142);
+    }
+    expect(caughtV2RegisterWrite).toEqual(true);
+
+    var caughtV2RamRead = false;
+    try {
+        val _ignoredRamValue = readV2Ram(memCore, 256);
+    } catch (e) {
+        caughtV2RamRead = true;
+        expect(e).toEqual(142);
+    }
+    expect(caughtV2RamRead).toEqual(true);
+
+    var caughtV2RamWrite = false;
+    try {
+        writeV2Ram(mutate memCore, -1, 0);
+    } catch (e) {
+        caughtV2RamWrite = true;
+        expect(e).toEqual(142);
+    }
+    expect(caughtV2RamWrite).toEqual(true);
+
+    var caughtSequenceRead = false;
+    var invalidSequenceReadPort = 15;
+    invalidSequenceReadPort += 1;
+    try {
+        val _ignoredSequence = v2GetOutputSequence(0, invalidSequenceReadPort);
+    } catch (e) {
+        caughtSequenceRead = true;
+        expect(e).toEqual(161);
+    }
+    expect(caughtSequenceRead).toEqual(true);
+
+    var caughtSequenceWrite = false;
+    var invalidSequenceWritePort = 15;
+    invalidSequenceWritePort += 1;
+    try {
+        val _ignoredSequence = v2SetOutputSequence(0, invalidSequenceWritePort, 0);
+    } catch (e) {
+        caughtSequenceWrite = true;
+        expect(e).toEqual(161);
+    }
+    expect(caughtSequenceWrite).toEqual(true);
+
+    var caughtV2QueueAppend = false;
+    try {
+        val _ignoredFullAppend = v2AppendQueueRoot(fullRoutes, route0);
+    } catch (e) {
+        caughtV2QueueAppend = true;
+        expect(e).toEqual(165);
+    }
+    expect(caughtV2QueueAppend).toEqual(true);
+
+    var caughtV2RecordAt = false;
+    try {
+        val _ignoredRecord = v2RecordAt(fullRoutes, 16);
+    } catch (e) {
+        caughtV2RecordAt = true;
+        expect(e).toEqual(166);
+    }
+    expect(caughtV2RecordAt).toEqual(true);
+
+    var caughtV2Replace = false;
+    try {
+        val _ignoredReplace = v2ReplaceRecordAt(fullRoutes, 16, route0);
+    } catch (e) {
+        caughtV2Replace = true;
+        expect(e).toEqual(166);
+    }
+    expect(caughtV2Replace).toEqual(true);
+
+    var caughtV2Remove = false;
+    try {
+        val _ignoredRemove = v2RemoveRecordAt(fullRoutes, 16);
+    } catch (e) {
+        caughtV2Remove = true;
+        expect(e).toEqual(166);
+    }
+    expect(caughtV2Remove).toEqual(true);
 }
 
 get fun `test v2 execution edge paths preserve bounded progress`() {
@@ -1552,7 +2117,7 @@ get fun `test v2 execution edge paths preserve bounded progress`() {
         exitCode: ErrorsV2.InvalidInstruction,
     });
     val invalidRegister = TonolithCoreV2.fromStorage(
-        makeV2StorageForTest(romWithFirstWordV2(0x2FF)),
+        makeV2StorageForTest(romWithFirstWordV2(0x2010)),
     );
     expect(invalidRegister.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
         to: invalidRegister.address,
@@ -1579,6 +2144,24 @@ get fun `test v2 execution edge paths preserve bounded progress`() {
         to: invalidSys.address,
     });
     expect(advanceV2OnceForTest(invalidSys, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidSysOperand = TonolithCoreV2.fromStorage(
+        makeV2StorageForTest(romWithFirstWordV2(0xF010)),
+    );
+    expect(
+        invalidSysOperand.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: invalidSysOperand.address });
+    expect(advanceV2OnceForTest(invalidSysOperand, deployer.address)).toHaveFailedTx({
+        exitCode: ErrorsV2.InvalidInstruction,
+    });
+    val invalidSysPort = TonolithCoreV2.fromStorage(
+        makeV2StorageForTest(romWithFirstWordV2(0xF109)),
+    );
+    expect(
+        invalidSysPort.deploy(deployer.address, { value: ton("1") }),
+    ).toHaveSuccessfulDeploy({ to: invalidSysPort.address });
+    expect(advanceV2OnceForTest(invalidSysPort, deployer.address)).toHaveFailedTx({
         exitCode: ErrorsV2.InvalidInstruction,
     });
 
@@ -2461,6 +3044,181 @@ get fun `test v2 delivery validation rejects malformed routes epochs and replays
             0,
         ),
     ).toHaveFailedTx({ exitCode: ErrorsV2.ConflictingReplay });
+
+    expect(
+        sendDeliverInputV2WithConfig(
+            core,
+            deployer.address,
+            ABI_VERSION_V2,
+            ton("0.1"),
+            15,
+            0,
+            validOutputId,
+            1,
+            0,
+            0,
+            1,
+            0,
+            3,
+            0,
+            7,
+            1,
+            0,
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.InvalidRoute });
+
+    var lowerEpochStorage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0xF029),
+        routes,
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var lowerEpochState = lowerEpochStorage.core.load();
+    lowerEpochState.epoch = 2;
+    lowerEpochStorage.core = lowerEpochState.toCell();
+    val lowerEpoch = TonolithCoreV2.fromStorage(lowerEpochStorage);
+    expect(lowerEpoch.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: lowerEpoch.address,
+    });
+    expect(
+        sendDeliverInputV2WithConfig(
+            lowerEpoch,
+            deployer.address,
+            ABI_VERSION_V2,
+            ton("0.1"),
+            16,
+            0,
+            validOutputId,
+            1,
+            0,
+            0,
+            1,
+            0,
+            2,
+            0,
+            7,
+            1,
+            0,
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.InvalidEpoch });
+
+    var invalidInboxStorage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0xF029),
+        routes,
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var invalidInboxState = invalidInboxStorage.core.load();
+    var invalidInboxQueues = invalidInboxState.queues.load();
+    invalidInboxQueues.inboxRoot = v2AppendQueueRoot(
+        invalidInboxQueues.inboxRoot,
+        V2InputRecord {
+            domain: 0,
+            outputId: validOutputId,
+            sourceCoreId: 1,
+            destinationCoreId: 0,
+            sourceEpoch: 0,
+            destinationEpoch: 1,
+            sourcePort: 0,
+            destinationPort: 2,
+            sequence: 0,
+            value: 7,
+            sourceInstructionCount: 1,
+            sourceStateHash: 0,
+            consumed: 0,
+        }.toCell(),
+    );
+    invalidInboxState.queues = invalidInboxQueues.toCell();
+    invalidInboxStorage.core = invalidInboxState.toCell();
+    val invalidInbox = TonolithCoreV2.fromStorage(invalidInboxStorage);
+    expect(invalidInbox.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: invalidInbox.address,
+    });
+    expect(
+        sendDeliverInputV2WithConfig(
+            invalidInbox,
+            deployer.address,
+            ABI_VERSION_V2,
+            ton("0.1"),
+            17,
+            0,
+            validOutputId,
+            1,
+            0,
+            0,
+            1,
+            0,
+            2,
+            0,
+            7,
+            1,
+            0,
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.InvalidStorage });
+
+    var fullInboxStorage = makeV2StorageForNetwork(
+        romWithFirstWordV2(0xF029),
+        routes,
+        onePeerV2(V2Peer {
+            domain: DOMAIN_PEER_V2,
+            coreId: 1,
+            peerAddress: deployer.address,
+        }),
+    );
+    var fullInboxState = fullInboxStorage.core.load();
+    fullInboxState.epoch = 1;
+    var fullInboxQueues = fullInboxState.queues.load();
+    repeat (16) {
+        fullInboxQueues.inboxRoot = v2AppendQueueRoot(
+            fullInboxQueues.inboxRoot,
+            inputRecordV2ForTest(1, 2, 0, 1000),
+        );
+    }
+    fullInboxState.queues = fullInboxQueues.toCell();
+    fullInboxStorage.core = fullInboxState.toCell();
+    val fullInbox = TonolithCoreV2.fromStorage(fullInboxStorage);
+    expect(fullInbox.deploy(deployer.address, { value: ton("1") })).toHaveSuccessfulDeploy({
+        to: fullInbox.address,
+    });
+    val nextSequenceOutputId = v2OutputId(
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2,
+        1,
+        7,
+        1,
+    );
+    expect(
+        sendDeliverInputV2WithConfig(
+            fullInbox,
+            deployer.address,
+            ABI_VERSION_V2,
+            ton("0.1"),
+            18,
+            0,
+            nextSequenceOutputId,
+            1,
+            0,
+            0,
+            1,
+            0,
+            2,
+            1,
+            7,
+            1,
+            2,
+        ),
+    ).toHaveFailedTx({ exitCode: ErrorsV2.QueueFull });
 }
 
 get fun `test v2 ROM and queue selectors preserve distinct boundary records`() {
