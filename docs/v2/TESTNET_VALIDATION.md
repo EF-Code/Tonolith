@@ -12,8 +12,11 @@ candidate must first pass formatting, checking, compilation, all Acton and
 TypeScript tests, reproducibility, coverage, mutation, and the gas/action/
 storage/message-size checks. Mainnet is out of scope.
 
-The current status is **not deployed**. The local Acton coverage and mutation
-gates are open, and this record contains no fabricated address or transaction.
+The current status is **not deployed**. Functional tests, TypeScript coverage,
+source-line/blended coverage, and the release-delta mutation gate pass, but the
+raw contract branch threshold, full dependency mutation survivors, and
+local-validator boundary remain open. This record contains no fabricated
+address or transaction.
 
 ## Preflight
 
@@ -24,8 +27,11 @@ acton fmt --check
 acton check
 acton build
 acton test --fuzz-seed 42
+npm run test:contract:coverage
+npm run test:contract:mutation
 npm run typecheck
 npm test
+npm run test:coverage
 ```
 
 The deployment wallet is selected by the script as

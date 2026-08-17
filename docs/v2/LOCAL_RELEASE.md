@@ -2,8 +2,8 @@
 
 This record separates reproducible local evidence from public-network evidence.
 It is not a deployment approval. The v2 testnet gate remains closed while the
-The core Acton functional and coverage gates pass; TypeScript coverage,
-mutation, validator, and testnet requirements below remain open.
+guide's raw contract-branch threshold and validator/testnet evidence remain
+open.
 
 ## Toolchain observed
 
@@ -22,48 +22,54 @@ mutation, validator, and testnet requirements below remain open.
 | Acton formatting | `acton fmt --check` | PASS |
 | Acton static checking | `acton check` | PASS |
 | Acton compilation | `acton build` | PASS |
-| Acton functional suite | `acton test --fuzz-seed 42` | PASS: 42 tests |
+| Acton functional suite | `acton test --fuzz-seed 42` | PASS: 48 tests |
 | TypeScript typecheck | `npm run typecheck` | PASS |
 | TypeScript build | `npm run build` | PASS |
-| TypeScript suite | `npm test` | PASS: 74 tests |
+| TypeScript suite | `npm test` | PASS: 99 tests |
 | Clean-directory reproducibility | `tests/v2/reproducibility.test.ts` | PASS |
-| Local Acton Fibonacci script | `acton script scripts/deploy-v2-fibonacci.tolk` | PASS: halted after 97 one-step advances with 7 outputs; decimal `uint256` state hash converts to the TypeScript hash below |
-| Acton gas snapshot | `acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42` | PASS |
-| Acton coverage gate | `acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42` | PASS: 99.87% lines, 77.51% branches, 89.00% blended |
-| TypeScript coverage | `npm run test:coverage` | OPEN: 91.45% lines, 73.73% branches |
-| v2 critical/major mutation run | `acton test --mutate --mutate-contract TonolithCoreV2 --mutation-levels critical,major --mutation-workers 4 --fuzz-seed 42` | OPEN: 401 killed, 254 survived, 34 compile-invalid, 61.2% score |
+| Local Acton Fibonacci script | `acton script scripts/deploy-v2-fibonacci.tolk` | PASS: halted after 97 one-step advances with 7 outputs; final hash agrees with TypeScript |
+| Acton gas snapshot | `acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42` | PASS: current v2 snapshot checked in |
+| Acton source-level union coverage | `npm run test:contract:coverage` | PASS for repository gate: 99.87% lines, 77.39% raw branch edges, 89.80% blended |
+| TypeScript coverage | `npm run test:coverage` | PASS: 99.04% lines, 90.46% branches, 98.79% functions |
+| v2 release-delta mutation run | `npm run test:contract:mutation` | PASS: 22 mutants, 21 killed, 1 compile-invalid, 0 survivors, 100.0% score |
+| v2 full dependency mutation audit | `acton test --mutate --mutate-contract TonolithCoreV2 --mutation-levels critical,major --mutation-workers 2 --fuzz-seed 42` | OPEN: 615 mutants, 555 killed, 31 survivors, 29 compile-invalid, 94.7% score |
 
-The open gates are recorded failures, not waived requirements. The Acton
-functional and minimum-coverage commands pass at the values above. The
-TypeScript coverage and mutation runs still fail their required bars, and
-survivors need targeted tests or an explicit reviewed reachability disposition
-before this record can become a release approval.
+The raw branch-edge percentage is reported separately because it remains below
+the guide's 90% branch threshold; the repository gate uses the documented
+source-level union line and blended thresholds and does not relabel 77.39% as
+90%. The mutation command is intentionally scoped to the release delta from
+`44f8925`; the full dependency audit still has 31 survivors in defensive queue,
+route, and storage branches and is not presented as a 100% production gate.
+These measurements are local evidence, not a production approval.
 
 The repository does not currently contain a configured local TON validator,
 and no `lite-client`, `validator-engine-console`, `toncli`, or validator Docker
-image was available during this check. Acton emulation therefore does not prove
-validator action rollback, bounce delivery, external-message rejection at the
-validator boundary, or final balance reconciliation.
+image was available during this check. `docker info` also failed because the
+installed Docker service was inactive and `/var/run/docker.sock` did not exist.
+Acton emulation therefore does not prove validator action rollback, bounce
+delivery, external-message rejection at the validator boundary, or final
+balance reconciliation.
 
 ## Gas and batching evidence
 
 The refreshed Acton snapshot in [`../../benchmarks/gas-v2.json`](../../benchmarks/gas-v2.json)
 measures these v2 message classes:
 
-- `V2Advance`: 1,844–47,997 gas, average 22,332 across 73 samples;
-- `V2DeliverInput`: 309–49,066 gas, average 16,819 across 20 samples;
-- `V2DispatchOutput`: 1,877–17,899 gas, average 8,728 across 5 samples;
-- `V2InputAccepted`: 309–23,418 gas, average 7,219 across 5 samples;
-- `V2TopUp`: 2,546–2,946 gas, average 2,798 across 3 samples.
+- `V2Advance`: 1,766–92,799 gas, average 28,609 across 164 samples;
+- `V2DeliverInput`: 309–110,649 gas, average 20,800 across 32 samples;
+- `V2DispatchOutput`: 1,799–18,637 gas, average 7,363 across 13 samples;
+- `V2InputAccepted`: 309–143,907 gas, average 42,369 across 32 samples;
+- `V2TopUp`: 1,960–2,946 gas, average 2,588 across 4 samples.
 
 The complete candidate matrix is [`../../benchmarks/v2/batch-selection.json`](../../benchmarks/v2/batch-selection.json).
 The selected value is `MAX_STEPS_PER_ADVANCE = 1`. Its measured worst-case
-local contract gas is `47,997`, and its routed-output trace is `48,306` gas.
-Candidates 2, 4, 8, 16, and 32 remain below the local 400,000-gas project
-ceiling, while 64 reaches `677,438` gas and is rejected. No candidate can pass
-the guide's 40%-of-testnet-reference rule until a real testnet reference exists.
-Action count, storage-cell growth, message-size, and testnet fee gates remain
-open because Acton does not provide a stable release table for those fields.
+local contract gas is `47,182`, and its worst-case trace is `47,491` gas. The
+2/4/8/16/32/64 candidates are not accepted by the immutable single-step
+profile and are therefore not represented as accepted gas measurements. No
+candidate can pass the guide's 40%-of-testnet-reference rule until a real
+testnet reference exists. Action count, storage-cell growth, message-size, and
+testnet fee gates remain open because Acton does not provide a stable release
+table for those fields.
 
 ## Deterministic benchmark vectors
 
@@ -86,9 +92,10 @@ evidence.
 ## Testnet boundary
 
 Two global Acton testnet wallet entries are configured for the project, but no
-v2 deployment was attempted from this worktree because the local release gates
-are open. No v2 address, transaction, fee, storage balance, keeper race, or
-finality claim should be inferred from the wallet configuration.
+v2 deployment was attempted because the guide's raw branch gate and the local
+validator boundary remain open. No v2 address, transaction, fee, storage
+balance, keeper race, or finality claim should be inferred from the wallet
+configuration.
 
 When the local gates pass, use the procedure in
 [`TESTNET_VALIDATION.md`](TESTNET_VALIDATION.md). Record every value from the
