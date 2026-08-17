@@ -50,13 +50,19 @@ jobs:
       - name: Run Acton contract tests and coverage gate
         run: |
           acton test --fuzz-seed 42
-          acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42
+          npm run test:contract:coverage
+
+      - name: Run Acton mutation gate
+        run: npm run test:contract:mutation
 
       - name: Check TypeScript
         run: npm run typecheck
 
       - name: Run tests
         run: npm test
+
+      - name: Run TypeScript coverage gate
+        run: npm run test:coverage
 
       - name: Build TypeScript tooling
         run: npm run build

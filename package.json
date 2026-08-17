@@ -40,13 +40,13 @@
     "build": "tsc -p tsconfig.json",
     "prepare": "npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node --import tsx --test 'tests/**/*.test.ts'",
-    "test:coverage": "c8 --reporter=text --reporter=lcov node --import tsx --test 'tests/**/*.test.ts'",
+    "test": "node --import tsx --test tests/*.test.ts tests/v2/*.test.ts",
+    "test:coverage": "c8 --check-coverage --lines 95 --branches 90 --functions 95 --statements 95 --reporter=text --reporter=lcov node --import tsx --test tests/*.test.ts tests/v2/*.test.ts",
     "assemble:fibonacci": "tsx tools/assembler/cli.ts programs/fibonacci.tasm programs/fibonacci.json",
     "test:contract": "acton test --fuzz-seed 42",
-    "test:contract:coverage": "acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42",
-    "test:contract:mutation": "acton test --mutate --mutate-contract TonolithCpu --mutation-levels critical,major --fuzz-seed 42",
-    "gas:snapshot": "acton test --snapshot benchmarks/gas-v1.json --fuzz-seed 42"
+    "test:contract:coverage": "tsx tools/acton-coverage.ts",
+    "test:contract:mutation": "acton test --mutate --mutate-contract TonolithCoreV2 --mutation-levels critical,major --mutation-workers 2 --mutation-diff ref --mutation-diff-ref 44f8925 --mutation-minimum-percent 100 --fuzz-seed 42",
+    "gas:snapshot": "acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42"
   },
   "engines": {
     "node": ">=26"
