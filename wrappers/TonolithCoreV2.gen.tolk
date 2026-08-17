@@ -290,6 +290,10 @@ fun TonolithCoreV2.getFlagsV2(self): uint2 {
     return net.runGetMethod(self.address, "getFlagsV2");
 }
 
+fun TonolithCoreV2.getOutputSequenceV2(self, port: uint4): uint8 {
+    return net.runGetMethod(self.address, "getOutputSequenceV2", [port]);
+}
+
 fun TonolithCoreV2.getRegistersV2(self): uint64 {
     return net.runGetMethod(self.address, "getRegistersV2");
 }

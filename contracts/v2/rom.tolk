@@ -61,7 +61,7 @@ fun v2RomWithFirstLeaf(firstLeaf: Cell<V2RomLeaf>): Cell<V2RomRoot> {
     }.toCell();
 }
 
-fun selectV2RomLevel1(level2: V2RomLevel2, index: int): V2RomLevel1 {
+fun selectV2RomLevel1(level2: V2RomLevel2, index: uint2): V2RomLevel1 {
     if (index == 0) {
         return level2.level10.load();
     }
@@ -71,10 +71,7 @@ fun selectV2RomLevel1(level2: V2RomLevel2, index: int): V2RomLevel1 {
     if (index == 2) {
         return level2.level12.load();
     }
-    if (index == 3) {
-        return level2.level13.load();
-    }
-    throw ErrorsV2.InvalidStorage;
+    return level2.level13.load();
 }
 
 fun v2RomWord(romCell: cell, address: uint10): uint16 {
@@ -86,7 +83,7 @@ fun v2RomWord(romCell: cell, address: uint10): uint16 {
     // therefore uses only its first two children, exactly like the v1 ROM
     // layout; the remaining children stay canonical zero padding.
     val level2 = rootIndex == 0 ? root.level20.load() : root.level21.load();
-    val level1 = selectV2RomLevel1(level2, (leafIndex >> 2) & 3);
+    val level1 = selectV2RomLevel1(level2, ((leafIndex >> 2) & 3) as uint2);
     val leafIndexInLevel = leafIndex & 3;
     var leafCell = level1.leaf0;
     if (leafIndexInLevel == 1) {

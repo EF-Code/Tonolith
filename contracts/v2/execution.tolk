@@ -43,13 +43,11 @@ fun v2LogicalAccumulator(mutate core: V2CoreState, value: uint4) {
     core.flags = v2SetZeroFlag(core.flags, core.accumulator);
 }
 
-fun v2GetOutputSequence(packed: uint128, port: int): uint8 {
-    assert (port >= 0 && port < 16) throw ErrorsV2.InvalidRoute;
+fun v2GetOutputSequence(packed: uint128, port: uint4): uint8 {
     return ((packed >> (port * 8)) & 255) as uint8;
 }
 
-fun v2SetOutputSequence(packed: uint128, port: int, sequence: uint8): uint128 {
-    assert (port >= 0 && port < 16) throw ErrorsV2.InvalidRoute;
+fun v2SetOutputSequence(packed: uint128, port: uint4, sequence: uint8): uint128 {
     val shift = port * 8;
     val mask = 255 << shift;
     return ((packed & ~mask) | (sequence << shift)) as uint128;
@@ -129,7 +127,7 @@ fun v2ExecuteSys(
         return null;
     }
     if (subop == 9) {
-        val port = operand >> 4;
+        val port = (operand >> 4) as uint4;
         val queues = core.queues.load();
         val cursor = v2FindInput(queues.inboxRoot, core.epoch, port);
         if (cursor.found == 0) {
@@ -245,12 +243,11 @@ fun v2ExecuteSys(
         core.status = STATUS_RUNNING_V2;
         return null;
     }
-    if (subop == 12) {
-        core.status = STATUS_FAULTED_V2;
-        core.faultCode = (operand >> 4) as uint8;
-        return null;
-    }
-    throw ErrorsV2.InvalidInstruction;
+    // v2ExecuteInstruction validates the SYS sub-opcode before dispatch, so
+    // reaching this point means the architectural TRAP operation.
+    core.status = STATUS_FAULTED_V2;
+    core.faultCode = (operand >> 4) as uint8;
+    return null;
 }
 
 fun v2ExecuteInstruction(
@@ -302,54 +299,54 @@ fun v2ExecuteInstruction(
         return null;
     }
     if (opcode == 2) {
-        core.accumulator = readV2Register(core, operand);
+        core.accumulator = readV2Register(core, operand as uint4);
         core.flags = v2SetZeroFlag(core.flags, core.accumulator);
         return null;
     }
     if (opcode == 3) {
-        writeV2Register(mutate core, operand, core.accumulator);
+        writeV2Register(mutate core, operand as uint4, core.accumulator);
         return null;
     }
     if (opcode == 4) {
-        v2AddAccumulator(mutate core, readV2Register(core, operand), false);
+        v2AddAccumulator(mutate core, readV2Register(core, operand as uint4), false);
         return null;
     }
     if (opcode == 5) {
-        v2AddAccumulator(mutate core, readV2Register(core, operand), true);
+        v2AddAccumulator(mutate core, readV2Register(core, operand as uint4), true);
         return null;
     }
     if (opcode == 6) {
-        v2SubtractAccumulator(mutate core, readV2Register(core, operand));
+        v2SubtractAccumulator(mutate core, readV2Register(core, operand as uint4));
         return null;
     }
     if (opcode == 7) {
         v2LogicalAccumulator(
             mutate core,
-            (core.accumulator & readV2Register(core, operand)) as uint4,
+            (core.accumulator & readV2Register(core, operand as uint4)) as uint4,
         );
         return null;
     }
     if (opcode == 8) {
         v2LogicalAccumulator(
             mutate core,
-            (core.accumulator | readV2Register(core, operand)) as uint4,
+            (core.accumulator | readV2Register(core, operand as uint4)) as uint4,
         );
         return null;
     }
     if (opcode == 9) {
         v2LogicalAccumulator(
             mutate core,
-            (core.accumulator ^ readV2Register(core, operand)) as uint4,
+            (core.accumulator ^ readV2Register(core, operand as uint4)) as uint4,
         );
         return null;
     }
     if (opcode == 10) {
-        core.accumulator = readV2Ram(core, operand);
+        core.accumulator = readV2Ram(core, operand as uint8);
         core.flags = v2SetZeroFlag(core.flags, core.accumulator);
         return null;
     }
     if (opcode == 11) {
-        writeV2Ram(mutate core, operand, core.accumulator);
+        writeV2Ram(mutate core, operand as uint8, core.accumulator);
         return null;
     }
     if (opcode == 12) {

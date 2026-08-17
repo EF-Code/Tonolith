@@ -40,7 +40,7 @@ fun emptyV2Queues(): Cell<V2QueueRoots> {
     }.toCell();
 }
 
-fun selectV2RamPage(root: V2RamRoot, index: int): Cell<V2RamPage> {
+fun selectV2RamPage(root: V2RamRoot, index: uint2): Cell<V2RamPage> {
     if (index == 0) {
         return root.page0;
     }
@@ -50,21 +50,16 @@ fun selectV2RamPage(root: V2RamRoot, index: int): Cell<V2RamPage> {
     if (index == 2) {
         return root.page2;
     }
-    if (index == 3) {
-        return root.page3;
-    }
-    throw ErrorsV2.InvalidStorage;
+    return root.page3;
 }
 
-fun readV2Register(core: V2CoreState, index: int): uint4 {
-    assert (index >= 0 && index < 16) throw ErrorsV2.ArchitecturalInvariant;
+fun readV2Register(core: V2CoreState, index: uint4): uint4 {
     val memory = core.memory.load();
     val registers = memory.registers.load();
     return ((registers.packed >> (index * 4)) & 15) as uint4;
 }
 
-fun writeV2Register(mutate core: V2CoreState, index: int, value: uint4) {
-    assert (index >= 0 && index < 16) throw ErrorsV2.ArchitecturalInvariant;
+fun writeV2Register(mutate core: V2CoreState, index: uint4, value: uint4) {
     val memory = core.memory.load();
     val registers = memory.registers.load();
     val shift = index * 4;
@@ -77,21 +72,19 @@ fun writeV2Register(mutate core: V2CoreState, index: int, value: uint4) {
     }.toCell();
 }
 
-fun readV2Ram(core: V2CoreState, address: int): uint4 {
-    assert (address >= 0 && address < 256) throw ErrorsV2.ArchitecturalInvariant;
+fun readV2Ram(core: V2CoreState, address: uint8): uint4 {
     val memory = core.memory.load();
-    val page = selectV2RamPage(memory.ram.load(), address >> 6).load();
+    val page = selectV2RamPage(memory.ram.load(), (address >> 6) as uint2).load();
     val shift = (address & 63) * 4;
     return ((page.packed >> shift) & 15) as uint4;
 }
 
-fun writeV2Ram(mutate core: V2CoreState, address: int, value: uint4) {
-    assert (address >= 0 && address < 256) throw ErrorsV2.ArchitecturalInvariant;
+fun writeV2Ram(mutate core: V2CoreState, address: uint8, value: uint4) {
     val memory = core.memory.load();
     val root = memory.ram.load();
     val pageIndex = address >> 6;
     val offset = address & 63;
-    val oldPage = selectV2RamPage(root, pageIndex).load();
+    val oldPage = selectV2RamPage(root, pageIndex as uint2).load();
     val shift = offset * 4;
     val mask = 15 << shift;
     val packed = ((oldPage.packed & ~mask) | (value << shift)) as uint256;

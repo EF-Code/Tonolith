@@ -1,7 +1,11 @@
 import "types"
 
 fun v2QueueCount(root: cell): int {
-    return root.beginParse().loadUint(5);
+    val count = root.beginParse().loadUint(5);
+    if (count > 16) {
+        throw ErrorsV2.InvalidStorage;
+    }
+    return count;
 }
 
 fun v2QueuePageCount(page: cell): int {

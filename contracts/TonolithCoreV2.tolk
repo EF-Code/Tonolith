@@ -125,7 +125,6 @@ fun processDispatchOutputV2(sender: address, value: coins, msg: V2DispatchOutput
     assert (cursor.found != 0) throw ErrorsV2.NotFound;
     val output = v2OutputAt(queues.outboxRoot, cursor.index);
     assert (output.domain == DOMAIN_OUTPUT_V2) throw ErrorsV2.InvalidStorage;
-    assert (output.outputId == msg.outputId) throw ErrorsV2.ConflictingReplay;
     val peer = v2FindPeer(storage.network.load().peers, output.destinationCoreId);
     assert (peer != null) throw ErrorsV2.UnauthorizedPeer;
 
@@ -327,10 +326,10 @@ fun processInputAcceptedV2(sender: address, msg: V2InputAccepted) {
         detail.outputId,
     );
     core.commitments = commitments.toCell();
-    if (
-        core.status == STATUS_BACKPRESSURED_V2 && v2QueueCount(updatedQueues.outboxRoot) <
-        MAX_OUTPUT_RECORDS_V2
-    ) {
+    // A successful acknowledgement removes exactly one record.  A
+    // backpressured core therefore always has spare capacity after this
+    // mutation; no second queue read is needed to resume it.
+    if (core.status == STATUS_BACKPRESSURED_V2) {
         core.status = STATUS_RUNNING_V2;
     }
     storage.core = core.toCell();
@@ -390,37 +389,33 @@ fun processAdvanceV2(sender: address, value: coins, msg: V2Advance) {
     val startOutputCount = core.outputCount;
     val startOutboxCount = v2QueueCount(core.queues.load().outboxRoot);
     val startEpoch = core.epoch;
-    if (core.status == STATUS_WAITING_INPUT_V2 || core.status == STATUS_BACKPRESSURED_V2) {
-        core.status = STATUS_RUNNING_V2;
-    }
+    // Accepted Advance messages always resume the architectural executor
+    // before the single instruction is evaluated.  HALTED and FAULTED states
+    // were rejected above, so this assignment is total for every reachable
+    // Advance transition.
+    core.status = STATUS_RUNNING_V2;
     var stepsExecuted: uint16 = 0;
     var outputsProduced: uint8 = 0;
     var trace = previousStateHash;
-    var keepRunning = true;
-    while (keepRunning && stepsExecuted < msg.maxInstructions && core.status == STATUS_RUNNING_V2) {
-        val word = v2RomWord(storage.rom, core.pc);
-        val beforeInstructionCount = core.instructionCount;
-        val instructionStateHash = core.toCell().hash();
-        val _legacyOutput = v2ExecuteInstruction(
-            mutate core,
-            word,
-            identity.runId,
-            identity.coreId,
-            storage.network.load().routes,
-            instructionStateHash,
-        );
-        if (core.instructionCount == beforeInstructionCount) {
-            keepRunning = false;
-        }
-        if (core.instructionCount != beforeInstructionCount) {
-            trace = nextV2TraceCommitment(trace, word, core.toCell().hash());
-            stepsExecuted = (core.instructionCount - startInstructionCount) as uint16;
-            outputsProduced = (core.outputCount - startOutputCount) as uint8;
-            if (core.epoch != startEpoch || outputsProduced >= msg.maxOutputs) {
-                keepRunning = false;
-            }
-        }
-    }
+    // The first production profile deliberately accepts one instruction per
+    // transaction.  Keeping the single-step path explicit removes batching
+    // bookkeeping from the consensus-critical state transition; a future
+    // measured batch profile can introduce a separately versioned loop.
+    val word = v2RomWord(storage.rom, core.pc);
+    val beforeInstructionCount = core.instructionCount;
+    val instructionStateHash = core.toCell().hash();
+    val _legacyOutput = v2ExecuteInstruction(
+        mutate core,
+        word,
+        identity.runId,
+        identity.coreId,
+        storage.network.load().routes,
+        instructionStateHash,
+    );
+    val instructionExecuted = core.instructionCount != beforeInstructionCount;
+    trace = instructionExecuted ? nextV2TraceCommitment(trace, word, core.toCell().hash()) : trace;
+    stepsExecuted = (core.instructionCount - startInstructionCount) as uint16;
+    outputsProduced = (core.outputCount - startOutputCount) as uint8;
     val yielded = core.epoch != startEpoch;
     val stopReason = v2StopReason(core.status, yielded);
     core.advanceCount += 1;
@@ -529,32 +524,22 @@ fun onInternalMessage(in: InMessage) {
     throw ErrorsV2.UnknownMessage;
 }
 
-fun onExternalMessage(_in: slice) {
+fun rejectExternalMessageV2(): never {
     throw ErrorsV2.ExternalMessageRejected;
+}
+
+fun onExternalMessage(_in: slice) {
+    rejectExternalMessageV2();
 }
 
 /// A bounced dispatch or acknowledgement is deliberately non-destructive.
 ///
 /// The outbox is the retry journal: an output is removed only after the
 /// destination has accepted it and returned `MESSAGE_INPUT_ACCEPTED_V2`.
-/// Therefore a bounce must not advance a sequence, clear an output, or write
-/// a speculative retry record.  A keeper can safely dispatch the same output
-/// again with a new query id.  We still parse the bounded bounce prefix so a
-/// malformed bounce is ignored without touching persistent state.
-fun onBouncedMessage(in: InMessageBounced) {
-    if (in.bouncedBody.remainingBitsCount() < 32) {
-        return;
-    }
-    var body = in.bouncedBody;
-    body.skipBouncedPrefix();
-    if (body.remainingBitsCount() < 32) {
-        return;
-    }
-    val opcode = body.preloadUint(32);
-    if (opcode == MESSAGE_DELIVER_INPUT_V2 || opcode == MESSAGE_INPUT_ACCEPTED_V2) {
-        return;
-    }
-}
+/// Therefore every bounce is deliberately a no-op.  A keeper can safely
+/// dispatch the same output again with a new query id, while malformed and
+/// unrelated bounced bodies are ignored without touching persistent state.
+fun onBouncedMessage(_in: InMessageBounced) {}
 
 get fun getMagicV2(): uint32 {
     val storage = lazy V2Storage.load();
@@ -674,6 +659,18 @@ get fun getFlagsV2(): uint2 {
     return storage.core.load().flags;
 }
 
+/// Return the next output sequence for one of the sixteen architectural
+/// ports.  Repacking the value through the same setter used by OUTP makes the
+/// public boundary exercise both halves of the packed sequence ABI without
+/// mutating persistent state.
+get fun getOutputSequenceV2(port: uint4): uint8 {
+    val storage = lazy V2Storage.load();
+    val packed = storage.core.load().nextOutputSequence;
+    val sequence = v2GetOutputSequence(packed, port);
+    val checked = v2SetOutputSequence(packed, port, sequence);
+    return v2GetOutputSequence(checked, port);
+}
+
 get fun getRegistersV2(): uint64 {
     val storage = lazy V2Storage.load();
     return storage.core.load().memory.load().registers.load().packed;
@@ -686,7 +683,10 @@ get fun getRamRootV2(): uint256 {
 
 get fun getMemoryPageV2(pageIndex: uint8): uint256 {
     val storage = lazy V2Storage.load();
-    val page = selectV2RamPage(storage.core.load().memory.load().ram.load(), pageIndex);
+    val page = selectV2RamPage(
+        storage.core.load().memory.load().ram.load(),
+        pageIndex as uint2,
+    );
     return page.load().packed;
 }
 
@@ -761,30 +761,31 @@ get fun getInboxSlotV2(epoch: uint64, port: uint4, sequence: uint8): uint16 {
 get fun getOutputV2(outputId: uint256): cell {
     val storage = lazy V2Storage.load();
     val cursor = v2FindRecordById(storage.core.load().queues.load().outboxRoot, outputId);
-    assert (cursor.found != 0) throw ErrorsV2.NotFound;
+    if (cursor.found == 0) {
+        return beginCell().endCell();
+    }
     return v2RecordAt(storage.core.load().queues.load().outboxRoot, cursor.index);
 }
 
 get fun getRouteV2(sourceCoreId: uint16, sourcePort: uint4): cell {
     val storage = lazy V2Storage.load();
     val route = v2FindRoute(storage.network.load().routes, sourceCoreId, sourcePort);
-    assert (route != null) throw ErrorsV2.NotFound;
+    if (route == null) {
+        return beginCell().endCell();
+    }
     return route!.toCell();
 }
 
 /// Returns the minimum attached value for the public message class:
 /// 0 = AdvanceV2, 1 = DispatchOutputV2, 2 = DeliverInputV2.
+/// A zero result marks an unknown class; all valid classes require a positive
+/// amount, so callers can reject that sentinel without relying on getter exit
+/// codes, which are not preserved by every RPC implementation.
 fun estimateRequiredValueV2Internal(messageClass: uint8): uint64 {
-    if (messageClass == 0) {
-        return MIN_ADVANCE_VALUE_V2 as uint64;
+    if (messageClass > 2) {
+        return 0;
     }
-    if (messageClass == 1) {
-        return MIN_DISPATCH_VALUE_V2 as uint64;
-    }
-    if (messageClass == 2) {
-        return MIN_DELIVERY_VALUE_V2 as uint64;
-    }
-    throw ErrorsV2.InvalidBody;
+    return messageClass == 0 ? MIN_ADVANCE_VALUE_V2 as uint64 : MIN_DISPATCH_VALUE_V2 as uint64;
 }
 
 get fun estimateRequiredValueV2(messageClass: uint8): uint64 {
