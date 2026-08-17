@@ -103,7 +103,7 @@ acknowledgements, retry-aware output dispatch, a permissionless bounded
 and trace files that the [Tonolith Visualizer](https://github.com/EF-Code/tonolith-visualizer)
 can consume.
 
-The current local evidence includes **42/42** Acton tests, **73/73** TypeScript
+The current local evidence includes **42/42** Acton tests, **74/74** TypeScript
 tests, deterministic Fibonacci/CRC-4/cellular-automaton vectors, a two-core
 counter pipeline, and a two-core 8-bit carry path. The v2 Fibonacci emulator
 produces `1, 1, 2, 3, 5, 8, 13` in **97 one-step batches** with final state hash

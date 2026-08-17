@@ -21,15 +21,16 @@ coverage and mutation requirements below are open.
 | Acton formatting | `acton fmt --check` | PASS |
 | Acton static checking | `acton check` | PASS |
 | Acton compilation | `acton build` | PASS |
-| Acton functional suite | `acton test --fuzz-seed 42` | PASS: 41 tests |
+| Acton functional suite | `acton test --fuzz-seed 42` | PASS: 42 tests |
 | TypeScript typecheck | `npm run typecheck` | PASS |
 | TypeScript build | `npm run build` | PASS |
-| TypeScript suite | `npm test` | PASS: 71 tests |
+| TypeScript suite | `npm test` | PASS: 74 tests |
 | Clean-directory reproducibility | `tests/v2/reproducibility.test.ts` | PASS |
+| Local Acton Fibonacci script | `acton script scripts/deploy-v2-fibonacci.tolk` | PASS: halted after 97 one-step advances with 7 outputs; decimal `uint256` state hash converts to the TypeScript hash below |
 | Acton gas snapshot | `acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42` | PASS |
 | Acton coverage gate | `acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42` | OPEN: 98.3% lines, 74.1% branches, 86.7% blended |
-| TypeScript coverage | `npm run test:coverage` | OPEN: 93.03% lines, 74.25% branches |
-| v2 critical/major mutation run | `acton test --mutate --mutate-contract TonolithCoreV2 --mutation-levels critical,major --mutation-workers 2 --fuzz-seed 42` | OPEN: 401 killed, 254 survived, 34 compile-invalid, 61.2% score |
+| TypeScript coverage | `npm run test:coverage` | OPEN: 91.43% lines, 73.41% branches |
+| v2 critical/major mutation run | `acton test --mutate --mutate-contract TonolithCoreV2 --mutation-levels critical,major --mutation-workers 4 --fuzz-seed 42` | OPEN: 401 killed, 254 survived, 34 compile-invalid, 61.2% score |
 
 The open gates are recorded failures, not waived requirements. The Acton
 minimum-score command exits non-zero at the current 86.7% blended score. The
@@ -75,8 +76,11 @@ are local-emulator evidence:
 - counter pipeline: outputs `1, 2`, two acknowledgements;
 - two-core 8-bit carry path: carry output `1`, two acknowledgements.
 
-Those hashes prove agreement between the checked-in emulator and its own
-canonical inputs. They are not TON transaction or finality evidence.
+The local Acton Fibonacci script reached the same halted state and printed the
+same final hash as a decimal `uint256`; rendering that value as fixed-width
+hex gives `8238d6bbcd507f4a3b9cba3b1ad48b2d88fd6ab11f7068b75340a3f0044a9f1f`.
+This is local Tolk/TypeScript agreement, not TON transaction or finality
+evidence.
 
 ## Testnet boundary
 
