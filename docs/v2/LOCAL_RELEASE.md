@@ -2,7 +2,8 @@
 
 This record separates reproducible local evidence from public-network evidence.
 It is not a deployment approval. The v2 testnet gate remains closed while the
-coverage and mutation requirements below are open.
+The core Acton functional and coverage gates pass; TypeScript coverage,
+mutation, validator, and testnet requirements below remain open.
 
 ## Toolchain observed
 
@@ -28,14 +29,14 @@ coverage and mutation requirements below are open.
 | Clean-directory reproducibility | `tests/v2/reproducibility.test.ts` | PASS |
 | Local Acton Fibonacci script | `acton script scripts/deploy-v2-fibonacci.tolk` | PASS: halted after 97 one-step advances with 7 outputs; decimal `uint256` state hash converts to the TypeScript hash below |
 | Acton gas snapshot | `acton test --snapshot benchmarks/gas-v2.json --fuzz-seed 42` | PASS |
-| Acton coverage gate | `acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42` | OPEN: 98.3% lines, 74.1% branches, 86.7% blended |
+| Acton coverage gate | `acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42` | PASS: 99.87% lines, 77.51% branches, 89.00% blended |
 | TypeScript coverage | `npm run test:coverage` | OPEN: 91.45% lines, 73.73% branches |
 | v2 critical/major mutation run | `acton test --mutate --mutate-contract TonolithCoreV2 --mutation-levels critical,major --mutation-workers 4 --fuzz-seed 42` | OPEN: 401 killed, 254 survived, 34 compile-invalid, 61.2% score |
 
 The open gates are recorded failures, not waived requirements. The Acton
-minimum-score command exits non-zero at the current 86.7% blended score. The
-mutation run also fails the required critical-mutant and major-mutant bars.
-Survivors need targeted tests or an explicit reviewed reachability disposition
+functional and minimum-coverage commands pass at the values above. The
+TypeScript coverage and mutation runs still fail their required bars, and
+survivors need targeted tests or an explicit reviewed reachability disposition
 before this record can become a release approval.
 
 The repository does not currently contain a configured local TON validator,
