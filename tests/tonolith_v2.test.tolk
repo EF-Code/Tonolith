@@ -170,12 +170,7 @@ fun romWithDistinctSelectorsV2(): Cell<V2RomRoot> {
             secondHalf: 0,
         }.toCell(),
     }.toCell();
-    val level20 = V2RomLevel2 {
-        level10: level10,
-        level11: level11,
-        level12: level12,
-        level13: level13,
-    }.toCell();
+    val level20 = V2RomLevel2 { level10, level11, level12, level13 }.toCell();
     val level21 = V2RomLevel2 {
         level10: V2RomLevel1 {
             leaf0: V2RomLeaf {
