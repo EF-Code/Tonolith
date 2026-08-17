@@ -145,6 +145,47 @@ test("verifier rejects StateInit/data drift and incomplete predecessor links", a
   );
 });
 
+test("verifier stays total on malformed history, address, and StateInit input", async () => {
+  const snapshot: RawChainSnapshot = {
+    source: "malformed-a",
+    network: "testnet",
+    account: {
+      address: "not-an-address",
+      codeBoc: beginCell().storeUint(1, 1).endCell().toBoc({ idx: false }).toString("base64"),
+      dataBoc: beginCell().storeUint(0, 1).endCell().toBoc({ idx: false }).toString("base64"),
+      stateInitBoc: "not-a-valid-boc",
+    },
+    transactions: [
+      { hash: "a".repeat(64), lt: "not-a-number", success: true, outbound: [] },
+    ],
+  };
+  const source = (id: string): RawChainSource => ({
+    id,
+    fetchSnapshot: async () => ({ ...snapshot, source: id }),
+  });
+
+  const report = await verifyRunFromSources(
+    "not-an-address",
+    {
+      address: "not-an-address",
+      network: "testnet",
+      codeHash: "0".repeat(64),
+      dataHash: "0".repeat(64),
+      stateInitHash: "0".repeat(64),
+      programId: "0".repeat(64),
+      runId: "0".repeat(64),
+      romRoot: "0".repeat(64),
+      routeRoot: "0".repeat(64),
+      staticCommitment: "0".repeat(64),
+    },
+    [source("malformed-a"), source("malformed-b")],
+  );
+
+  assert.equal(report.overall, "failed");
+  assert.equal(report.address, "not-an-address");
+  assert.match(report.errors.join("\n"), /invalid logical time/);
+});
+
 test("verifier replays authenticated delivery and acknowledgement state transitions", async () => {
   const peerAddress = `0:${"ab".repeat(32)}`;
   const artifact = buildArtifact("LDI 3\nOUTP 0\n", {

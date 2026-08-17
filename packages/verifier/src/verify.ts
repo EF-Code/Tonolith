@@ -69,7 +69,7 @@ export async function verifyRunFromSources(
   const reportBase = {
     overall,
     network: expectations.network,
-    address: Address.parse(expectations.address).toRawString(),
+    address: reportAddress(expectations.address),
     sources: sourceIds,
     commitments: {
       programId: expectations.programId,
@@ -164,7 +164,9 @@ export function verifyHistoryContinuity(transactions: readonly RawTransactionSna
       else if (transaction.prevTransactionHash.toLowerCase() !== previous.hash.toLowerCase()) errors.push(`history link mismatch at ${transaction.hash}`);
       if (transaction.prevTransactionLt === undefined) errors.push(`history predecessor logical time is missing at ${transaction.hash}`);
       else if (transaction.prevTransactionLt !== previous.lt) errors.push(`history logical-time link mismatch at ${transaction.hash}`);
-      if (BigInt(transaction.lt) <= BigInt(previous.lt)) errors.push(`history is not strictly ordered at ${transaction.hash}`);
+      if (/^\d+$/.test(transaction.lt) && /^\d+$/.test(previous.lt) && BigInt(transaction.lt) <= BigInt(previous.lt)) {
+        errors.push(`history is not strictly ordered at ${transaction.hash}`);
+      }
     }
     previous = transaction;
   }
@@ -341,16 +343,28 @@ function firstCell(boc: string): Cell {
 
 function deploymentSummary(account: RawAccountSnapshot): VerificationReport["deployment"] {
   if (account.stateInitBoc === undefined) return undefined;
-  const init = firstCell(account.stateInitBoc);
-  const state = loadStateInit(init.beginParse());
-  const stateInitHash = init.hash().toString("hex");
-  const codeHash = state.code === null || state.code === undefined ? undefined : state.code.hash().toString("hex");
-  const dataHash = state.data === null || state.data === undefined ? undefined : state.data.hash().toString("hex");
-  return {
-    stateInitHash,
-    ...(codeHash === undefined ? {} : { codeHash }),
-    ...(dataHash === undefined ? {} : { dataHash }),
-  };
+  try {
+    const init = firstCell(account.stateInitBoc);
+    const state = loadStateInit(init.beginParse());
+    const stateInitHash = init.hash().toString("hex");
+    const codeHash = state.code === null || state.code === undefined ? undefined : state.code.hash().toString("hex");
+    const dataHash = state.data === null || state.data === undefined ? undefined : state.data.hash().toString("hex");
+    return {
+      stateInitHash,
+      ...(codeHash === undefined ? {} : { codeHash }),
+      ...(dataHash === undefined ? {} : { dataHash }),
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+function reportAddress(value: string): string {
+  try {
+    return Address.parse(value).toRawString();
+  } catch {
+    return value;
+  }
 }
 
 function summarizeTransactions(transactions: readonly RawTransactionSnapshot[]): { acceptedAdvances: number; deliveredInputs: number; duplicateDeliveries: number; staleAttempts: number } {
