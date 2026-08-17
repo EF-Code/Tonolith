@@ -1,0 +1,1956 @@
+{
+  "timestamp": 1787001918,
+  "opcodes": {
+    "V2DispatchOutput": {
+      "min_gas": 10815,
+      "max_gas": 10815,
+      "avg_gas": 10815,
+      "samples": 1,
+      "all_values": [
+        10815
+      ]
+    },
+    "V2Advance": {
+      "min_gas": 13315,
+      "max_gas": 47182,
+      "avg_gas": 29288,
+      "samples": 84,
+      "all_values": [
+        28614,
+        26201,
+        46612,
+        32229,
+        29167,
+        29674,
+        29027,
+        25504,
+        27631,
+        29167,
+        29674,
+        29027,
+        32229,
+        26201,
+        26201,
+        26201,
+        26219,
+        26201,
+        26201,
+        26325,
+        26389,
+        26389,
+        25504,
+        26201,
+        26927,
+        27708,
+        27719,
+        27897,
+        27789,
+        27907,
+        27977,
+        28055,
+        28403,
+        30385,
+        26734,
+        26987,
+        26961,
+        27075,
+        27049,
+        29744,
+        29914,
+        29620,
+        29664,
+        29508,
+        28694,
+        28614,
+        27719,
+        27897,
+        27719,
+        27789,
+        26201,
+        26927,
+        28591,
+        30811,
+        26734,
+        26987,
+        27075,
+        13315,
+        13315,
+        13567,
+        13619,
+        13905,
+        13905,
+        14619,
+        28527,
+        28591,
+        25504,
+        46726,
+        46919,
+        47094,
+        47164,
+        46744,
+        46937,
+        47112,
+        47182,
+        46734,
+        46927,
+        25504,
+        25504,
+        29332,
+        26201,
+        26389,
+        23663,
+        46612
+      ]
+    },
+    "V2DeliverInput": {
+      "min_gas": 8603,
+      "max_gas": 12342,
+      "avg_gas": 11265,
+      "samples": 4,
+      "all_values": [
+        12022,
+        12092,
+        12342,
+        8603
+      ]
+    }
+  },
+  "trace_chains": {
+    "test v2 grouped architectural stop paths::trace#6": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#36": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 36",
+      "tx_count": 2,
+      "total_gas_used": 28216,
+      "total_gas_fees": 1881069,
+      "total_forward_fees": 124981,
+      "total_fees": 2080158
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#39": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 39",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#81": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 81",
+      "tx_count": 2,
+      "total_gas_used": 27236,
+      "total_gas_fees": 1815735,
+      "total_forward_fees": 124981,
+      "total_fees": 2014824
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#8": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#109": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 109",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4129855,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#9": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 9",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4386701,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#11": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4426168,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#1": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 95202,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#13": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 architectural stop reason events::trace#2": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4077944,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#77": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 77",
+      "tx_count": 2,
+      "total_gas_used": 28098,
+      "total_gas_fees": 1873202,
+      "total_forward_fees": 124981,
+      "total_fees": 2072291
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#82": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 82",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4129855,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#86": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 86",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#11": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#44": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 44",
+      "tx_count": 2,
+      "total_gas_used": 30694,
+      "total_gas_fees": 2046269,
+      "total_forward_fees": 124981,
+      "total_fees": 2245358
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#64": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 64",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#91": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 91",
+      "tx_count": 2,
+      "total_gas_used": 27384,
+      "total_gas_fees": 1825602,
+      "total_forward_fees": 124981,
+      "total_fees": 2024691
+    },
+    "test v2 architectural stop reason events::trace#11": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#5": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#90": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 90",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#19": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 19",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4167189,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#26": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 26",
+      "tx_count": 2,
+      "total_gas_used": 27236,
+      "total_gas_fees": 1815735,
+      "total_forward_fees": 124981,
+      "total_fees": 2014824
+    },
+    "test v2 grouped architectural stop paths::trace#20": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 20",
+      "tx_count": 2,
+      "total_gas_used": 29336,
+      "total_gas_fees": 1955735,
+      "total_forward_fees": 124981,
+      "total_fees": 2154824
+    },
+    "test v2 grouped architectural stop paths::trace#11": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#4": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96624,
+      "total_fees": 20601
+    },
+    "test v2 grouped architectural stop paths::trace#14": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 14",
+      "tx_count": 2,
+      "total_gas_used": 29476,
+      "total_gas_fees": 1965069,
+      "total_forward_fees": 124981,
+      "total_fees": 2164158
+    },
+    "test v2 grouped execution and memory boundaries::trace#6": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 47035,
+      "total_gas_fees": 3135669,
+      "total_forward_fees": 124981,
+      "total_fees": 3474492
+    },
+    "test v2 grouped execution and memory boundaries::trace#7": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4347234,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#104": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 104",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#32": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 32",
+      "tx_count": 2,
+      "total_gas_used": 28206,
+      "total_gas_fees": 1880402,
+      "total_forward_fees": 124981,
+      "total_fees": 2079491
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#68": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 68",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#31": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 31",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#85": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 85",
+      "tx_count": 2,
+      "total_gas_used": 31120,
+      "total_gas_fees": 2074669,
+      "total_forward_fees": 124981,
+      "total_fees": 2273758
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#23": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 23",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#60": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 60",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#6": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 27940,
+      "total_gas_fees": 1862669,
+      "total_forward_fees": 124981,
+      "total_fees": 2061758
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#30": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 30",
+      "tx_count": 2,
+      "total_gas_used": 28028,
+      "total_gas_fees": 1868535,
+      "total_forward_fees": 124981,
+      "total_fees": 2067624
+    },
+    "test v2 grouped architectural stop paths::trace#9": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 46921,
+      "total_gas_fees": 3128069,
+      "total_forward_fees": 124981,
+      "total_fees": 3466892
+    },
+    "test v2 grouped execution and memory boundaries::trace#21": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 21",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4628081,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#32": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 32",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#4": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 97691,
+      "total_fees": 20601
+    },
+    "test v2 grouped route and delivery guards::trace#7": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4163766,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#17": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 10815,
+      "total_gas_fees": 721001,
+      "total_forward_fees": 88002,
+      "total_fees": 721001
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#108": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 108",
+      "tx_count": 2,
+      "total_gas_used": 28836,
+      "total_gas_fees": 1922402,
+      "total_forward_fees": 124981,
+      "total_fees": 2121491
+    },
+    "test v2 grouped architectural stop paths::trace#17": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 29983,
+      "total_gas_fees": 1998869,
+      "total_forward_fees": 124981,
+      "total_fees": 2197958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#67": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 67",
+      "tx_count": 2,
+      "total_gas_used": 29003,
+      "total_gas_fees": 1933535,
+      "total_forward_fees": 124981,
+      "total_fees": 2132624
+    },
+    "test v2 grouped architectural stop paths::trace#1": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94135,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#53": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 53",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#28": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 28",
+      "tx_count": 2,
+      "total_gas_used": 28017,
+      "total_gas_fees": 1867802,
+      "total_forward_fees": 124981,
+      "total_fees": 2066891
+    },
+    "test v2 architectural stop reason events::trace#16": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 grouped route and delivery guards::trace#6": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 12022,
+      "total_gas_fees": 801468,
+      "total_forward_fees": 103291,
+      "total_fees": 801468
+    },
+    "test v2 grouped route and delivery guards::trace#14": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94135,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#79": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 79",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped architectural stop paths::trace#8": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4136077,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#95": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 95",
+      "tx_count": 1,
+      "total_gas_used": 13315,
+      "total_gas_fees": 887668,
+      "total_forward_fees": 80535,
+      "total_fees": 887668
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#46": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 46",
+      "tx_count": 2,
+      "total_gas_used": 27043,
+      "total_gas_fees": 1802869,
+      "total_forward_fees": 124981,
+      "total_fees": 2001958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#72": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 72",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#7": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#2": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#61": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 61",
+      "tx_count": 2,
+      "total_gas_used": 29929,
+      "total_gas_fees": 1995269,
+      "total_forward_fees": 124981,
+      "total_fees": 2194358
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#97": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 97",
+      "tx_count": 1,
+      "total_gas_used": 13567,
+      "total_gas_fees": 904468,
+      "total_forward_fees": 80535,
+      "total_fees": 904468
+    },
+    "test v2 architectural stop reason events::trace#1": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#3": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 25813,
+      "total_gas_fees": 1720869,
+      "total_forward_fees": 124981,
+      "total_fees": 1919958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#55": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 55",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 97691,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#80": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 80",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#37": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 37",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#107": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 107",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4129855,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#11": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4163766,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#15": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 26634,
+      "total_gas_fees": 1775602,
+      "total_forward_fees": 124981,
+      "total_fees": 1974691
+    },
+    "test v2 grouped architectural stop paths::trace#16": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#10": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 grouped architectural stop paths::trace#3": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 28923,
+      "total_gas_fees": 1928202,
+      "total_forward_fees": 124981,
+      "total_fees": 2127291
+    },
+    "test v2 grouped execution and memory boundaries::trace#23": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 23",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4672126,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#29": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 29",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#50": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 50",
+      "tx_count": 2,
+      "total_gas_used": 27270,
+      "total_gas_fees": 1818002,
+      "total_forward_fees": 124981,
+      "total_fees": 2017091
+    },
+    "test v2 grouped architectural stop paths::trace#18": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96980,
+      "total_fees": 20601
+    },
+    "test v2 architectural stop reason events::trace#13": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96269,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#14": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 14",
+      "tx_count": 2,
+      "total_gas_used": 47053,
+      "total_gas_fees": 3136869,
+      "total_forward_fees": 124981,
+      "total_fees": 3475692
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#110": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 110",
+      "tx_count": 2,
+      "total_gas_used": 28900,
+      "total_gas_fees": 1926669,
+      "total_forward_fees": 124981,
+      "total_fees": 2125758
+    },
+    "test v2 grouped execution and memory boundaries::trace#13": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4465635,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#49": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 49",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#62": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 62",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#78": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 78",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#43": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 43",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#51": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 51",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#89": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 89",
+      "tx_count": 2,
+      "total_gas_used": 27296,
+      "total_gas_fees": 1819735,
+      "total_forward_fees": 124981,
+      "total_fees": 2018824
+    },
+    "test v2 grouped execution and memory boundaries::trace#10": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 47403,
+      "total_gas_fees": 3160202,
+      "total_forward_fees": 124981,
+      "total_fees": 3499025
+    },
+    "test v2 grouped execution and memory boundaries::trace#2": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4077944,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#6": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#34": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 34",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93424,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#36": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 36",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#25": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 25",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#88": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 88",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#3": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 23663,
+      "total_gas_fees": 1577534,
+      "total_forward_fees": 80535,
+      "total_fees": 1577534
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#10": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#1": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 95202,
+      "total_fees": 20601
+    },
+    "test v2 grouped route and delivery guards::trace#16": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 16",
+      "tx_count": 2,
+      "total_gas_used": 46921,
+      "total_gas_fees": 3128069,
+      "total_forward_fees": 124981,
+      "total_fees": 3466892
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#54": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 54",
+      "tx_count": 2,
+      "total_gas_used": 27358,
+      "total_gas_fees": 1823869,
+      "total_forward_fees": 124981,
+      "total_fees": 2022958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#75": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 75",
+      "tx_count": 2,
+      "total_gas_used": 28028,
+      "total_gas_fees": 1868535,
+      "total_forward_fees": 124981,
+      "total_fees": 2067624
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#92": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 92",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#24": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 24",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#41": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 41",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4129855,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#52": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 52",
+      "tx_count": 2,
+      "total_gas_used": 27384,
+      "total_gas_fees": 1825602,
+      "total_forward_fees": 124981,
+      "total_fees": 2024691
+    },
+    "test v2 architectural stop reason events::trace#17": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#70": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 70",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#15": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93780,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#16": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 16",
+      "tx_count": 2,
+      "total_gas_used": 47246,
+      "total_gas_fees": 3149735,
+      "total_forward_fees": 124981,
+      "total_fees": 3488558
+    },
+    "test v2 grouped execution and memory boundaries::trace#25": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 25",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 95913,
+      "total_fees": 20601
+    },
+    "test v2 grouped route and delivery guards::trace#10": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 97335,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#24": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 24",
+      "tx_count": 2,
+      "total_gas_used": 47236,
+      "total_gas_fees": 3149069,
+      "total_forward_fees": 124981,
+      "total_fees": 3487892
+    },
+    "test v2 grouped execution and memory boundaries::trace#33": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 33",
+      "tx_count": 2,
+      "total_gas_used": 29641,
+      "total_gas_fees": 1976069,
+      "total_forward_fees": 124981,
+      "total_fees": 2175158
+    },
+    "test v2 grouped route and delivery guards::trace#5": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4163766,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#63": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 63",
+      "tx_count": 2,
+      "total_gas_used": 29973,
+      "total_gas_fees": 1998202,
+      "total_forward_fees": 124981,
+      "total_fees": 2197291
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#14": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#83": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 83",
+      "tx_count": 2,
+      "total_gas_used": 28900,
+      "total_gas_fees": 1926669,
+      "total_forward_fees": 124981,
+      "total_fees": 2125758
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#84": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 84",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#71": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 71",
+      "tx_count": 2,
+      "total_gas_used": 28028,
+      "total_gas_fees": 1868535,
+      "total_forward_fees": 124981,
+      "total_fees": 2067626
+    },
+    "test v2 grouped execution and memory boundaries::trace#30": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 30",
+      "tx_count": 2,
+      "total_gas_used": 25813,
+      "total_gas_fees": 1720869,
+      "total_forward_fees": 124981,
+      "total_fees": 1919958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#66": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 66",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#4": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 98047,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#1": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 91291,
+      "total_fees": 20601
+    },
+    "test v2 grouped execution and memory boundaries::trace#19": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 19",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4588614,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#106": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 106",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96980,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#103": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 103",
+      "tx_count": 1,
+      "total_gas_used": 13905,
+      "total_gas_fees": 927001,
+      "total_forward_fees": 80535,
+      "total_fees": 927001
+    },
+    "test v2 grouped execution and memory boundaries::trace#39": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 39",
+      "tx_count": 2,
+      "total_gas_used": 26698,
+      "total_gas_fees": 1779869,
+      "total_forward_fees": 124981,
+      "total_fees": 1978958
+    },
+    "test v2 grouped route and delivery guards::trace#2": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4136077,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#8": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 12092,
+      "total_gas_fees": 806134,
+      "total_forward_fees": 103291,
+      "total_fees": 806134
+    },
+    "test v2 architectural stop reason events::trace#5": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#8": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#15": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 29336,
+      "total_gas_fees": 1955735,
+      "total_forward_fees": 124981,
+      "total_fees": 2154824
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#38": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 38",
+      "tx_count": 2,
+      "total_gas_used": 28286,
+      "total_gas_fees": 1885735,
+      "total_forward_fees": 124981,
+      "total_fees": 2084824
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#12": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#105": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 105",
+      "tx_count": 1,
+      "total_gas_used": 14619,
+      "total_gas_fees": 974601,
+      "total_forward_fees": 80535,
+      "total_fees": 974601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#20": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 20",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96624,
+      "total_fees": 20601
+    },
+    "test v2 grouped architectural stop paths::trace#5": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#102": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 102",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#8": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 47228,
+      "total_gas_fees": 3148535,
+      "total_forward_fees": 124981,
+      "total_fees": 3487358
+    },
+    "test v2 grouped execution and memory boundaries::trace#15": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4509680,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#56": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 56",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#9": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 29476,
+      "total_gas_fees": 1965069,
+      "total_forward_fees": 124981,
+      "total_fees": 2164158
+    },
+    "test v2 grouped execution and memory boundaries::trace#20": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 20",
+      "tx_count": 2,
+      "total_gas_used": 47491,
+      "total_gas_fees": 3166069,
+      "total_forward_fees": 124981,
+      "total_fees": 3504892
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#98": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 98",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#2": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#18": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 18",
+      "tx_count": 2,
+      "total_gas_used": 47421,
+      "total_gas_fees": 3161402,
+      "total_forward_fees": 124981,
+      "total_fees": 3500225
+    },
+    "test v2 architectural stop reason events::trace#12": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 29983,
+      "total_gas_fees": 1998869,
+      "total_forward_fees": 124981,
+      "total_fees": 2197958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#35": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 35",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#47": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 47",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#26": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 26",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4077944,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#29": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 29",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#33": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 33",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#38": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 38",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#28": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 28",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#3": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#99": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 99",
+      "tx_count": 1,
+      "total_gas_used": 13619,
+      "total_gas_fees": 907934,
+      "total_forward_fees": 80535,
+      "total_fees": 907934
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#17": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 26698,
+      "total_gas_fees": 1779869,
+      "total_forward_fees": 124981,
+      "total_fees": 1978958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#73": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 73",
+      "tx_count": 2,
+      "total_gas_used": 28206,
+      "total_gas_fees": 1880402,
+      "total_forward_fees": 124981,
+      "total_fees": 2079491
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#48": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 48",
+      "tx_count": 2,
+      "total_gas_used": 27296,
+      "total_gas_fees": 1819735,
+      "total_forward_fees": 124981,
+      "total_fees": 2018824
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#100": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 100",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#7": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 grouped route and delivery guards::trace#9": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 9",
+      "tx_count": 1,
+      "total_gas_used": 12342,
+      "total_gas_fees": 822801,
+      "total_forward_fees": 103291,
+      "total_fees": 822801
+    },
+    "test v2 grouped architectural stop paths::trace#13": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#35": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 35",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#9": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 26528,
+      "total_gas_fees": 1768535,
+      "total_forward_fees": 124981,
+      "total_fees": 1967624
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#19": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 19",
+      "tx_count": 2,
+      "total_gas_used": 26698,
+      "total_gas_fees": 1779869,
+      "total_forward_fees": 124981,
+      "total_fees": 1978958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#21": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 21",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4077944,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#22": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 22",
+      "tx_count": 2,
+      "total_gas_used": 25813,
+      "total_gas_fees": 1720869,
+      "total_forward_fees": 124981,
+      "total_fees": 1919958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#27": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 27",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#57": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 57",
+      "tx_count": 2,
+      "total_gas_used": 30053,
+      "total_gas_fees": 2003535,
+      "total_forward_fees": 124981,
+      "total_fees": 2202624
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#74": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 74",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#31": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 31",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#87": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 87",
+      "tx_count": 2,
+      "total_gas_used": 27043,
+      "total_gas_fees": 1802869,
+      "total_forward_fees": 124981,
+      "total_fees": 2001958
+    },
+    "test v2 grouped route and delivery guards::trace#12": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 8603,
+      "total_gas_fees": 573534,
+      "total_forward_fees": 103291,
+      "total_fees": 573534
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#4": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#76": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 76",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 architectural stop reason events::trace#3": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 25813,
+      "total_gas_fees": 1720869,
+      "total_forward_fees": 124981,
+      "total_fees": 1919958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#65": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 65",
+      "tx_count": 2,
+      "total_gas_used": 29817,
+      "total_gas_fees": 1987802,
+      "total_forward_fees": 124981,
+      "total_fees": 2186891
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#42": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 42",
+      "tx_count": 2,
+      "total_gas_used": 28712,
+      "total_gas_fees": 1914135,
+      "total_forward_fees": 124981,
+      "total_fees": 2113224
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#96": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 96",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#22": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 22",
+      "tx_count": 2,
+      "total_gas_used": 47043,
+      "total_gas_fees": 3136202,
+      "total_forward_fees": 124981,
+      "total_fees": 3475025
+    },
+    "test v2 grouped execution and memory boundaries::trace#27": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 27",
+      "tx_count": 2,
+      "total_gas_used": 25813,
+      "total_gas_fees": 1720869,
+      "total_forward_fees": 124981,
+      "total_fees": 1919958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#16": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped route and delivery guards::trace#13": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96980,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#34": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 34",
+      "tx_count": 2,
+      "total_gas_used": 28098,
+      "total_gas_fees": 1873202,
+      "total_forward_fees": 124981,
+      "total_fees": 2072291
+    },
+    "test v2 grouped execution and memory boundaries::trace#12": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 47473,
+      "total_gas_fees": 3164869,
+      "total_forward_fees": 124981,
+      "total_fees": 3503692
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#94": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 94",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#12": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 32538,
+      "total_gas_fees": 2169202,
+      "total_forward_fees": 124981,
+      "total_fees": 2368291
+    },
+    "test v2 grouped route and delivery guards::trace#15": {
+      "test_name": "test v2 grouped route and delivery guards",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4163766,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#45": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 45",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped architectural stop paths::trace#10": {
+      "test_name": "test v2 grouped architectural stop paths",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 architectural stop reason events::trace#4": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94135,
+      "total_fees": 20601
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#58": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 58",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#93": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 93",
+      "tx_count": 1,
+      "total_gas_used": 13315,
+      "total_gas_fees": 887668,
+      "total_forward_fees": 80535,
+      "total_fees": 887668
+    },
+    "test v2 architectural stop reason events::trace#18": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 18",
+      "tx_count": 2,
+      "total_gas_used": 32538,
+      "total_gas_fees": 2169202,
+      "total_forward_fees": 124981,
+      "total_fees": 2368291
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#101": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 101",
+      "tx_count": 1,
+      "total_gas_used": 13905,
+      "total_gas_fees": 927001,
+      "total_forward_fees": 80535,
+      "total_fees": 927001
+    },
+    "test v2 architectural stop reason events::trace#14": {
+      "test_name": "test v2 architectural stop reason events",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4167189,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#7": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 26510,
+      "total_gas_fees": 1767335,
+      "total_forward_fees": 124981,
+      "total_fees": 1966424
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#40": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 40",
+      "tx_count": 2,
+      "total_gas_used": 28364,
+      "total_gas_fees": 1890935,
+      "total_forward_fees": 124981,
+      "total_fees": 2090024
+    },
+    "test v2 grouped execution and memory boundaries::trace#5": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4303190,
+      "total_fees": 70068
+    },
+    "test v2 grouped execution and memory boundaries::trace#17": {
+      "test_name": "test v2 grouped execution and memory boundaries",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4549147,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#18": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4290567,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#59": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 59",
+      "tx_count": 2,
+      "total_gas_used": 30223,
+      "total_gas_fees": 2014869,
+      "total_forward_fees": 124981,
+      "total_fees": 2213958
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#37": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 37",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4114033,
+      "total_fees": 70068
+    },
+    "test v2 grouped ROM and ISA boundaries::trace#69": {
+      "test_name": "test v2 grouped ROM and ISA boundaries",
+      "trace_name": "Trace 69",
+      "tx_count": 2,
+      "total_gas_used": 28923,
+      "total_gas_fees": 1928202,
+      "total_forward_fees": 124981,
+      "total_fees": 2127291
+    }
+  }
+}
