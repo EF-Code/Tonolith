@@ -3,7 +3,7 @@
   "measurement": {
     "command": "acton test tests/v2_batch_contract.test.tolk --snapshot benchmarks/v2/batch-gas.json --fuzz-seed 42",
     "environment": "local Acton 1.0.0 checkout",
-    "sourceCommit": "44f8925 plus current worktree",
+    "sourceCommit": "f6f41bf",
     "paths": [
       "full nonblocking ISA sequence",
       "legacy OUT event",
