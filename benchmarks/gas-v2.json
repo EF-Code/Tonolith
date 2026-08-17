@@ -1,0 +1,4558 @@
+{
+  "timestamp": 1786922309,
+  "opcodes": {
+    "V2DispatchOutput": {
+      "min_gas": 1877,
+      "max_gas": 17899,
+      "avg_gas": 8728,
+      "samples": 5,
+      "all_values": [
+        17899,
+        1877,
+        7954,
+        7954,
+        7954
+      ]
+    },
+    "V2TopUp": {
+      "min_gas": 2546,
+      "max_gas": 2946,
+      "avg_gas": 2798,
+      "samples": 3,
+      "all_values": [
+        2901,
+        2546,
+        2946
+      ]
+    },
+    "0x99999999": {
+      "min_gas": 1823,
+      "max_gas": 1823,
+      "avg_gas": 1823,
+      "samples": 1,
+      "all_values": [
+        1823
+      ]
+    },
+    "0x00000999": {
+      "min_gas": 1332,
+      "max_gas": 1332,
+      "avg_gas": 1332,
+      "samples": 1,
+      "all_values": [
+        1332
+      ]
+    },
+    "V2DeliverInput": {
+      "min_gas": 309,
+      "max_gas": 49066,
+      "avg_gas": 16819,
+      "samples": 20,
+      "all_values": [
+        35038,
+        49066,
+        2719,
+        2812,
+        3610,
+        3706,
+        7940,
+        7442,
+        17628,
+        17050,
+        11398,
+        11468,
+        13412,
+        14228,
+        35038,
+        22045,
+        35038,
+        24501,
+        21927,
+        309
+      ]
+    },
+    "V2Advance": {
+      "min_gas": 1844,
+      "max_gas": 47997,
+      "avg_gas": 22332,
+      "samples": 73,
+      "all_values": [
+        30832,
+        33805,
+        30896,
+        44756,
+        27040,
+        27092,
+        28508,
+        28482,
+        28706,
+        30864,
+        13195,
+        13352,
+        13195,
+        13890,
+        14228,
+        14942,
+        20106,
+        23081,
+        29537,
+        27740,
+        4744,
+        27043,
+        27043,
+        1844,
+        1999,
+        2051,
+        2206,
+        2258,
+        2351,
+        3620,
+        4744,
+        4848,
+        2808,
+        2886,
+        2964,
+        3042,
+        3230,
+        4337,
+        4441,
+        4648,
+        29974,
+        29152,
+        4596,
+        30135,
+        30215,
+        31029,
+        31141,
+        31185,
+        31265,
+        31435,
+        30832,
+        33805,
+        30896,
+        30049,
+        44635,
+        47997,
+        27043,
+        27740,
+        29894,
+        29444,
+        30686,
+        30864,
+        30838,
+        30856,
+        30926,
+        31032,
+        30249,
+        31993,
+        28255,
+        28482,
+        28680,
+        47997,
+        29537
+      ]
+    },
+    "0x00020000": {
+      "min_gas": 1938,
+      "max_gas": 1938,
+      "avg_gas": 1938,
+      "samples": 1,
+      "all_values": [
+        1938
+      ]
+    },
+    "Advance": {
+      "min_gas": 1588,
+      "max_gas": 19527,
+      "avg_gas": 15266,
+      "samples": 198,
+      "all_values": [
+        15477,
+        15330,
+        15767,
+        16032,
+        16393,
+        14730,
+        16831,
+        15477,
+        16923,
+        16831,
+        15477,
+        19229,
+        15477,
+        18970,
+        15477,
+        19174,
+        15477,
+        19308,
+        15477,
+        19527,
+        14730,
+        3045,
+        3251,
+        1777,
+        1588,
+        1870,
+        15477,
+        1761,
+        7970,
+        7813,
+        8256,
+        8508,
+        8846,
+        9147,
+        8560,
+        8256,
+        8846,
+        12045,
+        16831,
+        2949,
+        2265,
+        2343,
+        2421,
+        3491,
+        15477,
+        15477,
+        19527,
+        15477,
+        16367,
+        17915,
+        16341,
+        17536,
+        16419,
+        16419,
+        14730,
+        16831,
+        15477,
+        18636,
+        16831,
+        15477,
+        15330,
+        17536,
+        16755,
+        15477,
+        15330,
+        17536,
+        16923,
+        16897,
+        17456,
+        16915,
+        18512,
+        18556,
+        15477,
+        18636,
+        15477,
+        15330,
+        15477,
+        15330,
+        15477,
+        15330,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16341,
+        15767,
+        16755,
+        15330,
+        15767,
+        15330,
+        15767,
+        15330,
+        16032,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16341,
+        15767,
+        16755,
+        15330,
+        15767,
+        15330,
+        15767,
+        15330,
+        16032,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16341,
+        15767,
+        16755,
+        15330,
+        15767,
+        15330,
+        15767,
+        15330,
+        16032,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16341,
+        15767,
+        16755,
+        15330,
+        15767,
+        15330,
+        15767,
+        15330,
+        16032,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16341,
+        15767,
+        16755,
+        15330,
+        15767,
+        15330,
+        15767,
+        15330,
+        16032,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16341,
+        15767,
+        16755,
+        15330,
+        15767,
+        15330,
+        15767,
+        15330,
+        16032,
+        15767,
+        19229,
+        15767,
+        18688,
+        15330,
+        16367,
+        16831,
+        15477,
+        15330,
+        15477,
+        16755,
+        15477,
+        15330,
+        15767,
+        16897,
+        16393,
+        16831,
+        16032,
+        15477,
+        15330,
+        15477,
+        16755,
+        16923,
+        16897,
+        16915,
+        16985,
+        17091,
+        17536,
+        17456,
+        18290,
+        18512,
+        18556,
+        18636,
+        18688
+      ]
+    },
+    "V2InputAccepted": {
+      "min_gas": 309,
+      "max_gas": 23418,
+      "avg_gas": 7219,
+      "samples": 9,
+      "all_values": [
+        309,
+        309,
+        309,
+        7396,
+        23183,
+        9430,
+        23418,
+        309,
+        309
+      ]
+    },
+    "TopUp": {
+      "min_gas": 1328,
+      "max_gas": 1373,
+      "avg_gas": 1351,
+      "samples": 2,
+      "all_values": [
+        1373,
+        1328
+      ]
+    }
+  },
+  "trace_chains": {
+    "test Fibonacci contract emits the canonical output trace::trace#23": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 23",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#63": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 63",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#5": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test stale and invalid advance requests do not mutate state::trace#6": {
+      "test_name": "test stale and invalid advance requests do not mutate state",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 1777,
+      "total_gas_fees": 118468,
+      "total_forward_fees": 68090,
+      "total_fees": 118468
+    },
+    "test OUT updates the commitment and emits a bounded event::trace#1": {
+      "test_name": "test OUT updates the commitment and emits a bounded event",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92357,
+      "total_fees": 20601
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#10": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test named failure paths and halted rejection::trace#12": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#33": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 33",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test v2 advance validation and storage guards::trace#24": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 24",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test deploy exposes Tonolith metadata::trace#2": {
+      "test_name": "test deploy exposes Tonolith metadata",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test register load jump and ADC without carry::trace#9": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test arithmetic and flag boundary outcomes::trace#11": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 17206,
+      "total_gas_fees": 1147069,
+      "total_forward_fees": 112536,
+      "total_fees": 1296691
+    },
+    "test named failure paths and halted rejection::trace#37": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 37",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test v2 advance executes a canonical instruction and rejects stale state::trace#2": {
+      "test_name": "test v2 advance executes a canonical instruction and rejects stale state",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 inbox insertion is canonical under out of order delivery::trace#5": {
+      "test_name": "test v2 inbox insertion is canonical under out of order delivery",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 45065,
+      "total_gas_fees": 3004335,
+      "total_forward_fees": 124981,
+      "total_fees": 3203424
+    },
+    "test v2 bounded advance traverses every nonblocking ISA family::trace#1": {
+      "test_name": "test v2 bounded advance traverses every nonblocking ISA family",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#66": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 66",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#4": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#5": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 1877,
+      "total_gas_fees": 125134,
+      "total_forward_fees": 88002,
+      "total_fees": 125134
+    },
+    "test v2 inherited opcode families execute through the contract::trace#7": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 30203,
+      "total_gas_fees": 2013535,
+      "total_forward_fees": 124981,
+      "total_fees": 2212624
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#5": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 23183,
+      "total_gas_fees": 1545534,
+      "total_forward_fees": 96002,
+      "total_fees": 1682868
+    },
+    "test v2 bounced delivery keeps the outbox retryable::trace#3": {
+      "test_name": "test v2 bounced delivery keeps the outbox retryable",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 1938,
+      "total_gas_fees": 129201,
+      "total_forward_fees": 103291,
+      "total_fees": 129201
+    },
+    "test v2 inherited opcode families execute through the contract::trace#13": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 31173,
+      "total_gas_fees": 2078202,
+      "total_forward_fees": 124981,
+      "total_fees": 2277291
+    },
+    "test named failure paths and halted rejection::trace#20": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 20",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#62": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 62",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 inherited opcode families execute through the contract::trace#28": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 28",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test named failure paths and halted rejection::trace#23": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 23",
+      "tx_count": 1,
+      "total_gas_used": 9147,
+      "total_gas_fees": 609801,
+      "total_forward_fees": 68090,
+      "total_fees": 609801
+    },
+    "test named failure paths and halted rejection::trace#10": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test external messages are rejected::trace#1": {
+      "test_name": "test external messages are rejected",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93069,
+      "total_fees": 20601
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#6": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 7954,
+      "total_gas_fees": 530268,
+      "total_forward_fees": 88002,
+      "total_fees": 530268
+    },
+    "test arithmetic and flag boundary outcomes::trace#4": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test named failure paths and halted rejection::trace#32": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 32",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test JC false path and maximum jump target::trace#3": {
+      "test_name": "test JC false path and maximum jump target",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 16702,
+      "total_gas_fees": 1113469,
+      "total_forward_fees": 112536,
+      "total_fees": 1263091
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#76": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 76",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test arithmetic and flag boundary outcomes::trace#1": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96980,
+      "total_fees": 20601
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#1": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 99113,
+      "total_fees": 20601
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#12": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 11398,
+      "total_gas_fees": 759868,
+      "total_forward_fees": 103291,
+      "total_fees": 759868
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#85": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 85",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test JC false path and maximum jump target::trace#1": {
+      "test_name": "test JC false path and maximum jump target",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test register load jump and ADC without carry::trace#6": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#17": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 31141,
+      "total_gas_fees": 2076069,
+      "total_forward_fees": 124981,
+      "total_fees": 2275158
+    },
+    "test v2 bounded advance records outbox backpressure without executing::trace#1": {
+      "test_name": "test v2 bounded advance records outbox backpressure without executing",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 96980,
+      "total_fees": 20601
+    },
+    "test v2 bounded structures cover every fixed slot and selector::trace#1": {
+      "test_name": "test v2 bounded structures cover every fixed slot and selector",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92713,
+      "total_fees": 20601
+    },
+    "test v2 inherited opcode families execute through the contract::trace#15": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 31147,
+      "total_gas_fees": 2076469,
+      "total_forward_fees": 124981,
+      "total_fees": 2275558
+    },
+    "test v2 inherited opcode families execute through the contract::trace#19": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 19",
+      "tx_count": 2,
+      "total_gas_used": 31235,
+      "total_gas_fees": 2082335,
+      "total_forward_fees": 124981,
+      "total_fees": 2281424
+    },
+    "test v2 inherited opcode families execute through the contract::trace#29": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 29",
+      "tx_count": 2,
+      "total_gas_used": 28791,
+      "total_gas_fees": 1919402,
+      "total_forward_fees": 124981,
+      "total_fees": 2118491
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#13": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 31574,
+      "total_gas_fees": 2104935,
+      "total_forward_fees": 124981,
+      "total_fees": 2304024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#21": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 21",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test register load jump and ADC without carry::trace#11": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 receiver selectors topup and external rejection::trace#7": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 2546,
+      "total_gas_fees": 169734,
+      "total_forward_fees": 65246,
+      "total_fees": 169734
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#34": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 34",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#94": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 94",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#14": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#77": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 77",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test arithmetic logical and SYS opcodes::trace#4": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#4": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 2812,
+      "total_gas_fees": 187468,
+      "total_forward_fees": 103291,
+      "total_fees": 187468
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#26": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 26",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4350168,
+      "total_fees": 70068
+    },
+    "test v2 advance validation and storage guards::trace#12": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test v2 advance validation and storage guards::trace#19": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 19",
+      "tx_count": 1,
+      "total_gas_used": 3042,
+      "total_gas_fees": 202801,
+      "total_forward_fees": 80535,
+      "total_fees": 202801
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#20": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 20",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#14": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 13412,
+      "total_gas_fees": 894134,
+      "total_forward_fees": 103291,
+      "total_fees": 894134
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#32": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 32",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test named failure paths and halted rejection::trace#39": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 39",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test v2 receiver selectors topup and external rejection::trace#4": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1218,
+      "total_gas_fees": 81201,
+      "total_forward_fees": 44446,
+      "total_fees": 81201
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#64": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 64",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test register load jump and ADC without carry::trace#8": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 15039,
+      "total_gas_fees": 1002602,
+      "total_forward_fees": 112536,
+      "total_fees": 1152224
+    },
+    "test named failure paths and halted rejection::trace#7": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 1373,
+      "total_gas_fees": 91534,
+      "total_forward_fees": 44446,
+      "total_fees": 91534
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#4": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 advance validation and storage guards::trace#11": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 4848,
+      "total_gas_fees": 323201,
+      "total_forward_fees": 80535,
+      "total_fees": 323201
+    },
+    "test v2 receiver selectors topup and external rejection::trace#6": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 2901,
+      "total_gas_fees": 193401,
+      "total_forward_fees": 65246,
+      "total_fees": 193401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#26": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 26",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#5": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 27401,
+      "total_gas_fees": 1826735,
+      "total_forward_fees": 124981,
+      "total_fees": 2025824
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#12": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 inherited opcode families execute through the contract::trace#2": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#1": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92713,
+      "total_fees": 20601
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#8": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 95557,
+      "total_fees": 20601
+    },
+    "test arithmetic logical and SYS opcodes::trace#8": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 17206,
+      "total_gas_fees": 1147069,
+      "total_forward_fees": 112536,
+      "total_fees": 1296691
+    },
+    "test v2 inherited opcode families execute through the contract::trace#26": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 26",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#75": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 75",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test named failure paths and halted rejection::trace#21": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 21",
+      "tx_count": 1,
+      "total_gas_used": 8846,
+      "total_gas_fees": 589734,
+      "total_forward_fees": 68090,
+      "total_fees": 589734
+    },
+    "test arithmetic and flag boundary outcomes::trace#14": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 14",
+      "tx_count": 2,
+      "total_gas_used": 18821,
+      "total_gas_fees": 1254735,
+      "total_forward_fees": 112536,
+      "total_fees": 1404357
+    },
+    "test OUT updates the commitment and emits a bounded event::trace#2": {
+      "test_name": "test OUT updates the commitment and emits a bounded event",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test arithmetic logical and SYS opcodes::trace#18": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 18",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test stale and invalid advance requests do not mutate state::trace#2": {
+      "test_name": "test stale and invalid advance requests do not mutate state",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#19": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 19",
+      "tx_count": 2,
+      "total_gas_used": 34114,
+      "total_gas_fees": 2274269,
+      "total_forward_fees": 124981,
+      "total_fees": 2473358
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#13": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#5": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#22": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 22",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test RAM and branch opcodes::trace#4": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 19836,
+      "total_gas_fees": 1322402,
+      "total_forward_fees": 112536,
+      "total_fees": 1472024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#39": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 39",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#80": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 80",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test arithmetic and flag boundary outcomes::trace#16": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 16",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#1": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93424,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#29": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 29",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 receiver selectors topup and external rejection::trace#9": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 9",
+      "tx_count": 0,
+      "total_gas_used": 0,
+      "total_gas_fees": 0,
+      "total_forward_fees": 0,
+      "total_fees": 0
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#45": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 45",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 inherited opcode families execute through the contract::trace#8": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test named failure paths and halted rejection::trace#25": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 25",
+      "tx_count": 1,
+      "total_gas_used": 8560,
+      "total_gas_fees": 570668,
+      "total_forward_fees": 68090,
+      "total_fees": 570668
+    },
+    "test named failure paths and halted rejection::trace#15": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 7813,
+      "total_gas_fees": 520868,
+      "total_forward_fees": 68090,
+      "total_fees": 520868
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#44": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 44",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test external messages are rejected::trace#3": {
+      "test_name": "test external messages are rejected",
+      "trace_name": "Trace 3",
+      "tx_count": 0,
+      "total_gas_used": 0,
+      "total_gas_fees": 0,
+      "total_forward_fees": 0,
+      "total_fees": 0
+    },
+    "test named failure paths and halted rejection::trace#8": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test register load jump and ADC without carry::trace#5": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test RAM and branch opcodes::trace#2": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#4": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1118,
+      "total_gas_fees": 74534,
+      "total_forward_fees": 44446,
+      "total_fees": 74534
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#15": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 14228,
+      "total_gas_fees": 948534,
+      "total_forward_fees": 103291,
+      "total_fees": 948534
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#17": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 22045,
+      "total_gas_fees": 1469668,
+      "total_forward_fees": 103291,
+      "total_fees": 1469668
+    },
+    "test v2 deploy exposes immutable metadata and a canonical initial state::trace#2": {
+      "test_name": "test v2 deploy exposes immutable metadata and a canonical initial state",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test named failure paths and halted rejection::trace#16": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#3": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 1332,
+      "total_gas_fees": 88801,
+      "total_forward_fees": 44446,
+      "total_fees": 88801
+    },
+    "test OUT updates the commitment and emits a bounded event::trace#3": {
+      "test_name": "test OUT updates the commitment and emits a bounded event",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#88": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 88",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#78": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 78",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#8": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#38": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 38",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#46": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 46",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 bounded advance traverses every nonblocking ISA family::trace#2": {
+      "test_name": "test v2 bounded advance traverses every nonblocking ISA family",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 inherited opcode families execute through the contract::trace#25": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 25",
+      "tx_count": 2,
+      "total_gas_used": 32302,
+      "total_gas_fees": 2153469,
+      "total_forward_fees": 124981,
+      "total_fees": 2352558
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#36": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 36",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test v2 bounded advance stops at yield and trap::trace#3": {
+      "test_name": "test v2 bounded advance stops at yield and trap",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 34114,
+      "total_gas_fees": 2274269,
+      "total_forward_fees": 124981,
+      "total_fees": 2473358
+    },
+    "test named failure paths and halted rejection::trace#34": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 34",
+      "tx_count": 1,
+      "total_gas_used": 2949,
+      "total_gas_fees": 196601,
+      "total_forward_fees": 68090,
+      "total_fees": 196601
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#4": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 7396,
+      "total_gas_fees": 493068,
+      "total_forward_fees": 96002,
+      "total_fees": 493068
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#11": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 29015,
+      "total_gas_fees": 1934335,
+      "total_forward_fees": 124981,
+      "total_fees": 2133424
+    },
+    "test v2 receiver selectors topup and external rejection::trace#2": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test arithmetic logical and SYS opcodes::trace#9": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 17224,
+      "total_gas_fees": 1148269,
+      "total_forward_fees": 112536,
+      "total_fees": 1297891
+    },
+    "test named failure paths and halted rejection::trace#42": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 42",
+      "tx_count": 1,
+      "total_gas_used": 3491,
+      "total_gas_fees": 232734,
+      "total_forward_fees": 68090,
+      "total_fees": 232734
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#10": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test top up message preserves metadata::trace#3": {
+      "test_name": "test top up message preserves metadata",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 1328,
+      "total_gas_fees": 88534,
+      "total_forward_fees": 44446,
+      "total_fees": 88534
+    },
+    "test arithmetic and flag boundary outcomes::trace#3": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#16": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 bounded advance executes the full configured nop batch::trace#1": {
+      "test_name": "test v2 bounded advance executes the full configured nop batch",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 91291,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#9": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#35": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 35",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test JC false path and maximum jump target::trace#5": {
+      "test_name": "test JC false path and maximum jump target",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#6": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 9430,
+      "total_gas_fees": 628668,
+      "total_forward_fees": 96002,
+      "total_fees": 628668
+    },
+    "test v2 inherited opcode families execute through the contract::trace#4": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 advance executes a canonical instruction and rejects stale state::trace#1": {
+      "test_name": "test v2 advance executes a canonical instruction and rejects stale state",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93780,
+      "total_fees": 20601
+    },
+    "test v2 bounded advance records input wait without executing::trace#2": {
+      "test_name": "test v2 bounded advance records input wait without executing",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#28": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 28",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test v2 inherited opcode families execute through the contract::trace#14": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#20": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 20",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#1": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 advance validation and storage guards::trace#26": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 26",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test INC sets carry and zero on nibble wrap::trace#1": {
+      "test_name": "test INC sets carry and zero on nibble wrap",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test RAM and branch opcodes::trace#10": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 16728,
+      "total_gas_fees": 1115202,
+      "total_forward_fees": 112536,
+      "total_fees": 1264824
+    },
+    "test v2 advance executes a canonical instruction and rejects stale state::trace#3": {
+      "test_name": "test v2 advance executes a canonical instruction and rejects stale state",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 28049,
+      "total_gas_fees": 1869935,
+      "total_forward_fees": 124981,
+      "total_fees": 2069024
+    },
+    "test v2 HALT is an architectural state and rejects subsequent advance::trace#4": {
+      "test_name": "test v2 HALT is an architectural state and rejects subsequent advance",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 4596,
+      "total_gas_fees": 306401,
+      "total_forward_fees": 80535,
+      "total_fees": 306401
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#21": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 21",
+      "tx_count": 1,
+      "total_gas_used": 13890,
+      "total_gas_fees": 926001,
+      "total_forward_fees": 80535,
+      "total_fees": 926001
+    },
+    "test arithmetic and flag boundary outcomes::trace#8": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test named failure paths and halted rejection::trace#30": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 30",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test stale and invalid advance requests do not mutate state::trace#3": {
+      "test_name": "test stale and invalid advance requests do not mutate state",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15039,
+      "total_gas_fees": 1002602,
+      "total_forward_fees": 112536,
+      "total_fees": 1152224
+    },
+    "test external messages are rejected::trace#2": {
+      "test_name": "test external messages are rejected",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#79": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 79",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test arithmetic and flag boundary outcomes::trace#5": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 17845,
+      "total_gas_fees": 1189669,
+      "total_forward_fees": 112536,
+      "total_fees": 1339293
+    },
+    "test v2 inbox insertion is canonical under out of order delivery::trace#3": {
+      "test_name": "test v2 inbox insertion is canonical under out of order delivery",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 35347,
+      "total_gas_fees": 2356469,
+      "total_forward_fees": 199293,
+      "total_fees": 2543669
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#8": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#48": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 48",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#3": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 30444,
+      "total_gas_fees": 2029602,
+      "total_forward_fees": 124981,
+      "total_fees": 2228691
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#24": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 24",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#67": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 67",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 receiver selectors topup and external rejection::trace#3": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 44446,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#43": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 43",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#15": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 31744,
+      "total_gas_fees": 2116269,
+      "total_forward_fees": 124981,
+      "total_fees": 2315358
+    },
+    "test named failure paths and halted rejection::trace#18": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#1": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93069,
+      "total_fees": 20601
+    },
+    "test v2 bounded advance stops at a legacy output event::trace#3": {
+      "test_name": "test v2 bounded advance stops at a legacy output event",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 31141,
+      "total_gas_fees": 2076069,
+      "total_forward_fees": 124981,
+      "total_fees": 2275158
+    },
+    "test v2 bounded advance records input wait without executing::trace#3": {
+      "test_name": "test v2 bounded advance records input wait without executing",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 30283,
+      "total_gas_fees": 2018869,
+      "total_forward_fees": 124981,
+      "total_fees": 2217958
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#2": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4380391,
+      "total_fees": 70068
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#4": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#8": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 bounded advance stops at yield and trap::trace#4": {
+      "test_name": "test v2 bounded advance stops at yield and trap",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test JC false path and maximum jump target::trace#6": {
+      "test_name": "test JC false path and maximum jump target",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#1": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92357,
+      "total_fees": 20601
+    },
+    "test named failure paths and halted rejection::trace#22": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 22",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#9": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 9",
+      "tx_count": 1,
+      "total_gas_used": 1870,
+      "total_gas_fees": 124668,
+      "total_forward_fees": 68090,
+      "total_fees": 124668
+    },
+    "test v2 HALT is an architectural state and rejects subsequent advance::trace#1": {
+      "test_name": "test v2 HALT is an architectural state and rejects subsequent advance",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92713,
+      "total_fees": 20601
+    },
+    "test v2 inherited opcode families execute through the contract::trace#11": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 30995,
+      "total_gas_fees": 2066335,
+      "total_forward_fees": 124981,
+      "total_fees": 2265424
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#47": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 47",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 advance validation and storage guards::trace#27": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 27",
+      "tx_count": 1,
+      "total_gas_used": 4648,
+      "total_gas_fees": 309868,
+      "total_forward_fees": 80535,
+      "total_fees": 309868
+    },
+    "test v2 bounded advance stops at a legacy output event::trace#2": {
+      "test_name": "test v2 bounded advance stops at a legacy output event",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#90": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 90",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#2": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4367768,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#6": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test arithmetic and flag boundary outcomes::trace#9": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 17845,
+      "total_gas_fees": 1189669,
+      "total_forward_fees": 112536,
+      "total_fees": 1339291
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#29": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 29",
+      "tx_count": 1,
+      "total_gas_used": 23081,
+      "total_gas_fees": 1538734,
+      "total_forward_fees": 80535,
+      "total_fees": 1538734
+    },
+    "test v2 inherited opcode families execute through the contract::trace#16": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test arithmetic logical and SYS opcodes::trace#2": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 inbox insertion is canonical under out of order delivery::trace#2": {
+      "test_name": "test v2 inbox insertion is canonical under out of order delivery",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4367768,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#15": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test register load jump and ADC without carry::trace#3": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#16": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 16",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287226
+    },
+    "test v2 HALT is an architectural state and rejects subsequent advance::trace#2": {
+      "test_name": "test v2 HALT is an architectural state and rejects subsequent advance",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#6": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 44944,
+      "total_gas_fees": 2996269,
+      "total_forward_fees": 124981,
+      "total_fees": 3195358
+    },
+    "test RAM and branch opcodes::trace#11": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 16728,
+      "total_gas_fees": 1115202,
+      "total_forward_fees": 112536,
+      "total_fees": 1264824
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#18": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 18",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#10": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#8": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test INC sets carry and zero on nibble wrap::trace#5": {
+      "test_name": "test INC sets carry and zero on nibble wrap",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test JC false path and maximum jump target::trace#4": {
+      "test_name": "test JC false path and maximum jump target",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test v2 advance validation and storage guards::trace#5": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 2051,
+      "total_gas_fees": 136734,
+      "total_forward_fees": 80535,
+      "total_fees": 136734
+    },
+    "test v2 bounced delivery keeps the outbox retryable::trace#1": {
+      "test_name": "test v2 bounced delivery keeps the outbox retryable",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93424,
+      "total_fees": 20601
+    },
+    "test v2 bounded structures cover every fixed slot and selector::trace#2": {
+      "test_name": "test v2 bounded structures cover every fixed slot and selector",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 95557,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#59": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 59",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#83": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 83",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 receiver selectors topup and external rejection::trace#5": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 1823,
+      "total_gas_fees": 121534,
+      "total_forward_fees": 44446,
+      "total_fees": 121534
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#19": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 19",
+      "tx_count": 1,
+      "total_gas_used": 13195,
+      "total_gas_fees": 879668,
+      "total_forward_fees": 80535,
+      "total_fees": 879668
+    },
+    "test INC sets carry and zero on nibble wrap::trace#4": {
+      "test_name": "test INC sets carry and zero on nibble wrap",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 18945,
+      "total_gas_fees": 1263002,
+      "total_forward_fees": 112536,
+      "total_fees": 1412624
+    },
+    "test v2 advance validation and storage guards::trace#6": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 2206,
+      "total_gas_fees": 147068,
+      "total_forward_fees": 80535,
+      "total_fees": 147068
+    },
+    "test v2 inherited opcode families execute through the contract::trace#22": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 22",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#3": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#72": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 72",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#71": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 71",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test arithmetic logical and SYS opcodes::trace#11": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 17400,
+      "total_gas_fees": 1160002,
+      "total_forward_fees": 112536,
+      "total_fees": 1309624
+    },
+    "test arithmetic logical and SYS opcodes::trace#15": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 18821,
+      "total_gas_fees": 1254735,
+      "total_forward_fees": 112536,
+      "total_fees": 1404357
+    },
+    "test RAM and branch opcodes::trace#6": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 16676,
+      "total_gas_fees": 1111735,
+      "total_forward_fees": 112536,
+      "total_fees": 1261357
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#7": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#17": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 8256,
+      "total_gas_fees": 550401,
+      "total_forward_fees": 68090,
+      "total_fees": 550401
+    },
+    "test v2 bounded advance executes the full configured nop batch::trace#3": {
+      "test_name": "test v2 bounded advance executes the full configured nop batch",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 27352,
+      "total_gas_fees": 1823469,
+      "total_forward_fees": 124981,
+      "total_fees": 2022558
+    },
+    "test named failure paths and halted rejection::trace#6": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 1588,
+      "total_gas_fees": 105868,
+      "total_forward_fees": 68135,
+      "total_fees": 105868
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#3": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#2": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#11": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 19617,
+      "total_gas_fees": 1307802,
+      "total_forward_fees": 112536,
+      "total_fees": 1457424
+    },
+    "test v2 advance validation and storage guards::trace#8": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 2351,
+      "total_gas_fees": 156734,
+      "total_forward_fees": 80535,
+      "total_fees": 156734
+    },
+    "test v2 advance validation and storage guards::trace#2": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#7": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 7940,
+      "total_gas_fees": 529334,
+      "total_forward_fees": 103291,
+      "total_fees": 529334
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#15": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 13195,
+      "total_gas_fees": 879668,
+      "total_forward_fees": 80535,
+      "total_fees": 879668
+    },
+    "test v2 advance validation and storage guards::trace#23": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 23",
+      "tx_count": 1,
+      "total_gas_used": 4337,
+      "total_gas_fees": 289134,
+      "total_forward_fees": 80535,
+      "total_fees": 289134
+    },
+    "test v2 inherited opcode families execute through the contract::trace#18": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 advance validation and storage guards::trace#16": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#28": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 28",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4367768,
+      "total_fees": 70068
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#9": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 19483,
+      "total_gas_fees": 1298869,
+      "total_forward_fees": 112536,
+      "total_fees": 1448491
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#91": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 91",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#70": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 70",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#82": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 82",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test advance executes one instruction and emits commitments::trace#1": {
+      "test_name": "test advance executes one instruction and emits commitments",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92713,
+      "total_fees": 20601
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#21": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 21",
+      "tx_count": 2,
+      "total_gas_used": 31205,
+      "total_gas_fees": 2080335,
+      "total_forward_fees": 124981,
+      "total_fees": 2279424
+    },
+    "test v2 advance validation and storage guards::trace#20": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 20",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#3": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 27349,
+      "total_gas_fees": 1823269,
+      "total_forward_fees": 124981,
+      "total_fees": 2022358
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#5": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 3610,
+      "total_gas_fees": 240668,
+      "total_forward_fees": 103291,
+      "total_fees": 240668
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#89": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 89",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test RAM and branch opcodes::trace#1": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92357,
+      "total_fees": 20601
+    },
+    "test arithmetic logical and SYS opcodes::trace#3": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test named failure paths and halted rejection::trace#24": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 24",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test arithmetic and flag boundary outcomes::trace#12": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 17765,
+      "total_gas_fees": 1184335,
+      "total_forward_fees": 112536,
+      "total_fees": 1333957
+    },
+    "test register load jump and ADC without carry::trace#12": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 17232,
+      "total_gas_fees": 1148802,
+      "total_forward_fees": 112536,
+      "total_fees": 1298424
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#27": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 27",
+      "tx_count": 1,
+      "total_gas_used": 20106,
+      "total_gas_fees": 1340401,
+      "total_forward_fees": 80535,
+      "total_fees": 1340401
+    },
+    "test v2 advance validation and storage guards::trace#3": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 1844,
+      "total_gas_fees": 122934,
+      "total_forward_fees": 80535,
+      "total_fees": 122934
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#11": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 31494,
+      "total_gas_fees": 2099602,
+      "total_forward_fees": 124981,
+      "total_fees": 2298691
+    },
+    "test v2 advance validation and storage guards::trace#10": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 4744,
+      "total_gas_fees": 316268,
+      "total_forward_fees": 80535,
+      "total_fees": 316268
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#6": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#18": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#69": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 69",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test arithmetic and flag boundary outcomes::trace#17": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 18945,
+      "total_gas_fees": 1263002,
+      "total_forward_fees": 112536,
+      "total_fees": 1412624
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#41": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 41",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test stale and invalid advance requests do not mutate state::trace#4": {
+      "test_name": "test stale and invalid advance requests do not mutate state",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 3045,
+      "total_gas_fees": 203001,
+      "total_forward_fees": 68090,
+      "total_fees": 203001
+    },
+    "test register load jump and ADC without carry::trace#10": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#28": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 28",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 bounded advance stops at yield and trap::trace#1": {
+      "test_name": "test v2 bounded advance stops at yield and trap",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#58": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 58",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#2": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#60": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 60",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#7": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4380391,
+      "total_fees": 70068
+    },
+    "test v2 advance validation and storage guards::trace#1": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#31": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 31",
+      "tx_count": 2,
+      "total_gas_used": 29846,
+      "total_gas_fees": 1989735,
+      "total_forward_fees": 124981,
+      "total_fees": 2188824
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#98": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 98",
+      "tx_count": 2,
+      "total_gas_used": 16676,
+      "total_gas_fees": 1111735,
+      "total_forward_fees": 112536,
+      "total_fees": 1261357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#68": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 68",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#51": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 51",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#84": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 84",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test v2 bounded advance stops at a routed output event::trace#2": {
+      "test_name": "test v2 bounded advance stops at a routed output event",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4340079,
+      "total_fees": 70068
+    },
+    "test arithmetic logical and SYS opcodes::trace#6": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test v2 bounded advance records outbox backpressure without executing::trace#3": {
+      "test_name": "test v2 bounded advance records outbox backpressure without executing",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 29846,
+      "total_gas_fees": 1989735,
+      "total_forward_fees": 124981,
+      "total_fees": 2188824
+    },
+    "test arithmetic logical and SYS opcodes::trace#12": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 17845,
+      "total_gas_fees": 1189669,
+      "total_forward_fees": 112536,
+      "total_fees": 1339291
+    },
+    "test named failure paths and halted rejection::trace#14": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 HALT is an architectural state and rejects subsequent advance::trace#3": {
+      "test_name": "test v2 HALT is an architectural state and rejects subsequent advance",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 29461,
+      "total_gas_fees": 1964069,
+      "total_forward_fees": 124981,
+      "total_fees": 2163158
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#8": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test register load jump and ADC without carry::trace#4": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test named failure paths and halted rejection::trace#5": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 44446,
+      "total_fees": 63401
+    },
+    "test v2 bounded memory ROM queues routes peers and commitments::trace#1": {
+      "test_name": "test v2 bounded memory ROM queues routes peers and commitments",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92357,
+      "total_fees": 20601
+    },
+    "test v2 inbox insertion is canonical under out of order delivery::trace#4": {
+      "test_name": "test v2 inbox insertion is canonical under out of order delivery",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 49375,
+      "total_gas_fees": 3291669,
+      "total_forward_fees": 199293,
+      "total_fees": 3478869
+    },
+    "test v2 advance validation and storage guards::trace#18": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#95": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 95",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#13": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 19836,
+      "total_gas_fees": 1322402,
+      "total_forward_fees": 112536,
+      "total_fees": 1472024
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#9": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 28791,
+      "total_gas_fees": 1919402,
+      "total_forward_fees": 124981,
+      "total_fees": 2118491
+    },
+    "test v2 deploy exposes immutable metadata and a canonical initial state::trace#1": {
+      "test_name": "test v2 deploy exposes immutable metadata and a canonical initial state",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94135,
+      "total_fees": 20601
+    },
+    "test v2 receiver selectors topup and external rejection::trace#1": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94491,
+      "total_fees": 20601
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#8": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 7954,
+      "total_gas_fees": 530268,
+      "total_forward_fees": 88002,
+      "total_fees": 530268
+    },
+    "test v2 advance validation and storage guards::trace#14": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#14": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 14",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test v2 inherited opcode families execute through the contract::trace#1": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93424,
+      "total_fees": 20601
+    },
+    "test v2 advance validation and storage guards::trace#13": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 2808,
+      "total_gas_fees": 187201,
+      "total_forward_fees": 80535,
+      "total_fees": 187201
+    },
+    "test v2 bounded advance records input wait without executing::trace#1": {
+      "test_name": "test v2 bounded advance records input wait without executing",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 93780,
+      "total_fees": 20601
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#16": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 16",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 advance validation and storage guards::trace#22": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 22",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#19": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 19",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test RAM and branch opcodes::trace#8": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 8",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test v2 inherited opcode families execute through the contract::trace#27": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 27",
+      "tx_count": 2,
+      "total_gas_used": 28564,
+      "total_gas_fees": 1904269,
+      "total_forward_fees": 124981,
+      "total_fees": 2103358
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#57": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 57",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#27": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 27",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#7": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 21927,
+      "total_gas_fees": 1461801,
+      "total_forward_fees": 103291,
+      "total_fees": 1461801
+    },
+    "test arithmetic and flag boundary outcomes::trace#2": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#12": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#50": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 50",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test v2 bounded advance stops at yield and trap::trace#5": {
+      "test_name": "test v2 bounded advance stops at yield and trap",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 31205,
+      "total_gas_fees": 2080335,
+      "total_forward_fees": 124981,
+      "total_fees": 2279424
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#25": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 25",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#3": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 2719,
+      "total_gas_fees": 181268,
+      "total_forward_fees": 103291,
+      "total_fees": 181268
+    },
+    "test v2 bounded advance stops at a legacy output event::trace#1": {
+      "test_name": "test v2 bounded advance stops at a legacy output event",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 inherited opcode families execute through the contract::trace#30": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 30",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#40": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 40",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#6": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#14": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 14",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test named failure paths and halted rejection::trace#41": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 41",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test v2 inherited opcode families execute through the contract::trace#17": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 31165,
+      "total_gas_fees": 2077669,
+      "total_forward_fees": 124981,
+      "total_fees": 2276758
+    },
+    "test arithmetic logical and SYS opcodes::trace#1": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92357,
+      "total_fees": 20601
+    },
+    "test v2 bounded advance stops at a routed output event::trace#3": {
+      "test_name": "test v2 bounded advance stops at a routed output event",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 48306,
+      "total_gas_fees": 3220402,
+      "total_forward_fees": 124981,
+      "total_fees": 3559225
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#17": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 13352,
+      "total_gas_fees": 890134,
+      "total_forward_fees": 80535,
+      "total_fees": 890134
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#10": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test named failure paths and halted rejection::trace#36": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 36",
+      "tx_count": 1,
+      "total_gas_used": 2265,
+      "total_gas_fees": 151001,
+      "total_forward_fees": 68090,
+      "total_fees": 151001
+    },
+    "test v2 bounded advance executes the full configured nop batch::trace#2": {
+      "test_name": "test v2 bounded advance executes the full configured nop batch",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test named failure paths and halted rejection::trace#38": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 38",
+      "tx_count": 1,
+      "total_gas_used": 2343,
+      "total_gas_fees": 156201,
+      "total_forward_fees": 68090,
+      "total_fees": 156201
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#4": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1408501,
+      "total_fees": 63401
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#9": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 31450,
+      "total_gas_fees": 2096669,
+      "total_forward_fees": 124981,
+      "total_fees": 2295758
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#6": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 3706,
+      "total_gas_fees": 247068,
+      "total_forward_fees": 103291,
+      "total_fees": 247068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#61": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 61",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 inbox insertion is canonical under out of order delivery::trace#1": {
+      "test_name": "test v2 inbox insertion is canonical under out of order delivery",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92002,
+      "total_fees": 20601
+    },
+    "test arithmetic and flag boundary outcomes::trace#10": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 17232,
+      "total_gas_fees": 1148802,
+      "total_forward_fees": 112536,
+      "total_fees": 1298424
+    },
+    "test arithmetic logical and SYS opcodes::trace#16": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 16",
+      "tx_count": 2,
+      "total_gas_used": 18865,
+      "total_gas_fees": 1257669,
+      "total_forward_fees": 112536,
+      "total_fees": 1407291
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#99": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 99",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#7": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 7954,
+      "total_gas_fees": 530268,
+      "total_forward_fees": 88002,
+      "total_fees": 530268
+    },
+    "test deploy exposes Tonolith metadata::trace#1": {
+      "test_name": "test deploy exposes Tonolith metadata",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 89869,
+      "total_fees": 20601
+    },
+    "test v2 advance validation and storage guards::trace#15": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 15",
+      "tx_count": 1,
+      "total_gas_used": 2886,
+      "total_gas_fees": 192401,
+      "total_forward_fees": 80535,
+      "total_fees": 192401
+    },
+    "test v2 bounded advance stops at yield and trap::trace#2": {
+      "test_name": "test v2 bounded advance stops at yield and trap",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 inherited opcode families execute through the contract::trace#20": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 20",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test JC false path and maximum jump target::trace#2": {
+      "test_name": "test JC false path and maximum jump target",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 inherited opcode families execute through the contract::trace#31": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 31",
+      "tx_count": 2,
+      "total_gas_used": 28989,
+      "total_gas_fees": 1932602,
+      "total_forward_fees": 124981,
+      "total_fees": 2131691
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#5": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test register load jump and ADC without carry::trace#7": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 16702,
+      "total_gas_fees": 1113469,
+      "total_forward_fees": 112536,
+      "total_fees": 1263091
+    },
+    "test INC sets carry and zero on nibble wrap::trace#2": {
+      "test_name": "test INC sets carry and zero on nibble wrap",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test named failure paths and halted rejection::trace#40": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 40",
+      "tx_count": 1,
+      "total_gas_used": 2421,
+      "total_gas_fees": 161401,
+      "total_forward_fees": 68090,
+      "total_fees": 161401
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#3": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 48306,
+      "total_gas_fees": 3220402,
+      "total_forward_fees": 124981,
+      "total_fees": 3559225
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#30": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 30",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#20": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 20",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#13": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 11468,
+      "total_gas_fees": 764534,
+      "total_forward_fees": 103291,
+      "total_fees": 764534
+    },
+    "test arithmetic logical and SYS opcodes::trace#7": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 17232,
+      "total_gas_fees": 1148802,
+      "total_forward_fees": 112536,
+      "total_fees": 1298424
+    },
+    "test named failure paths and halted rejection::trace#26": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 26",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#3": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 inherited opcode families execute through the contract::trace#5": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 28049,
+      "total_gas_fees": 1869935,
+      "total_forward_fees": 124981,
+      "total_fees": 2069024
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#74": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 74",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test arithmetic logical and SYS opcodes::trace#5": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test named failure paths and halted rejection::trace#35": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 35",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test v2 bounded advance records outbox backpressure without executing::trace#2": {
+      "test_name": "test v2 bounded advance records outbox backpressure without executing",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4371191,
+      "total_fees": 70068
+    },
+    "test v2 inherited opcode families execute through the contract::trace#6": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test OUT updates the commitment and emits a bounded event::trace#4": {
+      "test_name": "test OUT updates the commitment and emits a bounded event",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#52": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 52",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#7": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 31338,
+      "total_gas_fees": 2089202,
+      "total_forward_fees": 124981,
+      "total_fees": 2288291
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#9": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test advance executes one instruction and emits commitments::trace#2": {
+      "test_name": "test advance executes one instruction and emits commitments",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#17": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 advance validation and storage guards::trace#7": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 7",
+      "tx_count": 1,
+      "total_gas_used": 2258,
+      "total_gas_fees": 150534,
+      "total_forward_fees": 80535,
+      "total_fees": 150534
+    },
+    "test named failure paths and halted rejection::trace#2": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#10": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 17628,
+      "total_gas_fees": 1175201,
+      "total_forward_fees": 103291,
+      "total_fees": 1175201
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#2": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#23": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 23",
+      "tx_count": 1,
+      "total_gas_used": 14228,
+      "total_gas_fees": 948534,
+      "total_forward_fees": 80535,
+      "total_fees": 948534
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#4": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 4",
+      "tx_count": 3,
+      "total_gas_used": 18517,
+      "total_gas_fees": 1234470,
+      "total_forward_fees": 235739,
+      "total_fees": 1308334
+    },
+    "test v2 advance validation and storage guards::trace#25": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 25",
+      "tx_count": 1,
+      "total_gas_used": 4441,
+      "total_gas_fees": 296068,
+      "total_forward_fees": 80535,
+      "total_fees": 296068
+    },
+    "test arithmetic logical and SYS opcodes::trace#10": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 17294,
+      "total_gas_fees": 1152935,
+      "total_forward_fees": 112536,
+      "total_fees": 1302557
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#56": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 56",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test RAM and branch opcodes::trace#5": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#12": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#4": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 4",
+      "tx_count": 2,
+      "total_gas_used": 35347,
+      "total_gas_fees": 2356469,
+      "total_forward_fees": 199293,
+      "total_fees": 2543669
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#11": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 17050,
+      "total_gas_fees": 1136668,
+      "total_forward_fees": 103291,
+      "total_fees": 1136668
+    },
+    "test v2 inherited opcode families execute through the contract::trace#24": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 24",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#87": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 87",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test stale and invalid advance requests do not mutate state::trace#1": {
+      "test_name": "test stale and invalid advance requests do not mutate state",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92002,
+      "total_fees": 20601
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#24": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 24",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test register load jump and ADC without carry::trace#1": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#6": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 6",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test named failure paths and halted rejection::trace#19": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 19",
+      "tx_count": 1,
+      "total_gas_used": 8508,
+      "total_gas_fees": 567201,
+      "total_forward_fees": 68090,
+      "total_fees": 567201
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#10": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 10",
+      "tx_count": 2,
+      "total_gas_used": 19538,
+      "total_gas_fees": 1302535,
+      "total_forward_fees": 112536,
+      "total_fees": 1553491
+    },
+    "test named failure paths and halted rejection::trace#11": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 11",
+      "tx_count": 1,
+      "total_gas_used": 1761,
+      "total_gas_fees": 117401,
+      "total_forward_fees": 68090,
+      "total_fees": 117401
+    },
+    "test RAM and branch opcodes::trace#13": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#1": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92357,
+      "total_fees": 20601
+    },
+    "test v2 inherited opcode families execute through the contract::trace#23": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 23",
+      "tx_count": 2,
+      "total_gas_used": 30558,
+      "total_gas_fees": 2037202,
+      "total_forward_fees": 124981,
+      "total_fees": 2236291
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#11": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#97": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 97",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#1": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92002,
+      "total_fees": 20601
+    },
+    "test named failure paths and halted rejection::trace#1": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 92713,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#12": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test v2 OUTP appends a routed output and commits it::trace#2": {
+      "test_name": "test v2 OUTP appends a routed output and commits it",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4367768,
+      "total_fees": 70068
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#2": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#3": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 30358,
+      "total_gas_fees": 2023869,
+      "total_forward_fees": 124981,
+      "total_fees": 2222958
+    },
+    "test v2 bounced delivery keeps the outbox retryable::trace#2": {
+      "test_name": "test v2 bounced delivery keeps the outbox retryable",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4380391,
+      "total_fees": 70068
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#22": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 22",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test ROM and RAM boundary pages remain addressable::trace#7": {
+      "test_name": "test ROM and RAM boundary pages remain addressable",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 19279,
+      "total_gas_fees": 1285269,
+      "total_forward_fees": 112536,
+      "total_fees": 1434891
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#3": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 3",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 91291,
+      "total_fees": 20601
+    },
+    "test v2 bounded advance stops at a routed output event::trace#1": {
+      "test_name": "test v2 bounded advance stops at a routed output event",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 94847,
+      "total_fees": 20601
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#2": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4281945,
+      "total_fees": 70068
+    },
+    "test stale and invalid advance requests do not mutate state::trace#5": {
+      "test_name": "test stale and invalid advance requests do not mutate state",
+      "trace_name": "Trace 5",
+      "tx_count": 1,
+      "total_gas_used": 3251,
+      "total_gas_fees": 216734,
+      "total_forward_fees": 68090,
+      "total_fees": 216734
+    },
+    "test v2 advance validation and storage guards::trace#21": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 21",
+      "tx_count": 1,
+      "total_gas_used": 3230,
+      "total_gas_fees": 215334,
+      "total_forward_fees": 80535,
+      "total_fees": 215334
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#73": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 73",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test top up message preserves metadata::trace#1": {
+      "test_name": "test top up message preserves metadata",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 89869,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#53": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 53",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#37": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 37",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test v2 bounced delivery keeps the outbox retryable::trace#4": {
+      "test_name": "test v2 bounced delivery keeps the outbox retryable",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1719,
+      "total_gas_fees": 114601,
+      "total_forward_fees": 44446,
+      "total_fees": 114601
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#6": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test v2 receiver selectors topup and external rejection::trace#8": {
+      "test_name": "test v2 receiver selectors topup and external rejection",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 2946,
+      "total_gas_fees": 196401,
+      "total_forward_fees": 65246,
+      "total_fees": 196401
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#30": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 30",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4371191,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#86": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 86",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test v2 inherited opcode families execute through the contract::trace#12": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 12",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 inherited opcode families execute through the contract::trace#21": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 21",
+      "tx_count": 2,
+      "total_gas_used": 31341,
+      "total_gas_fees": 2089402,
+      "total_forward_fees": 124981,
+      "total_fees": 2288492
+    },
+    "test arithmetic logical and SYS opcodes::trace#14": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 14",
+      "tx_count": 2,
+      "total_gas_used": 18599,
+      "total_gas_fees": 1239935,
+      "total_forward_fees": 112536,
+      "total_fees": 1389557
+    },
+    "test advance executes one instruction and emits commitments::trace#3": {
+      "test_name": "test advance executes one instruction and emits commitments",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 inherited opcode families execute through the contract::trace#10": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 10",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test arithmetic and flag boundary outcomes::trace#13": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 17224,
+      "total_gas_fees": 1148269,
+      "total_forward_fees": 112536,
+      "total_fees": 1297891
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#96": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 96",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#13": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 31173,
+      "total_gas_fees": 2078202,
+      "total_forward_fees": 124981,
+      "total_fees": 2277291
+    },
+    "test INC sets carry and zero on nibble wrap::trace#3": {
+      "test_name": "test INC sets carry and zero on nibble wrap",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#1": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 1",
+      "tx_count": 1,
+      "total_gas_used": 309,
+      "total_gas_fees": 20601,
+      "total_forward_fees": 95202,
+      "total_fees": 20601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#65": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 65",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test arithmetic logical and SYS opcodes::trace#13": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 17765,
+      "total_gas_fees": 1184335,
+      "total_forward_fees": 112536,
+      "total_fees": 1333957
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#4": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#18": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 18",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4318034,
+      "total_fees": 70068
+    },
+    "test v2 acknowledgement retires output and rejects wrong peer::trace#8": {
+      "test_name": "test v2 acknowledgement retires output and rejects wrong peer",
+      "trace_name": "Trace 8",
+      "tx_count": 1,
+      "total_gas_used": 23418,
+      "total_gas_fees": 1561201,
+      "total_forward_fees": 96002,
+      "total_fees": 1698535
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#93": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 93",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#55": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 55",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 bounded advance traverses every nonblocking ISA family::trace#3": {
+      "test_name": "test v2 bounded advance traverses every nonblocking ISA family",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 27352,
+      "total_gas_fees": 1823469,
+      "total_forward_fees": 124981,
+      "total_fees": 2022558
+    },
+    "test named failure paths and halted rejection::trace#13": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 13",
+      "tx_count": 1,
+      "total_gas_used": 7970,
+      "total_gas_fees": 531334,
+      "total_forward_fees": 68090,
+      "total_fees": 531334
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#92": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 92",
+      "tx_count": 2,
+      "total_gas_used": 16341,
+      "total_gas_fees": 1089402,
+      "total_forward_fees": 112536,
+      "total_fees": 1239024
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#2": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 1051,
+      "total_gas_fees": 70068,
+      "total_forward_fees": 4384479,
+      "total_fees": 70068
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#31": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 31",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#81": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 81",
+      "tx_count": 2,
+      "total_gas_used": 16076,
+      "total_gas_fees": 1071735,
+      "total_forward_fees": 112536,
+      "total_fees": 1221357
+    },
+    "test register load jump and ADC without carry::trace#13": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 13",
+      "tx_count": 2,
+      "total_gas_used": 17140,
+      "total_gas_fees": 1142669,
+      "total_forward_fees": 112536,
+      "total_fees": 1292291
+    },
+    "test v2 IN waits, accepts authenticated input, deduplicates, and consumes::trace#5": {
+      "test_name": "test v2 IN waits, accepts authenticated input, deduplicates, and consumes",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 24810,
+      "total_gas_fees": 1654002,
+      "total_forward_fees": 199293,
+      "total_fees": 1702001
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#9": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 9",
+      "tx_count": 1,
+      "total_gas_used": 7442,
+      "total_gas_fees": 496134,
+      "total_forward_fees": 103291,
+      "total_fees": 496134
+    },
+    "test v2 inherited opcode families execute through the contract::trace#9": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 29753,
+      "total_gas_fees": 1983535,
+      "total_forward_fees": 124981,
+      "total_fees": 2182624
+    },
+    "test RAM and branch opcodes::trace#9": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 9",
+      "tx_count": 2,
+      "total_gas_used": 17845,
+      "total_gas_fees": 1189669,
+      "total_forward_fees": 112536,
+      "total_fees": 1339291
+    },
+    "test exact arithmetic carry and subtraction boundaries::trace#11": {
+      "test_name": "test exact arithmetic carry and subtraction boundaries",
+      "trace_name": "Trace 11",
+      "tx_count": 2,
+      "total_gas_used": 17206,
+      "total_gas_fees": 1147069,
+      "total_forward_fees": 112536,
+      "total_fees": 1296691
+    },
+    "test v2 advance validation and storage guards::trace#4": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 1999,
+      "total_gas_fees": 133268,
+      "total_forward_fees": 80535,
+      "total_fees": 133268
+    },
+    "test arithmetic and flag boundary outcomes::trace#6": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 6",
+      "tx_count": 2,
+      "total_gas_used": 17064,
+      "total_gas_fees": 1137602,
+      "total_forward_fees": 112536,
+      "total_fees": 1287224
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#7": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 28817,
+      "total_gas_fees": 1921135,
+      "total_forward_fees": 124981,
+      "total_fees": 2120224
+    },
+    "test v2 execution edge paths preserve bounded progress::trace#25": {
+      "test_name": "test v2 execution edge paths preserve bounded progress",
+      "trace_name": "Trace 25",
+      "tx_count": 1,
+      "total_gas_used": 14942,
+      "total_gas_fees": 996134,
+      "total_forward_fees": 80535,
+      "total_fees": 996134
+    },
+    "test register load jump and ADC without carry::trace#2": {
+      "test_name": "test register load jump and ADC without carry",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1231966,
+      "total_fees": 63401
+    },
+    "test v2 inherited opcode families execute through the contract::trace#3": {
+      "test_name": "test v2 inherited opcode families execute through the contract",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 27352,
+      "total_gas_fees": 1823469,
+      "total_forward_fees": 124981,
+      "total_fees": 2022558
+    },
+    "test RAM and branch opcodes::trace#3": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 3",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test v2 advance validation and storage guards::trace#17": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 17",
+      "tx_count": 1,
+      "total_gas_used": 2964,
+      "total_gas_fees": 197601,
+      "total_forward_fees": 80535,
+      "total_fees": 197601
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#33": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 33",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test top up message preserves metadata::trace#2": {
+      "test_name": "test top up message preserves metadata",
+      "trace_name": "Trace 2",
+      "tx_count": 1,
+      "total_gas_used": 951,
+      "total_gas_fees": 63401,
+      "total_forward_fees": 1195877,
+      "total_fees": 63401
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#54": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 54",
+      "tx_count": 2,
+      "total_gas_used": 18997,
+      "total_gas_fees": 1266469,
+      "total_forward_fees": 112536,
+      "total_fees": 1416091
+    },
+    "test v2 advance validation and storage guards::trace#9": {
+      "test_name": "test v2 advance validation and storage guards",
+      "trace_name": "Trace 9",
+      "tx_count": 1,
+      "total_gas_used": 3620,
+      "total_gas_fees": 241334,
+      "total_forward_fees": 80535,
+      "total_fees": 241334
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#49": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 49",
+      "tx_count": 2,
+      "total_gas_used": 15639,
+      "total_gas_fees": 1042602,
+      "total_forward_fees": 112536,
+      "total_fees": 1192224
+    },
+    "test v2 SYS controls cover flags shifts arithmetic and architectural stops::trace#5": {
+      "test_name": "test v2 SYS controls cover flags shifts arithmetic and architectural stops",
+      "trace_name": "Trace 5",
+      "tx_count": 2,
+      "total_gas_used": 30524,
+      "total_gas_fees": 2034935,
+      "total_forward_fees": 124981,
+      "total_fees": 2234024
+    },
+    "test v2 delivery validation rejects malformed routes epochs and replays::trace#16": {
+      "test_name": "test v2 delivery validation rejects malformed routes epochs and replays",
+      "trace_name": "Trace 16",
+      "tx_count": 2,
+      "total_gas_used": 35347,
+      "total_gas_fees": 2356469,
+      "total_forward_fees": 199293,
+      "total_fees": 2543669
+    },
+    "test v2 advance executes a canonical instruction and rejects stale state::trace#4": {
+      "test_name": "test v2 advance executes a canonical instruction and rejects stale state",
+      "trace_name": "Trace 4",
+      "tx_count": 1,
+      "total_gas_used": 4744,
+      "total_gas_fees": 316268,
+      "total_forward_fees": 80535,
+      "total_fees": 316268
+    },
+    "test named failure paths and halted rejection::trace#27": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 27",
+      "tx_count": 1,
+      "total_gas_used": 8256,
+      "total_gas_fees": 550401,
+      "total_forward_fees": 68090,
+      "total_fees": 550401
+    },
+    "test arithmetic and flag boundary outcomes::trace#7": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    },
+    "test RAM and branch opcodes::trace#12": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 12",
+      "tx_count": 2,
+      "total_gas_used": 15039,
+      "total_gas_fees": 1002602,
+      "total_forward_fees": 112536,
+      "total_fees": 1152224
+    },
+    "test RAM and branch opcodes::trace#7": {
+      "test_name": "test RAM and branch opcodes",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 18224,
+      "total_gas_fees": 1214935,
+      "total_forward_fees": 112536,
+      "total_fees": 1364557
+    },
+    "test named failure paths and halted rejection::trace#29": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 29",
+      "tx_count": 1,
+      "total_gas_used": 8846,
+      "total_gas_fees": 589734,
+      "total_forward_fees": 68090,
+      "total_fees": 589734
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#42": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 42",
+      "tx_count": 2,
+      "total_gas_used": 16650,
+      "total_gas_fees": 1110002,
+      "total_forward_fees": 112536,
+      "total_fees": 1259624
+    },
+    "test named failure paths and halted rejection::trace#31": {
+      "test_name": "test named failure paths and halted rejection",
+      "trace_name": "Trace 31",
+      "tx_count": 1,
+      "total_gas_used": 12045,
+      "total_gas_fees": 803001,
+      "total_forward_fees": 68090,
+      "total_fees": 803001
+    },
+    "test arithmetic and flag boundary outcomes::trace#15": {
+      "test_name": "test arithmetic and flag boundary outcomes",
+      "trace_name": "Trace 15",
+      "tx_count": 2,
+      "total_gas_used": 18865,
+      "total_gas_fees": 1257669,
+      "total_forward_fees": 112536,
+      "total_fees": 1407291
+    },
+    "test arithmetic logical and SYS opcodes::trace#17": {
+      "test_name": "test arithmetic logical and SYS opcodes",
+      "trace_name": "Trace 17",
+      "tx_count": 2,
+      "total_gas_used": 18945,
+      "total_gas_fees": 1263002,
+      "total_forward_fees": 112536,
+      "total_fees": 1412624
+    },
+    "test Fibonacci contract emits the canonical output trace::trace#7": {
+      "test_name": "test Fibonacci contract emits the canonical output trace",
+      "trace_name": "Trace 7",
+      "tx_count": 2,
+      "total_gas_used": 15786,
+      "total_gas_fees": 1052402,
+      "total_forward_fees": 112536,
+      "total_fees": 1202024
+    }
+  }
+}

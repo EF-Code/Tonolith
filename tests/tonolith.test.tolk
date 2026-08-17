@@ -333,6 +333,22 @@ get fun `test exact arithmetic carry and subtraction boundaries`() {
     expect(subtractCore.accumulator).toEqual(0);
     expect(subtractCore.flags).toEqual(3);
 
+    var opcodeCore = initialCore().load();
+    executeInstruction(mutate opcodeCore, 0x1001);
+    executeInstruction(mutate opcodeCore, 0x3000);
+    executeInstruction(mutate opcodeCore, 0x5000);
+    executeInstruction(mutate opcodeCore, 0x7000);
+    executeInstruction(mutate opcodeCore, 0x8000);
+    executeInstruction(mutate opcodeCore, 0x9000);
+    executeInstruction(mutate opcodeCore, 0xA000);
+    executeInstruction(mutate opcodeCore, 0xB000);
+    executeInstruction(mutate opcodeCore, 0xC001);
+    opcodeCore.flags = FLAG_ZERO;
+    executeInstruction(mutate opcodeCore, 0xD002);
+    opcodeCore.flags = FLAG_CARRY;
+    executeInstruction(mutate opcodeCore, 0xE003);
+    expect(opcodeCore.instructionCount).toEqual(11);
+
     val deployer = testing.treasury("exact-arithmetic-contract-deployer");
     val addCpu = TonolithCpu.fromStorage(
         makeStorage(

@@ -6,6 +6,9 @@
   "type": "module",
   "main": "./dist/tools/index.js",
   "types": "./dist/tools/index.d.ts",
+  "bin": {
+    "tonolith": "./dist/tools/tonolith-v2.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/tools/index.d.ts",
@@ -16,6 +19,16 @@
       "types": "./dist/tools/browser.d.ts",
       "import": "./dist/tools/browser.js",
       "default": "./dist/tools/browser.js"
+    },
+    "./v2": {
+      "types": "./dist/packages/sdk/src/index.d.ts",
+      "import": "./dist/packages/sdk/src/index.js",
+      "default": "./dist/packages/sdk/src/index.js"
+    },
+    "./v2/node": {
+      "types": "./dist/packages/sdk/src/node.d.ts",
+      "import": "./dist/packages/sdk/src/node.js",
+      "default": "./dist/packages/sdk/src/node.js"
     }
   },
   "files": [
@@ -27,8 +40,8 @@
     "build": "tsc -p tsconfig.json",
     "prepare": "npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts",
-    "test:coverage": "c8 --reporter=text --reporter=lcov node --import tsx --test tests/*.test.ts",
+    "test": "node --import tsx --test 'tests/**/*.test.ts'",
+    "test:coverage": "c8 --reporter=text --reporter=lcov node --import tsx --test 'tests/**/*.test.ts'",
     "assemble:fibonacci": "tsx tools/assembler/cli.ts programs/fibonacci.tasm programs/fibonacci.json",
     "test:contract": "acton test --fuzz-seed 42",
     "test:contract:coverage": "acton test --coverage --coverage-format text --coverage-minimum-percent 89 --fuzz-seed 42",

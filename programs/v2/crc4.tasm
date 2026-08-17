@@ -1,0 +1,13 @@
+; Bounded checksum over the fixed nibble vector A, 3, 5, 9.
+LDI 0xA
+STR R0
+LDI 3
+XOR R0
+STR R0
+LDI 5
+XOR R0
+STR R0
+LDI 9
+XOR R0
+OUT
+HALT

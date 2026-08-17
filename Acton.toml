@@ -12,6 +12,11 @@ display-name = "TonolithCpu"
 src = "contracts/TonolithCpu.tolk"
 depends = []
 
+[contracts.TonolithCoreV2]
+display-name = "TonolithCoreV2"
+src = "contracts/TonolithCoreV2.tolk"
+depends = []
+
 [test]
 
 [scripts]
@@ -19,6 +24,8 @@ deploy-emulation = "acton script scripts/deploy.tolk"
 deploy-testnet = "acton script scripts/deploy-fibonacci.tolk --net testnet"
 deploy-fibonacci-emulation = "acton script scripts/deploy-fibonacci.tolk"
 deploy-fibonacci-testnet = "acton script scripts/deploy-fibonacci.tolk --net testnet"
+deploy-v2-fibonacci-emulation = "acton script scripts/deploy-v2-fibonacci.tolk"
+deploy-v2-fibonacci-testnet = "acton script scripts/deploy-v2-fibonacci.tolk --net testnet"
 
 [fmt]
 width = 100

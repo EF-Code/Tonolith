@@ -1,0 +1,7 @@
+; Source half of the two-core counter pipeline.
+LDI 1
+OUTP 0
+LDI 2
+OUTP 0
+YIELD
+HALT

@@ -1,0 +1,7 @@
+; Destination half of the two-core counter pipeline.
+IN 0
+OUT
+IN 0
+OUT
+YIELD
+HALT

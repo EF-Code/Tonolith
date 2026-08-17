@@ -1,0 +1,7 @@
+; High nibble receives the low result and carry as two authenticated inputs.
+IN 0
+STR R0
+IN 1
+OUT
+YIELD
+HALT

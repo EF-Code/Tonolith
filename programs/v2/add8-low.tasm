@@ -1,0 +1,16 @@
+; Low nibble: 0xF + 0x1 = 0 with carry on port 1.
+LDI 15
+STR R0
+LDI 1
+ADD R0
+OUTP 0
+JC SEND_CARRY
+LDI 0
+OUTP 1
+YIELD
+HALT
+SEND_CARRY:
+LDI 1
+OUTP 1
+YIELD
+HALT
